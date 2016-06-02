@@ -14,11 +14,11 @@ SDK предоставляет доступ к платформе Scorocode дл
 github "Alamofire/Alamofire" ~> 3.3
 github "SwiftyJSON/SwiftyJSON"
 ```
-Запустить carthage update --platform iOS,Mac
-
-Открыть заново проект в Xcode
-
-В Target -> General -> Linked Frameworks and Libraries из <Каталог проекта> -> Carthage -> Build -> iOS перетащить 2 файла:
+Закрыть проект в xcode, запустить в консоли:
+```
+carthage update --platform iOS,Mac
+```
+Открыть заново проект в Xcode. В Target -> General -> Linked Frameworks and Libraries из <Каталог проекта> -> Carthage -> Build -> iOS перетащить 2 файла:
 ```
 Alamofire.framework
 SwiftyJSON.framework
@@ -26,7 +26,7 @@ SwiftyJSON.framework
 
 В Target -> Build Phases добавить New Run Script Phase:
 
-скрипт:
+Скрипт:
 ```
 /usr/local/bin/carthage copy-frameworks
 ```
