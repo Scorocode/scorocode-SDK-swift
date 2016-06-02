@@ -5,46 +5,46 @@ SDK предоставляет доступ к платформе Scorocode дл
 ### Установка
 Подключение библиотеки к проекту
 
-Установить Carthage
-https://github.com/Carthage/Carthage
+Установить [Carthage](https://github.com/Carthage/Carthage)
 
 Создать приложение
 
 Создать в корне проекта файл с именем "Cartfile", записать в него строки:
-
-  github "Alamofire/Alamofire" ~> 3.3
-
-  github "SwiftyJSON/SwiftyJSON"
-
+```
+github "Alamofire/Alamofire" ~> 3.3
+github "SwiftyJSON/SwiftyJSON"
+```
 Запустить carthage update --platform iOS,Mac
 
 Открыть заново проект в Xcode
 
 В Target -> General -> Linked Frameworks and Libraries из <Каталог проекта> -> Carthage -> Build -> iOS перетащить 2 файла:
-
-  Alamofire.framework
-
-  SwiftyJSON.framework
+```
+Alamofire.framework
+SwiftyJSON.framework
+```
 
 В Target -> Build Phases добавить New Run Script Phase:
 
 скрипт:
-
+```
 /usr/local/bin/carthage copy-frameworks
-
+```
 Два Input File:
 
+```
 $(SRCROOT)/Carthage/Build/iOS/Alamofire.framework
-
+```
 и
-
+```
 $(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework
-
+```
 
 В случае отсутствия bridging header создать его с таким содержимым:
 
+```
 #import "BSONSerialization.h"
-
+```
 
 Создать в проекте новую группу (например, SCLib)
 
@@ -52,11 +52,13 @@ $(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework
 
 В AppDelegate.swift в метод didFinishLaunchingWithOptions указать значения параметров инициализации API:
 
+```
 let applicationId = ""
 let clientId = ""
 let accessKey = ""
 let fileKey = ""
 let messageKey = ""
+```
 
 ### License
 ```
