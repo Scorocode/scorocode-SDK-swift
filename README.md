@@ -1,4 +1,4 @@
-# scorocode-sdk-swift
+# scorocode-SDK-swift
 SDK предоставляет доступ к платформе Scorocode для построения приложений, основанных на swift
 Подробности на нашем сайте: https://scorocode.ru
 
