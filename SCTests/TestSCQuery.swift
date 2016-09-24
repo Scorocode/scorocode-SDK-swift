@@ -66,7 +66,7 @@ class TestSCQuery: XCTestCase {
     
     func testAddOperator() {
         XCTAssertNil(query.operators)
-        let op = SCOperator.EqualTo(fieldName, scString)
+        let op = SCOperator.equalTo(fieldName, scString)
         query.addOperator(fieldName, oper: op)
         XCTAssertTrue(query.operators![fieldName]! == op)
     }
@@ -93,8 +93,8 @@ class TestSCQuery: XCTestCase {
         query.ascending("field1")
         query.descending("field2")
         query.fields(["field1", "field2"])
-        let and1 = SCOperator.EqualTo("fieldString", SCString("Строка"))
-        let and2 = SCOperator.EqualTo("fieldNumber", SCInt(33))
+        let and1 = SCOperator.equalTo("fieldString", SCString("Строка"))
+        let and2 = SCOperator.equalTo("fieldNumber", SCInt(33))
         query.and([and1, and2])
         
         query.reset()
@@ -138,84 +138,84 @@ class TestSCQuery: XCTestCase {
     func testEqualTo() {
         XCTAssertNil(query.operators)
         query.equalTo(fieldName, scString)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.EqualTo(fieldName, scString))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.equalTo(fieldName, scString))
     }
     
     func testNotEqualTo() {
         XCTAssertNil(query.operators)
         query.notEqualTo(fieldName, scString)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.NotEqualTo(fieldName, scString))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.notEqualTo(fieldName, scString))
     }
     
     func testContainedIn() {
         XCTAssertNil(query.operators)
         query.containedIn(fieldName, scArray)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.ContainedIn(fieldName, scArray))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.containedIn(fieldName, scArray))
     }
 
     func testContainsAll() {
         XCTAssertNil(query.operators)
         query.containsAll(fieldName, scArray)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.ContainsAll(fieldName, scArray))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.containsAll(fieldName, scArray))
     }
     
     func testNotContainedIn() {
         XCTAssertNil(query.operators)
         query.notContainedIn(fieldName, scArray)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.NotContainedIn(fieldName, scArray))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.notContainedIn(fieldName, scArray))
     }
     
     func testGreaterThan() {
         XCTAssertNil(query.operators)
         query.greaterThan(fieldName, scInt)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.GreaterThan(fieldName, scInt))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.greaterThan(fieldName, scInt))
     }
     
     func testGreaterThanOrEqualTo() {
         XCTAssertNil(query.operators)
         query.greaterThanOrEqualTo(fieldName, scInt)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.GreaterThanOrEqualTo(fieldName, scInt))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.greaterThanOrEqualTo(fieldName, scInt))
     }
     
     func testLessThan() {
         XCTAssertNil(query.operators)
         query.lessThan(fieldName, scInt)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.LessThan(fieldName, scInt))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.lessThan(fieldName, scInt))
     }
     
     func testLessThanOrEqualTo() {
         XCTAssertNil(query.operators)
         query.lessThanOrEqualTo(fieldName, scInt)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.LessThanOrEqualTo(fieldName, scInt))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.lessThanOrEqualTo(fieldName, scInt))
     }
     
     func testExists() {
         XCTAssertNil(query.operators)
         query.exists(fieldName)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.Exists(fieldName))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.exists(fieldName))
     }
     
     func testDoesNotExist() {
         XCTAssertNil(query.operators)
         query.doesNotExist(fieldName)
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.DoesNotExist(fieldName))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.doesNotExist(fieldName))
     }
     
     func testContains() {
         XCTAssertNil(query.operators)
         query.contains(fieldName, "[A-Z]")
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.Contains(fieldName, "[A-Z]", ""))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.contains(fieldName, "[A-Z]", ""))
     }
     
     func testStartsWith() {
         XCTAssertNil(query.operators)
         query.startsWith(fieldName, "[A-Z]")
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.StartsWith(fieldName, "[A-Z]", ""))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.startsWith(fieldName, "[A-Z]", ""))
     }
     
     func testEndsWith() {
         XCTAssertNil(query.operators)
         query.endsWith(fieldName, "[A-Z]")
-        XCTAssertTrue(query.operators![fieldName]! == SCOperator.EndsWith(fieldName, "[A-Z]", ""))
+        XCTAssertTrue(query.operators![fieldName]! == SCOperator.endsWith(fieldName, "[A-Z]", ""))
     }
 }

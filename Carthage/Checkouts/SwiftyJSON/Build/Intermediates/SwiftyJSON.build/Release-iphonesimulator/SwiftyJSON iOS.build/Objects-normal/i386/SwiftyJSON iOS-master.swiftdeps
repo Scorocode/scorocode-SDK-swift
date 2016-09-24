@@ -1,0 +1,5 @@
+version: "Apple Swift version 3.0 (swiftlang-800.0.46.2 clang-800.0.38)"
+options: "3684c35097da550c70b1406c9260ea14"
+build_time: [527993407, 585889000]
+inputs:
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/Carthage/Checkouts/SwiftyJSON/Source/SwiftyJSON.swift": [9223372036854775807, 0]

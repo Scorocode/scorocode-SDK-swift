@@ -11,56 +11,56 @@ import SwiftyJSON
 
 enum SCOperator: SCPullable {
     
-    case EqualTo(String, SCValue)
-    case NotEqualTo(String, SCValue)
-    case ContainedIn(String, SCArray)
-    case ContainsAll(String, SCArray)
-    case NotContainedIn(String, SCArray)
-    case GreaterThan(String, SCValue)
-    case GreaterThanOrEqualTo(String, SCValue)
-    case LessThan(String, SCValue)
-    case LessThanOrEqualTo(String, SCValue)
-    case Exists(String)
-    case DoesNotExist(String)
-    case Contains(String, String, String)
-    case StartsWith(String, String, String)
-    case EndsWith(String, String, String)
-    case Or([SCOperator])
-    case And([SCOperator])
+    case equalTo(String, SCValue)
+    case notEqualTo(String, SCValue)
+    case containedIn(String, SCArray)
+    case containsAll(String, SCArray)
+    case notContainedIn(String, SCArray)
+    case greaterThan(String, SCValue)
+    case greaterThanOrEqualTo(String, SCValue)
+    case lessThan(String, SCValue)
+    case lessThanOrEqualTo(String, SCValue)
+    case exists(String)
+    case doesNotExist(String)
+    case contains(String, String, String)
+    case startsWith(String, String, String)
+    case endsWith(String, String, String)
+    case or([SCOperator])
+    case and([SCOperator])
     
     var name: String? {
         switch self {
-        case .EqualTo(let name, _):
+        case .equalTo(let name, _):
             return name
-        case .NotEqualTo(let name, _):
+        case .notEqualTo(let name, _):
             return name
-        case .ContainedIn(let name, _):
+        case .containedIn(let name, _):
             return name
-        case .ContainsAll(let name, _):
+        case .containsAll(let name, _):
             return name
-        case .NotContainedIn(let name, _):
+        case .notContainedIn(let name, _):
             return name
-        case .GreaterThan(let name, _):
+        case .greaterThan(let name, _):
             return name
-        case .GreaterThanOrEqualTo(let name, _):
+        case .greaterThanOrEqualTo(let name, _):
             return name
-        case .LessThan(let name, _):
+        case .lessThan(let name, _):
             return name
-        case .LessThanOrEqualTo(let name, _):
+        case .lessThanOrEqualTo(let name, _):
             return name
-        case .Exists(let name):
+        case .exists(let name):
             return name
-        case .DoesNotExist(let name):
+        case .doesNotExist(let name):
             return name
-        case .Contains(let name, _, _):
+        case .contains(let name, _, _):
             return name
-        case StartsWith(let name, _, _):
+        case .startsWith(let name, _, _):
             return name
-        case .EndsWith(let name, _, _):
+        case .endsWith(let name, _, _):
             return name
-        case .And(_):
+        case .and(_):
             return nil
-        case .Or(_):
+        case .or(_):
             return nil
         }
     }
@@ -69,52 +69,52 @@ enum SCOperator: SCPullable {
         
         switch self {
             
-        case .EqualTo(_, let value):
+        case .equalTo(_, let value):
             return value.apiValue
             
-        case .NotEqualTo(_, let value):
+        case .notEqualTo(_, let value):
             return ["$ne" : value.apiValue]
             
-        case .ContainedIn(_, let value):
+        case .containedIn(_, let value):
             return ["$in" : value.apiValue]
             
-        case .ContainsAll(_, let value):
+        case .containsAll(_, let value):
             return ["$all" : value.apiValue]
             
-        case .NotContainedIn(_, let value):
+        case .notContainedIn(_, let value):
             return ["$nin" : value.apiValue]
             
-        case .GreaterThan(_, let value):
+        case .greaterThan(_, let value):
             return ["$gt" : value.apiValue]
             
-        case .GreaterThanOrEqualTo(_, let value):
+        case .greaterThanOrEqualTo(_, let value):
             return ["$gte" : value.apiValue]
             
-        case .LessThan(_, let value):
+        case .lessThan(_, let value):
             return ["$lt" : value.apiValue]
             
-        case .LessThanOrEqualTo(_, let value):
+        case .lessThanOrEqualTo(_, let value):
             return ["$lte" : value.apiValue]
             
-        case .Exists:
+        case .exists:
             return ["$exists" : true]
             
-        case .DoesNotExist:
+        case .doesNotExist:
             return ["$exists" : false]
             
-        case .Contains(_, let pattern, let options):
+        case .contains(_, let pattern, let options):
             return ["$regex" : pattern, "$options" : options]
             
-        case .StartsWith(_, let pattern, let options):
+        case .startsWith(_, let pattern, let options):
             return ["$regex" : "^" + pattern, "$options" : options]
             
-        case .EndsWith(_, let pattern, let options):
+        case .endsWith(_, let pattern, let options):
             return ["$regex" : pattern + "$", "$options" : options]
 
-        case .Or(let operators):
+        case .or(let operators):
             return operators.map({ $0.expression })
             
-        case .And(let operators):
+        case .and(let operators):
             return operators.map({ $0.expression })
         }
         
@@ -124,52 +124,52 @@ enum SCOperator: SCPullable {
         
         switch self {
             
-        case .EqualTo(let name, let value):
+        case .equalTo(let name, let value):
             return [name: value.apiValue]
             
-        case .NotEqualTo(let name, let value):
+        case .notEqualTo(let name, let value):
             return [name: ["$ne" : value.apiValue]]
             
-        case .ContainedIn(let name, let value):
+        case .containedIn(let name, let value):
             return [name: ["$in" : value.apiValue]]
             
-        case .ContainsAll(let name, let value):
+        case .containsAll(let name, let value):
             return [name: ["$all" : value.apiValue]]
             
-        case .NotContainedIn(let name, let value):
+        case .notContainedIn(let name, let value):
             return [name: ["$nin" : value.apiValue]]
             
-        case .GreaterThan(let name, let value):
+        case .greaterThan(let name, let value):
             return [name: ["$gt" : value.apiValue]]
             
-        case .GreaterThanOrEqualTo(let name, let value):
+        case .greaterThanOrEqualTo(let name, let value):
             return [name: ["$gte" : value.apiValue]]
             
-        case .LessThan(let name, let value):
+        case .lessThan(let name, let value):
             return [name: ["$lt" : value.apiValue]]
             
-        case .LessThanOrEqualTo(let name, let value):
+        case .lessThanOrEqualTo(let name, let value):
             return [name: ["$lte" : value.apiValue]]
             
-        case .Exists(let name):
+        case .exists(let name):
             return [name: ["$exists" : true]]
             
-        case .DoesNotExist(let name):
+        case .doesNotExist(let name):
             return [name: ["$exists" : false]]
             
-        case .Contains(let name, let pattern, let options):
+        case .contains(let name, let pattern, let options):
             return [name: ["$regex" : pattern, "$options" : options]]
             
-        case .StartsWith(let name, let pattern, let options):
+        case .startsWith(let name, let pattern, let options):
             return [name: ["$regex" : "^" + pattern, "$options" : options]]
             
-        case .EndsWith(let name, let pattern, let options):
+        case .endsWith(let name, let pattern, let options):
             return [name: ["$regex" : pattern + "$", "$options" : options]]
             
-        case .Or(let operators):
+        case .or(let operators):
             return [ "$or": operators.map({ $0.expression }) ]
             
-        case .And(let operators):
+        case .and(let operators):
             return [ "$and": operators.map({ $0.expression }) ]
         }
         
@@ -180,7 +180,7 @@ func == (lhs: [SCOperator], rhs: [SCOperator]) -> Bool {
     if lhs.count != rhs.count {
         return false
     }
-    for (index, leftValue) in lhs.enumerate() {
+    for (index, leftValue) in lhs.enumerated() {
         if leftValue != rhs[index] {
             return false
         }
@@ -196,46 +196,46 @@ func !=(lhs: SCOperator, rhs: SCOperator) -> Bool {
 func ==(lhs: SCOperator, rhs: SCOperator) -> Bool {
     switch (lhs, rhs) {
         
-    case (let SCOperator.EqualTo(name1, v1), let SCOperator.EqualTo(name2, v2)):
+    case (let SCOperator.equalTo(name1, v1), let SCOperator.equalTo(name2, v2)):
         return name1 == name2 && v1 == v2
     
-    case (let SCOperator.NotEqualTo(name1, v1), let SCOperator.NotEqualTo(name2, v2)):
+    case (let SCOperator.notEqualTo(name1, v1), let SCOperator.notEqualTo(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCOperator.ContainedIn(name1, v1), let SCOperator.ContainedIn(name2, v2)):
+    case (let SCOperator.containedIn(name1, v1), let SCOperator.containedIn(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCOperator.ContainsAll(name1, v1), let SCOperator.ContainsAll(name2, v2)):
+    case (let SCOperator.containsAll(name1, v1), let SCOperator.containsAll(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCOperator.NotContainedIn(name1, v1), let SCOperator.NotContainedIn(name2, v2)):
+    case (let SCOperator.notContainedIn(name1, v1), let SCOperator.notContainedIn(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCOperator.GreaterThan(name1, v1), let SCOperator.GreaterThan(name2, v2)):
+    case (let SCOperator.greaterThan(name1, v1), let SCOperator.greaterThan(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCOperator.GreaterThanOrEqualTo(name1, v1), let SCOperator.GreaterThanOrEqualTo(name2, v2)):
+    case (let SCOperator.greaterThanOrEqualTo(name1, v1), let SCOperator.greaterThanOrEqualTo(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCOperator.LessThan(name1, v1), let SCOperator.LessThan(name2, v2)):
+    case (let SCOperator.lessThan(name1, v1), let SCOperator.lessThan(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCOperator.LessThanOrEqualTo(name1, v1), let SCOperator.LessThanOrEqualTo(name2, v2)):
+    case (let SCOperator.lessThanOrEqualTo(name1, v1), let SCOperator.lessThanOrEqualTo(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCOperator.Exists(name1), let SCOperator.Exists(name2)):
+    case (let SCOperator.exists(name1), let SCOperator.exists(name2)):
         return name1 == name2
         
-    case (let SCOperator.DoesNotExist(name1), let SCOperator.DoesNotExist(name2)):
+    case (let SCOperator.doesNotExist(name1), let SCOperator.doesNotExist(name2)):
         return name1 == name2
         
-    case (let SCOperator.Contains(name1, pattern1, options1), let SCOperator.Contains(name2, pattern2, options2)):
+    case (let SCOperator.contains(name1, pattern1, options1), let SCOperator.contains(name2, pattern2, options2)):
         return name1 == name2 && pattern1 == pattern2 && options1 == options2
         
-    case (let SCOperator.StartsWith(name1, pattern1, options1), let SCOperator.StartsWith(name2, pattern2, options2)):
+    case (let SCOperator.startsWith(name1, pattern1, options1), let SCOperator.startsWith(name2, pattern2, options2)):
         return name1 == name2 && pattern1 == pattern2 && options1 == options2
         
-    case (let SCOperator.EndsWith(name1, pattern1, options1), let SCOperator.EndsWith(name2, pattern2, options2)):
+    case (let SCOperator.endsWith(name1, pattern1, options1), let SCOperator.endsWith(name2, pattern2, options2)):
         return name1 == name2 && pattern1 == pattern2 && options1 == options2
         
     default:

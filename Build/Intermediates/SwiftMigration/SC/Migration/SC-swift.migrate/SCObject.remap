@@ -1,0 +1,169 @@
+[
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 232,
+  "remove": 3,
+  "text": " ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 259,
+  "remove": 3,
+  "text": " ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 415,
+  "text": "file",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 575,
+  "text": "file",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 715,
+  "text": "file",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1075,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1155,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1231,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1328,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1425,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1524,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1624,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1729,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1829,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 1916,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 2015,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 2127,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 2218,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 2309,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 2410,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 2692,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 3051,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 3179,
+  "remove": 1,
+  "text": "s",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 3446,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 3484,
+  "remove": 3,
+  "text": " ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 3642,
+  "remove": 5,
+  "text": "(o",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 3653,
+  "remove": 1,
+  "text": ": ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 3660,
+  "text": ".",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 3853,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 4135,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 4346,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCObject.swift",
+  "offset": 4391,
+  "remove": 3,
+  "text": " ",
+ }
+]

@@ -1,0 +1,16 @@
+version: "Apple Swift version 3.0 (swiftlang-800.0.46.2 clang-800.0.38)"
+options: "daf55fd4a0b25fecda0e42941b02da08"
+build_time: [527992258, 660538000]
+inputs:
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCUser.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCQuery.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCUpdateOperator.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCObject.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCOperator.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCUpdate.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCAPI.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/Utils.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCValue.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCAPIRouter.swift": [527992199, 0]
+  "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSC.swift": [527992199, 0]

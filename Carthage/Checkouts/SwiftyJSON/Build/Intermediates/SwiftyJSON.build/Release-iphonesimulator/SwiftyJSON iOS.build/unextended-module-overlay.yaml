@@ -1,0 +1,13 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': '/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/Carthage/Checkouts/SwiftyJSON/Build/Products/Release-iphonesimulator/SwiftyJSON.framework/Modules'
+    'contents': [{
+      'type': 'file',
+      'name': 'module.modulemap',
+      'external-contents': '/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/Carthage/Checkouts/SwiftyJSON/Build/Intermediates/SwiftyJSON.build/Release-iphonesimulator/SwiftyJSON iOS.build/unextended-module.modulemap',
+    }]
+  }]
+}

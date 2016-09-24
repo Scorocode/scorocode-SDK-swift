@@ -1,0 +1,97 @@
+[
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 227,
+  "text": "file",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 670,
+  "remove": 1,
+  "text": "self.e",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 681,
+  "remove": 5,
+  "text": "(d",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 696,
+  "remove": 1,
+  "text": ": ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1014,
+  "remove": 5,
+  "text": "(t",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1025,
+  "remove": 1,
+  "text": ": ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1121,
+  "remove": 1,
+  "text": "self.e",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1132,
+  "remove": 5,
+  "text": "(d",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1147,
+  "remove": 1,
+  "text": ": ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1465,
+  "remove": 5,
+  "text": "(t",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1476,
+  "remove": 1,
+  "text": ": ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1571,
+  "remove": 1,
+  "text": "self.e",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1582,
+  "remove": 5,
+  "text": "(d",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1597,
+  "remove": 1,
+  "text": ": ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1911,
+  "remove": 5,
+  "text": "(t",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SCTests/TestSCMessage.swift",
+  "offset": 1922,
+  "remove": 1,
+  "text": ": ",
+ }
+]

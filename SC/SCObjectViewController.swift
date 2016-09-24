@@ -15,32 +15,32 @@ class SCObjectViewController: UIViewController {
     
     var data: [String: AnyObject]?
     
-    @IBOutlet private weak var stringTextField: UITextField!
-    @IBOutlet private weak var doubleTextField: UITextField!
+    @IBOutlet fileprivate weak var stringTextField: UITextField!
+    @IBOutlet fileprivate weak var doubleTextField: UITextField!
     
-    @IBOutlet private weak var trashButton: UIBarButtonItem!
+    @IBOutlet fileprivate weak var trashButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
     }
     
-    private func configureView() {
+    fileprivate func configureView() {
         switch mode {
         case "New":
             print("New")
             navigationItem.rightBarButtonItem?.title = "Insert"
-            trashButton.enabled = false
+            trashButton.isEnabled = false
         case "Edit":
             print("Edit for \(objectId!)")
-            trashButton.enabled = true
+            trashButton.isEnabled = true
             getObjectForEdit()
         default:
             break
         }
     }
     
-    private func getObjectForEdit() {
+    fileprivate func getObjectForEdit() {
         SCObject.getById(objectId!, collection: "testcoll") {
             success, error, result in
             self.data = result!["0"] as? [String: AnyObject]
@@ -54,17 +54,17 @@ class SCObjectViewController: UIViewController {
         }
     }
     
-    @IBAction private func savePressed() {
+    @IBAction fileprivate func savePressed() {
         switch mode {
         case "New":
             
             var updateDic = [String: SCValue]()
             
             let obj = SCObject(collection: "testcoll")
-            if let string = stringTextField.text where string != "" {
+            if let string = stringTextField.text , string != "" {
                 updateDic["fieldString"] = SCString(string)
             }
-            if let num = doubleTextField.text where num != "" {
+            if let num = doubleTextField.text , num != "" {
                 updateDic["fieldNumber"] = SCDouble(Double(num)!)
             }
             updateDic["readACL"] = SCArray([SCString("*"), SCString("0123456789")])
@@ -72,13 +72,13 @@ class SCObjectViewController: UIViewController {
             obj.save() {
                 success, error, result in
                 if success {
-                    let alert = UIAlertController(title: "Успешно сохранено", message: nil, preferredStyle: .Alert)
-                    let ok = UIAlertAction(title: "OK", style: .Default) {
+                    let alert = UIAlertController(title: "Успешно сохранено", message: nil, preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default) {
                         action in
-                        self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popViewController(animated: true)
                     }
                     alert.addAction(ok)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 } else {
                     print(error)
                 }
@@ -88,23 +88,23 @@ class SCObjectViewController: UIViewController {
             let obj = SCObject(collection: "testcoll", id: objectId)
             var updateDic = [String: SCValue]()
             
-            if let string = stringTextField.text where string != "" {
+            if let string = stringTextField.text , string != "" {
                 updateDic["fieldString"] = SCString(string)
             }
-            if let num = doubleTextField.text where num != "" {
+            if let num = doubleTextField.text , num != "" {
                 updateDic["fieldNumber"] = SCDouble(Double(num)!)
             }
             obj.set(updateDic)
             obj.save() {
                 success, error, result in
                 if success {
-                    let alert = UIAlertController(title: "Успешно сохранено", message: nil, preferredStyle: .Alert)
-                    let ok = UIAlertAction(title: "OK", style: .Default) {
+                    let alert = UIAlertController(title: "Успешно сохранено", message: nil, preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default) {
                         action in
-                        self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popViewController(animated: true)
                     }
                     alert.addAction(ok)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
 
@@ -114,20 +114,20 @@ class SCObjectViewController: UIViewController {
         }
     }
     
-    @IBAction private func trashPressed() {
+    @IBAction fileprivate func trashPressed() {
         let obj = SCObject(collection: "testcoll", id: objectId)
         obj.remove() {
             success, error, result in
             if success {
                 if let removedDocs = result!["docs"] as? [String] {
                     if removedDocs.contains(self.objectId!) {
-                        let alert = UIAlertController(title: "Успешно удалено", message: nil, preferredStyle: .Alert)
-                        let ok = UIAlertAction(title: "OK", style: .Default) {
+                        let alert = UIAlertController(title: "Успешно удалено", message: nil, preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "OK", style: .default) {
                             action in
-                            self.navigationController?.popViewControllerAnimated(true)
+                            self.navigationController?.popViewController(animated: true)
                         }
                         alert.addAction(ok)
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             } else {

@@ -43,9 +43,9 @@ class TestSCValue: XCTestCase {
     }
     
     func testSCDate() {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let scDate = SCDate(dateFormatter.dateFromString("2016-05-31")!)
+        let scDate = SCDate(dateFormatter.date(from: "2016-05-31")!)
         XCTAssert((scDate.apiValue as! String) == "2016-05-30T21:00:00Z")
     }
     
@@ -98,10 +98,10 @@ class TestSCValue: XCTestCase {
     }
     
     func testEqualDate() {
-        let now = NSDate()
+        let now = Date()
         let v1 = SCDate(now)
         let v2 = SCDate(now)
-        let v3 = SCDate(now.dateByAddingTimeInterval(1))
+        let v3 = SCDate(now.addingTimeInterval(1))
         
         XCTAssertEqual(true, v1 == v2)
         XCTAssertNotEqual(true, v1 == v3)

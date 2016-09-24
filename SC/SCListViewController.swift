@@ -7,14 +7,34 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class SCListViewController: UIViewController {
 
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var searchField: UITextField!
+    @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var searchField: UITextField!
     
-    private var data = [[String: AnyObject]]()
-    private var selectedIndex = 0
+    fileprivate var data = [[String: AnyObject]]()
+    fileprivate var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,22 +45,22 @@ class SCListViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getObjects()
     }
     
-    private func getObjects() {
+    fileprivate func getObjects() {
         var query = SCQuery(collection: "testcoll")
         query.descending("createdAt")
-        if let search = searchField.text where search != "" {
+        if let search = searchField.text , search != "" {
             query.equalTo("fieldString", SCString(search))
         }
         query.find() {
             success, error, result in
             self.data.removeAll()
             let keys = result!.keys
-            let sortedKeys = keys.sort() {
+            let sortedKeys = keys.sorted() {
                 Double($1) > Double($0)
             }
             for key in sortedKeys {
@@ -50,26 +70,26 @@ class SCListViewController: UIViewController {
         }
     }
     
-    @IBAction private func addPressed() {
-        performSegueWithIdentifier("ToSingleObject", sender: "New")
+    @IBAction fileprivate func addPressed() {
+        performSegue(withIdentifier: "ToSingleObject", sender: "New")
     }
     
-    @IBAction private func refreshPressed() {
+    @IBAction fileprivate func refreshPressed() {
         getObjects()
     }
     
-    @IBAction private func logoutPressed() {
+    @IBAction fileprivate func logoutPressed() {
         SCUser.logout() {
             success, error in
             if success {
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToSingleObject" {
-            let vc = segue.destinationViewController as! SCObjectViewController
+            let vc = segue.destination as! SCObjectViewController
             let mode = sender as! String
             vc.mode = mode
             if mode == "Edit" {
@@ -81,22 +101,22 @@ class SCListViewController: UIViewController {
 
 extension SCListViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        selectedIndex = indexPath.row
-        performSegueWithIdentifier("ToSingleObject", sender: "Edit")
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        selectedIndex = (indexPath as NSIndexPath).row
+        performSegue(withIdentifier: "ToSingleObject", sender: "Edit")
     }
 }
 
 extension SCListViewController: UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ObjectCell", forIndexPath: indexPath)
-        let object = data[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ObjectCell", for: indexPath)
+        let object = data[(indexPath as NSIndexPath).row]
         var text = ""
         if let fieldString = object["fieldString"] as? String {
             text += fieldString
@@ -111,7 +131,7 @@ extension SCListViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44.0
     }
     

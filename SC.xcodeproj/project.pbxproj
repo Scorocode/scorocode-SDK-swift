@@ -22,8 +22,6 @@
 		34A2311C1CF444D200F5B9A8 /* SCSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2311B1CF444D200F5B9A8 /* SCSignupViewController.swift */; };
 		34A2311E1CF44F9600F5B9A8 /* SCListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2311D1CF44F9600F5B9A8 /* SCListViewController.swift */; };
 		34A231201CF4543F00F5B9A8 /* SCObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2311F1CF4543F00F5B9A8 /* SCObjectViewController.swift */; };
-		34AA50601CFB91E600633BF7 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AA505E1CFB91E600633BF7 /* Alamofire.framework */; };
-		34AA50611CFB91E600633BF7 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AA505F1CFB91E600633BF7 /* SwiftyJSON.framework */; };
 		34AA507A1CFB991700633BF7 /* BSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AA50791CFB991700633BF7 /* BSONSerialization.m */; };
 		34AA50861CFB994200633BF7 /* SC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA507C1CFB994200633BF7 /* SC.swift */; };
 		34AA50871CFB994200633BF7 /* SCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA507D1CFB994200633BF7 /* SCMessage.swift */; };
@@ -42,6 +40,8 @@
 		34EB67AC1CD1E3C20052A8D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34EB67AA1CD1E3C20052A8D3 /* Main.storyboard */; };
 		34EB67AE1CD1E3C20052A8D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EB67AD1CD1E3C20052A8D3 /* Assets.xcassets */; };
 		34EB67B11CD1E3C20052A8D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34EB67AF1CD1E3C20052A8D3 /* LaunchScreen.storyboard */; };
+		AD95D6431D9604C800D68C3A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD95D6411D9604C800D68C3A /* Alamofire.framework */; };
+		AD95D6441D9604C800D68C3A /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD95D6421D9604C800D68C3A /* SwiftyJSON.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,8 +73,6 @@
 		34A2311B1CF444D200F5B9A8 /* SCSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCSignupViewController.swift; sourceTree = "<group>"; };
 		34A2311D1CF44F9600F5B9A8 /* SCListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCListViewController.swift; sourceTree = "<group>"; };
 		34A2311F1CF4543F00F5B9A8 /* SCObjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCObjectViewController.swift; sourceTree = "<group>"; };
-		34AA505E1CFB91E600633BF7 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		34AA505F1CFB91E600633BF7 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = ../Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		34AA50781CFB991700633BF7 /* BSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONSerialization.h; sourceTree = "<group>"; };
 		34AA50791CFB991700633BF7 /* BSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONSerialization.m; sourceTree = "<group>"; };
 		34AA507C1CFB994200633BF7 /* SC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SC.swift; sourceTree = "<group>"; };
@@ -97,6 +95,8 @@
 		34EB67AD1CD1E3C20052A8D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34EB67B01CD1E3C20052A8D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34EB67B21CD1E3C20052A8D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD95D6411D9604C800D68C3A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
+		AD95D6421D9604C800D68C3A /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +111,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34AA50601CFB91E600633BF7 /* Alamofire.framework in Frameworks */,
-				34AA50611CFB91E600633BF7 /* SwiftyJSON.framework in Frameworks */,
+				AD95D6441D9604C800D68C3A /* SwiftyJSON.framework in Frameworks */,
+				AD95D6431D9604C800D68C3A /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,8 +122,8 @@
 		3420101C1CD1E6F900636F10 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				34AA505E1CFB91E600633BF7 /* Alamofire.framework */,
-				34AA505F1CFB91E600633BF7 /* SwiftyJSON.framework */,
+				AD95D6411D9604C800D68C3A /* Alamofire.framework */,
+				AD95D6421D9604C800D68C3A /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -278,15 +278,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Aleksandr Konakov";
 				TargetAttributes = {
 					347A8E3F1CE9C47F00A3A73C = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 34EB67A21CD1E3C20052A8D3;
 					};
 					34EB67A21CD1E3C20052A8D3 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -452,6 +454,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SCTests/SCTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SC.app/SC";
 			};
 			name = Debug;
@@ -471,6 +474,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.konakov.aleksandr.SCTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SCTests/SCTests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SC.app/SC";
 			};
 			name = Release;
@@ -489,8 +493,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -534,8 +540,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -554,6 +562,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -574,6 +583,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SC/SC-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -592,6 +602,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.konakov.aleksandr.SC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SC/SC-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -25,9 +25,9 @@ class TestSCUpdate: XCTestCase {
     func testOperators() {
         
         var update = SCUpdate()
-        let op1 = SCUpdateOperator.Push(name: "fieldName1", value: SCString("A"), each: false)
+        let op1 = SCUpdateOperator.push(name: "fieldName1", value: SCString("A"), each: false)
         update.addOperator(op1)
-        let op2 = SCUpdateOperator.Push(name: "fieldName2", value: SCString("b"), each: true)
+        let op2 = SCUpdateOperator.push(name: "fieldName2", value: SCString("b"), each: true)
         update.addOperator(op2)
         XCTAssertEqual(update.operators, [op1, op2])
     }
@@ -35,7 +35,7 @@ class TestSCUpdate: XCTestCase {
     func testAddOperator() {
         
         var update = SCUpdate()
-        let op1 = SCUpdateOperator.Push(name: "fieldName1", value: SCString("A"), each: false)
+        let op1 = SCUpdateOperator.push(name: "fieldName1", value: SCString("A"), each: false)
         update.addOperator(op1)
         XCTAssertEqual(update.operators.last!, op1)
     }
@@ -43,13 +43,13 @@ class TestSCUpdate: XCTestCase {
     func testSet() {
         var update = SCUpdate()
         update.set(["fieldName": SCString("A")])
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Set(["fieldName": SCString("A")]))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.set(["fieldName": SCString("A")]))
     }
     
     func testPush() {
         var update = SCUpdate()
         update.push("fieldName", SCString("A"))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Push(name: "fieldName", value: SCString("A"), each: false))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.push(name: "fieldName", value: SCString("A"), each: false))
     }
     
     func testPushEach() {
@@ -59,7 +59,7 @@ class TestSCUpdate: XCTestCase {
         XCTAssertEqual(update.operators, [SCUpdateOperator]())
         
         update.pushEach("fieldName", SCArray([SCString("A")]))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Push(name: "fieldName", value: SCArray([SCString("A")]), each: true))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.push(name: "fieldName", value: SCArray([SCString("A")]), each: true))
     }
     
     // TODO: Pull
@@ -67,7 +67,7 @@ class TestSCUpdate: XCTestCase {
         var update = SCUpdate()
         
         update.pull("fieldName", SCString("A"))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Pull("fieldName", SCString("A")))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.pull("fieldName", SCString("A")))
     }
     
     func testPullAll() {
@@ -77,19 +77,19 @@ class TestSCUpdate: XCTestCase {
         XCTAssertEqual(update.operators, [SCUpdateOperator]())
         
         update.pullAll("fieldName", SCArray([SCString("A")]))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.PullAll("fieldName", SCArray([SCString("A")])))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.pullAll("fieldName", SCArray([SCString("A")])))
     }
     
     func testAddToSet() {
         var update = SCUpdate()
         update.addToSet("fieldName", SCString("A"))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.AddToSet(name: "fieldName", value: SCString("A"), each: false))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.addToSet(name: "fieldName", value: SCString("A"), each: false))
     }
     
     func testAddToSetEach() {
         var update = SCUpdate()
         update.addToSetEach("fieldName", SCString("A"))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.AddToSet(name: "fieldName", value: SCString("A"), each: true))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.addToSet(name: "fieldName", value: SCString("A"), each: true))
     }
     
     func testPop() {
@@ -99,7 +99,7 @@ class TestSCUpdate: XCTestCase {
         XCTAssertEqual(update.operators, [SCUpdateOperator]())
         
         update.pop("fieldName", 1)
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Pop("fieldName", 1))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.pop("fieldName", 1))
     }
     
     func testInc() {
@@ -109,7 +109,7 @@ class TestSCUpdate: XCTestCase {
         XCTAssertEqual(update.operators, [SCUpdateOperator]())
         
         update.inc("fieldName", SCInt(1))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Inc("fieldName", SCInt(1)))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.inc("fieldName", SCInt(1)))
     }
     
     func testCurrentDate() {
@@ -119,7 +119,7 @@ class TestSCUpdate: XCTestCase {
         XCTAssertEqual(update.operators, [SCUpdateOperator]())
         
         update.currentDate("fieldName", typeSpec: "date")
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.CurrentDate("fieldName", "date"))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.currentDate("fieldName", "date"))
     }
     
     func testMul() {
@@ -129,21 +129,21 @@ class TestSCUpdate: XCTestCase {
         XCTAssertEqual(update.operators, [SCUpdateOperator]())
         
         update.mul("fieldName", SCInt(5))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Mul("fieldName", SCInt(5)))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.mul("fieldName", SCInt(5)))
     }
     
     func testMin() {
         var update = SCUpdate()
         
         update.min("fieldName", SCInt(5))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Min("fieldName", SCInt(5)))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.min("fieldName", SCInt(5)))
     }
     
     func testMax() {
         var update = SCUpdate()
         
         update.max("fieldName", SCInt(5))
-        XCTAssertEqual(update.operators.last!, SCUpdateOperator.Max("fieldName", SCInt(5)))
+        XCTAssertEqual(update.operators.last!, SCUpdateOperator.max("fieldName", SCInt(5)))
     }
     
     

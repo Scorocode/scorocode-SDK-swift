@@ -10,9 +10,9 @@ import UIKit
 
 class SCSignupViewController: UIViewController {
 
-    @IBOutlet private weak var usernameTextField: UITextField!
-    @IBOutlet private weak var emailTextField: UITextField!
-    @IBOutlet private weak var passwordTextField: UITextField!
+    @IBOutlet fileprivate weak var usernameTextField: UITextField!
+    @IBOutlet fileprivate weak var emailTextField: UITextField!
+    @IBOutlet fileprivate weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,17 +20,17 @@ class SCSignupViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBAction private func signupPressed() {
-        guard let email = emailTextField.text where email != "",
-            let password = passwordTextField.text where password != "",
-        let username = usernameTextField.text where username != "" else {
-                let alert = UIAlertController(title: "Регистрация невозможна", message: "Не указан email, пароль или имя пользователя", preferredStyle: .Alert)
-                let ok = UIAlertAction(title: "OK", style: .Default) {
+    @IBAction fileprivate func signupPressed() {
+        guard let email = emailTextField.text , email != "",
+            let password = passwordTextField.text , password != "",
+        let username = usernameTextField.text , username != "" else {
+                let alert = UIAlertController(title: "Регистрация невозможна", message: "Не указан email, пароль или имя пользователя", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default) {
                     action in
                     return
                 }
                 alert.addAction(ok)
-                presentViewController(alert, animated: true, completion: nil)
+                present(alert, animated: true, completion: nil)
                 return
         }
         
@@ -38,33 +38,33 @@ class SCSignupViewController: UIViewController {
         user.signup(username, email: email, password: password) {
             success, error, result in
             if success {
-                let alert = UIAlertController(title: "Пользователь зарегистрирован", message: nil, preferredStyle: .Alert)
-                let ok = UIAlertAction(title: "OK", style: .Default) {
+                let alert = UIAlertController(title: "Пользователь зарегистрирован", message: nil, preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default) {
                     action in
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
                 alert.addAction(ok)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             } else {
                 var message = ""
                 switch error! {
-                case .API(_, let apiMessage):
+                case .api(_, let apiMessage):
                     message = apiMessage
                 default:
                     break
                 }
-                let alert = UIAlertController(title: "Ошибка при регистрации", message: message, preferredStyle: .Alert)
-                let ok = UIAlertAction(title: "OK", style: .Default) {
+                let alert = UIAlertController(title: "Ошибка при регистрации", message: message, preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default) {
                     action in
                 }
                 alert.addAction(ok)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction private func cancelPressed() {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction fileprivate func cancelPressed() {
+        dismiss(animated: true, completion: nil)
     }
 
 }

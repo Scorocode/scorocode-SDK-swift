@@ -1,0 +1,44 @@
+[
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/AppDelegate.swift",
+  "offset": 286,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/AppDelegate.swift",
+  "offset": 360,
+  "remove": 8,
+  "text": "UIApplicationLaunchOptionsKey",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/AppDelegate.swift",
+  "offset": 372,
+  "remove": 7,
+  "text": "y",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/AppDelegate.swift",
+  "offset": 825,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/AppDelegate.swift",
+  "offset": 1343,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/AppDelegate.swift",
+  "offset": 1781,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/AppDelegate.swift",
+  "offset": 2012,
+  "text": "_ ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/AppDelegate.swift",
+  "offset": 2278,
+  "text": "_ ",
+ }
+]
