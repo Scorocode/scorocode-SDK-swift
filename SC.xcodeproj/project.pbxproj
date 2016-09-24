@@ -40,8 +40,8 @@
 		34EB67AC1CD1E3C20052A8D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34EB67AA1CD1E3C20052A8D3 /* Main.storyboard */; };
 		34EB67AE1CD1E3C20052A8D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34EB67AD1CD1E3C20052A8D3 /* Assets.xcassets */; };
 		34EB67B11CD1E3C20052A8D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34EB67AF1CD1E3C20052A8D3 /* LaunchScreen.storyboard */; };
-		AD95D6431D9604C800D68C3A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD95D6411D9604C800D68C3A /* Alamofire.framework */; };
-		AD95D6441D9604C800D68C3A /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD95D6421D9604C800D68C3A /* SwiftyJSON.framework */; };
+		AD95D6471D96063B00D68C3A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD95D6451D96063B00D68C3A /* Alamofire.framework */; };
+		AD95D6481D96063B00D68C3A /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD95D6461D96063B00D68C3A /* SwiftyJSON.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,8 +95,8 @@
 		34EB67AD1CD1E3C20052A8D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34EB67B01CD1E3C20052A8D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34EB67B21CD1E3C20052A8D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AD95D6411D9604C800D68C3A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
-		AD95D6421D9604C800D68C3A /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = "<group>"; };
+		AD95D6451D96063B00D68C3A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
+		AD95D6461D96063B00D68C3A /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +111,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD95D6441D9604C800D68C3A /* SwiftyJSON.framework in Frameworks */,
-				AD95D6431D9604C800D68C3A /* Alamofire.framework in Frameworks */,
+				AD95D6481D96063B00D68C3A /* SwiftyJSON.framework in Frameworks */,
+				AD95D6471D96063B00D68C3A /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,8 +122,8 @@
 		3420101C1CD1E6F900636F10 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD95D6411D9604C800D68C3A /* Alamofire.framework */,
-				AD95D6421D9604C800D68C3A /* SwiftyJSON.framework */,
+				AD95D6451D96063B00D68C3A /* Alamofire.framework */,
+				AD95D6461D96063B00D68C3A /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
