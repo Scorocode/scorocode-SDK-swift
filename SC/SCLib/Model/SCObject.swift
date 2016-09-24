@@ -112,14 +112,14 @@ class SCObject {
         _update.max(name, value)
     }
     
-    class func getById(_ id: String, collection: String, callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    class func getById(_ id: String, collection: String, callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         
         var query = SCQuery(collection: collection)
         query.equalTo("_id", SCString(id))
         SCAPI.sharedInstance.find(query, callback: callback)
     }
     
-    func save(_ callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    func save(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         if _id != nil && _update.operators.count > 0 {
             SCAPI.sharedInstance.updateById(self, callback: callback)
         } else {
@@ -128,7 +128,7 @@ class SCObject {
     }
     
     // Удаляет текущий документ
-    func remove(_ callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    func remove(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         guard _id != nil else {
             callback(false, SCError.system("Id не заполнен"), nil)
             return
@@ -139,7 +139,7 @@ class SCObject {
         SCAPI.sharedInstance.remove(query, callback: callback)
     }
     
-    func upload(_ field: String, filename: String, data: Data, callback: (Bool, SCError?) -> Void) {
+    func upload(_ field: String, filename: String, data: Data, callback: @escaping (Bool, SCError?) -> Void) {
         
         guard let id = _id else { return }
         
@@ -147,7 +147,7 @@ class SCObject {
         SCAPI.sharedInstance.upload(field, filename: filename, data: encodedData, docId: id, collection: collection, callback: callback)
     }
     
-    func deleteFile(_ field: String, filename: String, callback: (Bool, SCError?) -> Void) {
+    func deleteFile(_ field: String, filename: String, callback: @escaping (Bool, SCError?) -> Void) {
         
         guard let id = _id else { return }
         
@@ -158,7 +158,7 @@ class SCObject {
         SCAPI.sharedInstance.getFile(self.collection, field: field, filename: filename, callback: callback)
     }
     
-    func getFileLink(_ fieldName: String, callback: (Bool, SCError?, URL?) -> Void) {
+    func getFileLink(_ fieldName: String, callback: @escaping (Bool, SCError?, URL?) -> Void) {
         if let filename = get(fieldName) as? String {
             SCAPI.sharedInstance.getFileLink(_collection, fieldName: fieldName, filename: filename, callback: callback)
         }

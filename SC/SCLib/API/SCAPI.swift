@@ -60,7 +60,7 @@ class SCAPI {
         body[kEmail] = email
         body[kPassword] = password
         
-        Alamofire.request(SCAPIRouter.login(body)).responseJSON() {
+        Alamofire.request(SCAPIRouter.login(body as [String : AnyObject])).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
                 print(responseJSON.result.error)
@@ -69,13 +69,13 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     let result = response["result"].dictionaryValue
                     if let sessionId = result["sessionId"] {
                         self.sessionId = sessionId.stringValue
-                        callback(true, nil, response["result"].dictionaryObject)
+                        callback(true, nil, response["result"].dictionaryObject as [String : AnyObject]?)
                     }
                 } else {
                     callback(false, self.makeError(response), nil)
@@ -92,7 +92,7 @@ class SCAPI {
         body[kClientKey] = clientId
         body[kSessionId] = sessionId
         
-        Alamofire.request(SCAPIRouter.logout(body)).responseJSON() {
+        Alamofire.request(SCAPIRouter.logout(body as [String : AnyObject])).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
                 print(responseJSON.result.error)
@@ -101,7 +101,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     callback(true, nil)
@@ -131,10 +131,10 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+                    callback(true, nil, response["result"].dictionaryObject as [String : AnyObject]?)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }
@@ -172,11 +172,11 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 
                 if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+                    callback(true, nil, response["result"].dictionaryObject as [String : AnyObject]?)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }
@@ -207,10 +207,10 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+                    callback(true, nil, response["result"].dictionaryObject as [String : AnyObject]?)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }
@@ -238,10 +238,10 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+                    callback(true, nil, response["result"].dictionaryObject as [String : AnyObject]?)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }
@@ -269,11 +269,11 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     let result = response["result"].dictionaryObject
-                    callback(true, nil, result)
+                    callback(true, nil, result as [String : AnyObject]?)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }
@@ -317,7 +317,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     let base64String = response["result"].stringValue
@@ -351,7 +351,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     callback(true, nil, response["result"].intValue)
@@ -398,10 +398,10 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
-                    callback(true, nil, response["result"].URL)
+                    callback(true, nil, response["result"].URL as URL?)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }
@@ -432,7 +432,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     callback(true, nil)
@@ -464,7 +464,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     callback(true, nil)
@@ -497,7 +497,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     callback(true, nil, response["count"].intValue)
@@ -528,7 +528,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     callback(true, nil, response["count"].intValue)
@@ -559,7 +559,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     callback(true, nil, response["count"].intValue)
@@ -590,7 +590,7 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     callback(true, nil)
@@ -616,10 +616,10 @@ class SCAPI {
                 return
             }
             
-            if let responseValue: AnyObject = responseJSON.result.value {
+            if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+                    callback(true, nil, response["result"].dictionaryObject as [String : AnyObject]?)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }

@@ -10,7 +10,7 @@ import Foundation
 
 struct SCScript {
     
-    static func run(_ scriptId: String, pool: [String: AnyObject], callback: (Bool, SCError?) -> Void) {
+    static func run(_ scriptId: String, pool: [String: AnyObject], callback: @escaping (Bool, SCError?) -> Void) {
         
         SCAPI.sharedInstance.scripts(scriptId, pool: pool, callback: callback)
     }

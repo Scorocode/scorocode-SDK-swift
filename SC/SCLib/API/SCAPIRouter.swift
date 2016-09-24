@@ -11,6 +11,15 @@ import Alamofire
 import SwiftyJSON
 
 enum SCAPIRouter: URLRequestConvertible {
+  /// Returns a URL request or throws if an `Error` was encountered.
+  ///
+  /// - throws: An `Error` if the underlying `URLRequest` is `nil`.
+  ///
+  /// - returns: A URL request.
+  public func asURLRequest() throws -> URLRequest {
+    
+  }
+
     
     fileprivate static let baseURLString = "https://api.scorocode.ru/api/v1/"
     
