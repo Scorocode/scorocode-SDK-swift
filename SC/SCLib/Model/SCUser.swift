@@ -15,19 +15,19 @@ class SCUser: SCObject {
     }
     
     // Аутентификация пользователя приложения
-    func login(_ email: String, password: String, callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    func login(_ email: String, password: String, callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         
         SCAPI.sharedInstance.login(email, password: password, callback: callback)
     }
     
     // Завершение активной сессии пользователя
-    static func logout(_ callback: (Bool, SCError?) -> Void) {
+    static func logout(_ callback: @escaping (Bool, SCError?) -> Void) {
         
         SCAPI.sharedInstance.logout(callback)
     }
     
     // Метод для регистрации нового пользователя в приложении. Поля устанавливаются методами родительского класса Object.
-    func signup(_ callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    func signup(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         guard let username = get("username") as? String,
             let email = get("email") as? String,
             let password = get("password") as? String else { return }
@@ -35,7 +35,7 @@ class SCUser: SCObject {
         signup(username, email: email, password: password, callback: callback)
     }
     
-    func signup(_ username: String, email: String, password: String, callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    func signup(_ username: String, email: String, password: String, callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         
         SCAPI.sharedInstance.register(username, email: email, password: password, callback: callback)
     }

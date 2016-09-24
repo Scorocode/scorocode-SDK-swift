@@ -6,39 +6,43 @@
 	<dict>
 		<key>Frameworks/Alamofire.framework/Alamofire</key>
 		<data>
-		rg5MiF5pBjIqmdRmvpBABlewAoU=
+		DIp4iBGJxKUSrd+r/6lnkjB4piE=
 		</data>
 		<key>Frameworks/Alamofire.framework/Info.plist</key>
 		<data>
-		Lh4rTP86g0olNuvSdWvfsTG1meg=
+		Pl2qIAPolmXnjA+St7NF5VkUs7Y=
 		</data>
 		<key>Frameworks/Alamofire.framework/_CodeSignature/CodeResources</key>
 		<data>
-		WIFx+YT/fYLuFFSJUO9ccjEioJk=
+		J0uwGxj5p4xUP/UzGR4KPnJq58w=
 		</data>
 		<key>Frameworks/libswiftCore.dylib</key>
 		<data>
-		tZdJVndxjIkYvyBk4UrZ2dqw0Jo=
+		LF41Uh0Sp4L1Z3yICK12sjRbUjs=
 		</data>
 		<key>Frameworks/libswiftCoreGraphics.dylib</key>
 		<data>
-		DZVMlCbQnVGlHW9Ke0pyBqtCIq4=
+		GiTlUYKtNaSb4tIeIPM1luUQKhI=
 		</data>
 		<key>Frameworks/libswiftDarwin.dylib</key>
 		<data>
-		5EEldCxrNyZ/WenxMNMrmwzdVEU=
+		JI9mWSWbrNTAgmEGtAHcrKH3nfs=
 		</data>
 		<key>Frameworks/libswiftDispatch.dylib</key>
 		<data>
-		1rcA7rm15eWIuzOujaRK3wGrGew=
+		n3BulE7mkUZ+qQ2lnIm/7/pcf5g=
 		</data>
 		<key>Frameworks/libswiftFoundation.dylib</key>
 		<data>
-		fa2azBu+FobblfFip72eAzdVJYM=
+		uF/sF/xbjxlaAhjVX8hawYPUcik=
 		</data>
 		<key>Frameworks/libswiftObjectiveC.dylib</key>
 		<data>
-		zLbAgtsurQXKqPbqNiCjKbezv24=
+		4sQ5ITCtBahH9Q58pH53rQ/5vfo=
+		</data>
+		<key>Frameworks/libswiftos.dylib</key>
+		<data>
+		3pGIqKcGBe5aYb7UlzMBucLGukM=
 		</data>
 		<key>libswiftRemoteMirror.dylib</key>
 		<data>
@@ -51,99 +55,110 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			rg5MiF5pBjIqmdRmvpBABlewAoU=
+			DIp4iBGJxKUSrd+r/6lnkjB4piE=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZOstJ2/AwoNeKa7WF1nO8JgWbVolCVo6+96rD+OLybM=
+			Ax3NrFFRw5/fzYf0NW9UhzNvWnVRxuHj1qWixN6zTvo=
 			</data>
 		</dict>
 		<key>Frameworks/Alamofire.framework/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Lh4rTP86g0olNuvSdWvfsTG1meg=
+			Pl2qIAPolmXnjA+St7NF5VkUs7Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			xQXmxWyNMz9PPfU6HuckIqUqtANdIU2qcOLUJ73eqUA=
+			HGCgOxf8dzRrs2YDnRUlSkDD3oLGkIDmVDgEzHkd3qw=
 			</data>
 		</dict>
 		<key>Frameworks/Alamofire.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			WIFx+YT/fYLuFFSJUO9ccjEioJk=
+			J0uwGxj5p4xUP/UzGR4KPnJq58w=
 			</data>
 			<key>hash2</key>
 			<data>
-			s4czu2L/paYSXxfkzuxlxgKSEOpsLttFPTA7nZ3ULE4=
+			IsD9D2YW6kf9TiyU/KI2JKnj1GiU6bN2QM8Z0OWOiEo=
 			</data>
 		</dict>
 		<key>Frameworks/libswiftCore.dylib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			tZdJVndxjIkYvyBk4UrZ2dqw0Jo=
+			LF41Uh0Sp4L1Z3yICK12sjRbUjs=
 			</data>
 			<key>hash2</key>
 			<data>
-			xyQwzEpbT7wEOHtnxQVVyR3gV6HLBlIsD2sqcTpvgjA=
+			PZgl7551/w0mzGRapHf+JXuFQ6G1jX3jxFhrO+SHjCI=
 			</data>
 		</dict>
 		<key>Frameworks/libswiftCoreGraphics.dylib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			DZVMlCbQnVGlHW9Ke0pyBqtCIq4=
+			GiTlUYKtNaSb4tIeIPM1luUQKhI=
 			</data>
 			<key>hash2</key>
 			<data>
-			AFbK012YF5fberFzfP8E/6WcD2tU/spR17Q6a6G8+qI=
+			AljusE8LQqIa6xN4+H9bg3See3hL8zQybuGdrQpaX0s=
 			</data>
 		</dict>
 		<key>Frameworks/libswiftDarwin.dylib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5EEldCxrNyZ/WenxMNMrmwzdVEU=
+			JI9mWSWbrNTAgmEGtAHcrKH3nfs=
 			</data>
 			<key>hash2</key>
 			<data>
-			/nQX86aLUdgxaJ+tzzNFDBKuqcXEehpORjf46jJ4duM=
+			MMzPVQ5XO5Dh0+LDlfKc3NZFJRL+t9eEeu6DAT81Z7U=
 			</data>
 		</dict>
 		<key>Frameworks/libswiftDispatch.dylib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1rcA7rm15eWIuzOujaRK3wGrGew=
+			n3BulE7mkUZ+qQ2lnIm/7/pcf5g=
 			</data>
 			<key>hash2</key>
 			<data>
-			hlr75lI5fqybQSNbXAjpYP9lJTUf83T7LDnf3JtpNrU=
+			/suKCuGzuAoGv8MD/0uTTyTCKBcg9Uh6hHUcyEPV08g=
 			</data>
 		</dict>
 		<key>Frameworks/libswiftFoundation.dylib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			fa2azBu+FobblfFip72eAzdVJYM=
+			uF/sF/xbjxlaAhjVX8hawYPUcik=
 			</data>
 			<key>hash2</key>
 			<data>
-			sIP9yJYq3S8YYAd/YSIP9H82uriwffCfX3dLJh7T1jw=
+			qqzDRv8cKKOFiAPagp3QxzFXpSrM9hxIoEjI5H982SM=
 			</data>
 		</dict>
 		<key>Frameworks/libswiftObjectiveC.dylib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zLbAgtsurQXKqPbqNiCjKbezv24=
+			4sQ5ITCtBahH9Q58pH53rQ/5vfo=
 			</data>
 			<key>hash2</key>
 			<data>
-			CsvagfBlOdzds6mvS6tTTaVBLksiRzz/RvMr36CPKqE=
+			5TNbgkrV4vReZbfZZ5TgmjRbWXS87koPZsuUJhlY60g=
+			</data>
+		</dict>
+		<key>Frameworks/libswiftos.dylib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			3pGIqKcGBe5aYb7UlzMBucLGukM=
+			</data>
+			<key>hash2</key>
+			<data>
+			LtcKRthlwopiSpRsPPza7t7nRkfzLry8PHNzyeHDJX8=
 			</data>
 		</dict>
 		<key>libswiftRemoteMirror.dylib</key>
