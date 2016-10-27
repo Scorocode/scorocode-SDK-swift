@@ -7,11 +7,10 @@
 //
 
 import Foundation
-//import SwiftyJSON
+import SwiftyJSON
 
 public enum SCUpdateOperator: Equatable {
-    
-//    case Set(String, SCValue)
+  
     case set([String: SCValue])
     case push(name: String, value: SCValue, each: Bool)
     case pull(String, SCPullable)
@@ -54,9 +53,6 @@ public enum SCUpdateOperator: Equatable {
     public var dic: AnyObject {
         
         switch self {
-            
-//        case .Set(let name, let value):
-//            return [name : value.apiValue]
         case .set(let dic):
             var result = [String: AnyObject]()
             for (name, value) in dic {
@@ -64,7 +60,6 @@ public enum SCUpdateOperator: Equatable {
             }
             return result as AnyObject
 
-        // TODO: $sort, $slice, $position
         case .push(let name, let value, let each):
             if !each {
                 return [name : value.apiValue] as AnyObject
@@ -116,16 +111,13 @@ public enum SCUpdateOperator: Equatable {
 
 public func ==(lhs: SCUpdateOperator, rhs: SCUpdateOperator) -> Bool {
     switch (lhs, rhs) {
-        
-//    case (let SCUpdateOperator.Set(name1, v1), let SCUpdateOperator.Set(name2, v2)):
-//        return name1 == name2 && v1 == v2
+      
     case (let SCUpdateOperator.set(dic1), let SCUpdateOperator.set(dic2)):
         return dic1 == dic2
         
     case (let SCUpdateOperator.push(name1, v1, each1), let SCUpdateOperator.push(name2, v2, each2)):
         return name1 == name2 && v1 == v2 && each1 == each2
 
-        // TODO: Pull
     case (let SCUpdateOperator.pull(name1, v1), let SCUpdateOperator.pull(name2, v2)):
         if name1 != name2 { return false }
         
