@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 public enum SCError {
     case system(String)
@@ -393,7 +394,7 @@ open class SCAPI {
             if let responseValue: AnyObject = responseJSON.result.value as AnyObject? {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
-                    callback(true, nil, response["result"].URL)
+                    callback(true, nil, response["result"].URL as URL?)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }

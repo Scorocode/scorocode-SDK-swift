@@ -75,7 +75,7 @@ class SCObjectViewController: UIViewController {
                     let alert = UIAlertController(title: "Успешно сохранено", message: nil, preferredStyle: .alert)
                     let ok = UIAlertAction(title: "OK", style: .default) {
                         action in
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                     alert.addAction(ok)
                     self.present(alert, animated: true, completion: nil)
@@ -101,7 +101,7 @@ class SCObjectViewController: UIViewController {
                     let alert = UIAlertController(title: "Успешно сохранено", message: nil, preferredStyle: .alert)
                     let ok = UIAlertAction(title: "OK", style: .default) {
                         action in
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                     alert.addAction(ok)
                     self.present(alert, animated: true, completion: nil)
@@ -124,7 +124,7 @@ class SCObjectViewController: UIViewController {
                         let alert = UIAlertController(title: "Успешно удалено", message: nil, preferredStyle: .alert)
                         let ok = UIAlertAction(title: "OK", style: .default) {
                             action in
-                            self.navigationController?.popViewController(animated: true)
+                            _ = self.navigationController?.popViewController(animated: true)
                         }
                         alert.addAction(ok)
                         self.present(alert, animated: true, completion: nil)
