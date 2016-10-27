@@ -8,18 +8,8 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 
-enum SCAPIRouter: URLRequestConvertible {
-  /// Returns a URL request or throws if an `Error` was encountered.
-  ///
-  /// - throws: An `Error` if the underlying `URLRequest` is `nil`.
-  ///
-  /// - returns: A URL request.
-  public func asURLRequest() throws -> URLRequest {
-    
-  }
-
+public enum SCAPIRouter: URLRequestConvertible {
     
     fileprivate static let baseURLString = "https://api.scorocode.ru/api/v1/"
     
@@ -42,39 +32,38 @@ enum SCAPIRouter: URLRequestConvertible {
     case scripts([String: AnyObject])
     case stat([String: AnyObject])
     
-    var URLRequest: NSMutableURLRequest {
-        
-        var method: Alamofire.Method {
-        
+    public func asURLRequest() throws -> URLRequest {
+        var method: Alamofire.HTTPMethod {
+            
             switch self {
                 
-            case .login: return .POST
-            case .logout: return .POST
-            case .register: return .POST
+            case .login: return .post
+            case .logout: return .post
+            case .register: return .post
                 
-            case .insert: return .POST
-            case .remove: return .POST
-            case .update: return .POST
-            case .updateById: return .POST
-            case .find: return .POST
-            case .count: return .POST
+            case .insert: return .post
+            case .remove: return .post
+            case .update: return .post
+            case .updateById: return .post
+            case .find: return .post
+            case .count: return .post
                 
-            case .upload: return .POST
-            case .deleteFile: return .POST
-            case .getFile: return .GET
-            case .getFileLink: return .POST
+            case .upload: return .post
+            case .deleteFile: return .post
+            case .getFile: return .get
+            case .getFileLink: return .post
                 
-            case .sendEmail: return .POST
-            case .sendPush: return .POST
-            case .sendSms: return .POST
+            case .sendEmail: return .post
+            case .sendPush: return .post
+            case .sendSms: return .post
                 
-            case .scripts: return .POST
+            case .scripts: return .post
                 
-            case .stat: return .POST
+            case .stat: return .post
             }
         }
         
-        let result: (path: String, parameters: [String: AnyObject]?) = {
+        let result: (path: String, parameters: [String: Any]?) = {
             switch self {
                 
             case .login(let body):
@@ -135,20 +124,19 @@ enum SCAPIRouter: URLRequestConvertible {
         
         let baseURL = Foundation.URL(string: SCAPIRouter.baseURLString)
         let URL = Foundation.URL(string: result.path, relativeTo: baseURL)
-        let URLRequest = NSMutableURLRequest(url: URL!)
-        URLRequest.setValue(String("application/json"), forHTTPHeaderField: "Content-Type")
+        var request = Foundation.URLRequest(url: URL!)
+        request.setValue(String("application/json"), forHTTPHeaderField: "Content-Type")
         
-        let encoding = method == Alamofire.Method.POST ? Alamofire.ParameterEncoding.json : Alamofire.ParameterEncoding.url
-        let (encodedRequest, _) = encoding.encode(URLRequest, parameters: result.parameters)
-        
-        encodedRequest.httpMethod = method.rawValue
-        
-        if let httpBody = encodedRequest.httpBody {
-            let s = String(data: httpBody, encoding: String.Encoding.utf8)
-            print(s)
+        let encoding: ParameterEncoding = method == Alamofire.HTTPMethod.post ? Alamofire.JSONEncoding.default : Alamofire.URLEncoding.default
+        do {
+            var encodedRequest = try? encoding.encode(request, with: result.parameters! )
+            encodedRequest?.httpMethod = method.rawValue
+            if let httpBody = encodedRequest?.httpBody {
+                let s = String(data: httpBody, encoding: String.Encoding.utf8)
+                print(s)
+            }
+            return encodedRequest!
         }
-        
-        return encodedRequest
     }
-    
+  
 }

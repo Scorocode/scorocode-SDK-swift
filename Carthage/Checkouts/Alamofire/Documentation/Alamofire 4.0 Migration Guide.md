@@ -189,7 +189,7 @@ let destination: Request.DownloadFileDestination = { _, _ in
 }
 let parameters: Parameters = ["foo": "bar"]
 
-Alamofire.download(urlString, method: .get, parameters: parameters, encoding: JSONEncoding.default)
+Alamofire.download(urlString, method: .get, parameters: parameters, encoding: JSONEncoding.default, to: destination)
 	.downloadProgress(queue: DispatchQueue.utility) { progress in
 		print("Progress: \(progress.fractionCompleted)")
 	}
@@ -441,7 +441,7 @@ It's important to note that these APIs are only available on iOS and tvOS 10+ an
 
 ```swift
 Alamofire.request(urlString).response { response in
-    if #available(iOS 10.0. *) {
+    if #available(iOS 10.0, *) {
 		debugPrint(response.metrics)
     }
 }
@@ -453,7 +453,7 @@ Alamofire.request(urlString).response { response in
 
 ## Updated Features
 
-Alamofire 4 contains many new features and enhancments on existing ones. This section is designed to give a brief overview of the features and demonstrate their uses. For more information on each each, please refer to the linked pull request.
+Alamofire 4 contains many new features and enhancements on existing ones. This section is designed to give a brief overview of the features and demonstrate their uses. For more information on each each, please refer to the linked pull request.
 
 ### Errors
 

@@ -7,90 +7,89 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-struct SCQuery {
+public struct SCQuery {
     
     fileprivate let _collection: String
-    var collection: String {
+    public var collection: String {
         return _collection
     }
     
     fileprivate var _userQuery: [String: AnyObject]?
-    var userQuery: [String: AnyObject]? {
+    public var userQuery: [String: AnyObject]? {
         return _userQuery
     }
     
     fileprivate var _operators: [String: SCOperator]?
-    var operators: [String: SCOperator]? {
+    public var operators: [String: SCOperator]? {
         return _operators
     }
     
     fileprivate var _andOr: SCOperator?
-    var andOr: SCOperator? {
+    public var andOr: SCOperator? {
         return _andOr
     }
     
     fileprivate var _limit: Int?
-    var limit: Int? {
+    public var limit: Int? {
         return _limit
     }
     
     fileprivate var _skip: Int?
-    var skip: Int? {
+    public var skip: Int? {
         return _skip
     }
     
     fileprivate var _sort: [String: Int]?
-    var sort: [String: Int]? {
+    public var sort: [String: Int]? {
         return _sort
     }
     
     fileprivate var _fields: [String]?
-    var fields: [String]? {
+    public var fields: [String]? {
         return _fields
     }
         
-    init(collection: String) {
+    public init(collection: String) {
         self._collection = collection
     }
     
     // Поиск документов, на основе сформированного условия выборки. Возвращает ошибку или массив документов.
-    func find(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    public func find(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
 
         SCAPI.sharedInstance.find(self, callback: callback)
     }
     
     // Подсчет количества документов в коллекции согласно условию выборки.
-    func count(_ callback: @escaping (Bool, SCError?, Int?) -> Void) {
+    public func count(_ callback: @escaping (Bool, SCError?, Int?) -> Void) {
         
         SCAPI.sharedInstance.count(self, callback: callback)
     }
     
     // Обновляет документы соответствующие условию выборки.
-    func update(_ update: SCUpdate, callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    public func update(_ update: SCUpdate, callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         
         SCAPI.sharedInstance.update(self, update: update, callback: callback)
     }
     
     // Удаляет документы соответствующие условию выборки.
-    func remove(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    public func remove(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         
         SCAPI.sharedInstance.remove(self, callback: callback)
     }
     
     // Устанавливает лимит выборки (параметр limit протокола).
-    mutating func limit(_ limit: Int) {
+    public mutating func limit(_ limit: Int) {
         _limit = limit
     }
     
     // Метод для установки количества пропускаемых документов (параметр skip протокола).
-    mutating func skip(_ skip: Int) {
+    public mutating func skip(_ skip: Int) {
         _skip = skip
     }
     
     // Метод для рассчета skip, соответствующего номеру страницы на основе установленного значения limit.
-    mutating func page(_ page: Int) {
+    public mutating func page(_ page: Int) {
         guard page > 0 else { return }
         if let limit = _limit {
             _skip = (page - 1) * limit
@@ -100,7 +99,7 @@ struct SCQuery {
     }
     
     // Установка пользовательского условия выборки
-    mutating func raw(_ json: String) {
+    public mutating func raw(_ json: String) {
         
         if let dataFromString = json.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             let json = JSON(data: dataFromString)
@@ -109,7 +108,7 @@ struct SCQuery {
     }
     
     // Очистка условий выборки
-    mutating func reset() {
+    public mutating func reset() {
         _operators = nil
         _userQuery = nil
         _sort = nil
@@ -118,7 +117,7 @@ struct SCQuery {
     }
     
     // Сортировка по полю по возрастанию (параметр sort протокола)
-    mutating func ascending(_ name: String) {
+    public mutating func ascending(_ name: String) {
         if _sort == nil {
             _sort = [String: Int]()
         }
@@ -126,7 +125,7 @@ struct SCQuery {
     }
     
     // Сортировка по полю по убыванию (параметр sort протокола)
-    mutating func descending(_ name: String) {
+    public mutating func descending(_ name: String) {
         if _sort == nil {
             _sort = [String: Int]()
         }
@@ -134,93 +133,93 @@ struct SCQuery {
     }
     
     // Установка списка возвращаемых полей (параметр fields протокола)
-    mutating func fields(_ names: [String]) {
+    public mutating func fields(_ names: [String]) {
         _fields = names
     }
     
-    mutating func addOperator(_ name: String, oper: SCOperator) {
+    public mutating func addOperator(_ name: String, oper: SCOperator) {
         if _operators == nil {
             _operators = [String: SCOperator]()
         }
         _operators![name] = oper
     }
     
-    mutating func equalTo(_ name: String, _ value: SCValue) {
+    public mutating func equalTo(_ name: String, _ value: SCValue) {
         let op = SCOperator.equalTo(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func notEqualTo(_ name: String, _ value: SCValue) {
+    public mutating func notEqualTo(_ name: String, _ value: SCValue) {
         let op = SCOperator.notEqualTo(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func containedIn(_ name: String, _ value: SCArray) {
+    public mutating func containedIn(_ name: String, _ value: SCArray) {
         let op = SCOperator.containedIn(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func containsAll(_ name: String, _ value: SCArray) {
+    public mutating func containsAll(_ name: String, _ value: SCArray) {
         let op = SCOperator.containsAll(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func notContainedIn(_ name: String, _ value: SCArray) {
+    public mutating func notContainedIn(_ name: String, _ value: SCArray) {
         let op = SCOperator.notContainedIn(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func greaterThan(_ name: String, _ value: SCValue) {
+    public mutating func greaterThan(_ name: String, _ value: SCValue) {
         let op = SCOperator.greaterThan(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func greaterThanOrEqualTo(_ name: String, _ value: SCValue) {
+    public mutating func greaterThanOrEqualTo(_ name: String, _ value: SCValue) {
         let op = SCOperator.greaterThanOrEqualTo(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func lessThan(_ name: String, _ value: SCValue) {
+    public mutating func lessThan(_ name: String, _ value: SCValue) {
         let op = SCOperator.lessThan(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func lessThanOrEqualTo(_ name: String, _ value: SCValue) {
+    public mutating func lessThanOrEqualTo(_ name: String, _ value: SCValue) {
         let op = SCOperator.lessThanOrEqualTo(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func exists(_ name: String) {
+    public mutating func exists(_ name: String) {
         let op = SCOperator.exists(name)
         addOperator(name, oper: op)
     }
     
-    mutating func doesNotExist(_ name: String) {
+    public mutating func doesNotExist(_ name: String) {
         let op = SCOperator.doesNotExist(name)
         addOperator(name, oper: op)
     }
     
-    mutating func contains(_ name: String, _ pattern: String) {
+    public mutating func contains(_ name: String, _ pattern: String) {
         let op = SCOperator.contains(name, pattern, "")
         addOperator(name, oper: op)
     }
     
-    mutating func startsWith(_ name: String, _ pattern: String) {
+    public mutating func startsWith(_ name: String, _ pattern: String) {
         let op = SCOperator.startsWith(name, pattern, "")
         addOperator(name, oper: op)
     }
     
-    mutating func endsWith(_ name: String, _ pattern: String) {
+    public mutating func endsWith(_ name: String, _ pattern: String) {
         let op = SCOperator.endsWith(name, pattern, "")
         addOperator(name, oper: op)
     }
     
-    mutating func and(_ operators: [SCOperator]) {
+    public mutating func and(_ operators: [SCOperator]) {
         let op = SCOperator.and(operators)
         _andOr = op
     }
     
-    mutating func or(_ operators: [SCOperator]) {
+    public mutating func or(_ operators: [SCOperator]) {
         let op = SCOperator.or(operators)
         _andOr = op
     }

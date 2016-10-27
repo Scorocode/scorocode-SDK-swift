@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import SwiftyJSON
+//import SwiftyJSON
 
-enum SCOperator: SCPullable {
+public enum SCOperator: SCPullable {
     
     case equalTo(String, SCValue)
     case notEqualTo(String, SCValue)
@@ -28,7 +28,7 @@ enum SCOperator: SCPullable {
     case or([SCOperator])
     case and([SCOperator])
     
-    var name: String? {
+    public var name: String? {
         switch self {
         case .equalTo(let name, _):
             return name
@@ -65,7 +65,7 @@ enum SCOperator: SCPullable {
         }
     }
     
-    var dic: AnyObject {
+    public var dic: AnyObject {
         
         switch self {
             
@@ -73,110 +73,110 @@ enum SCOperator: SCPullable {
             return value.apiValue
             
         case .notEqualTo(_, let value):
-            return ["$ne" : value.apiValue]
+            return ["$ne" : value.apiValue] as AnyObject
             
         case .containedIn(_, let value):
-            return ["$in" : value.apiValue]
+            return ["$in" : value.apiValue] as AnyObject
             
         case .containsAll(_, let value):
-            return ["$all" : value.apiValue]
+            return ["$all" : value.apiValue] as AnyObject
             
         case .notContainedIn(_, let value):
-            return ["$nin" : value.apiValue]
+            return ["$nin" : value.apiValue] as AnyObject
             
         case .greaterThan(_, let value):
-            return ["$gt" : value.apiValue]
+            return ["$gt" : value.apiValue] as AnyObject
             
         case .greaterThanOrEqualTo(_, let value):
-            return ["$gte" : value.apiValue]
+            return ["$gte" : value.apiValue] as AnyObject
             
         case .lessThan(_, let value):
-            return ["$lt" : value.apiValue]
+            return ["$lt" : value.apiValue] as AnyObject
             
         case .lessThanOrEqualTo(_, let value):
-            return ["$lte" : value.apiValue]
+            return ["$lte" : value.apiValue] as AnyObject
             
         case .exists:
-            return ["$exists" : true]
+            return ["$exists" : true] as AnyObject
             
         case .doesNotExist:
-            return ["$exists" : false]
+            return ["$exists" : false] as AnyObject
             
         case .contains(_, let pattern, let options):
-            return ["$regex" : pattern, "$options" : options]
+            return ["$regex" : pattern, "$options" : options] as AnyObject
             
         case .startsWith(_, let pattern, let options):
-            return ["$regex" : "^" + pattern, "$options" : options]
+            return ["$regex" : "^" + pattern, "$options" : options] as AnyObject
             
         case .endsWith(_, let pattern, let options):
-            return ["$regex" : pattern + "$", "$options" : options]
+            return ["$regex" : pattern + "$", "$options" : options] as AnyObject
 
         case .or(let operators):
-            return operators.map({ $0.expression })
+            return operators.map({ $0.expression }) as AnyObject
             
         case .and(let operators):
-            return operators.map({ $0.expression })
+            return operators.map({ $0.expression }) as AnyObject
         }
         
     }
     
-    var expression: AnyObject {
+    public var expression: AnyObject {
         
         switch self {
             
         case .equalTo(let name, let value):
-            return [name: value.apiValue]
+            return [name: value.apiValue] as AnyObject
             
         case .notEqualTo(let name, let value):
-            return [name: ["$ne" : value.apiValue]]
+            return [name: ["$ne" : value.apiValue]] as AnyObject
             
         case .containedIn(let name, let value):
-            return [name: ["$in" : value.apiValue]]
+            return [name: ["$in" : value.apiValue]] as AnyObject
             
         case .containsAll(let name, let value):
-            return [name: ["$all" : value.apiValue]]
+            return [name: ["$all" : value.apiValue]] as AnyObject
             
         case .notContainedIn(let name, let value):
-            return [name: ["$nin" : value.apiValue]]
+            return [name: ["$nin" : value.apiValue]] as AnyObject
             
         case .greaterThan(let name, let value):
-            return [name: ["$gt" : value.apiValue]]
+            return [name: ["$gt" : value.apiValue]] as AnyObject
             
         case .greaterThanOrEqualTo(let name, let value):
-            return [name: ["$gte" : value.apiValue]]
+            return [name: ["$gte" : value.apiValue]] as AnyObject
             
         case .lessThan(let name, let value):
-            return [name: ["$lt" : value.apiValue]]
+            return [name: ["$lt" : value.apiValue]] as AnyObject
             
         case .lessThanOrEqualTo(let name, let value):
-            return [name: ["$lte" : value.apiValue]]
+            return [name: ["$lte" : value.apiValue]] as AnyObject
             
         case .exists(let name):
-            return [name: ["$exists" : true]]
+            return [name: ["$exists" : true]] as AnyObject
             
         case .doesNotExist(let name):
-            return [name: ["$exists" : false]]
+            return [name: ["$exists" : false]] as AnyObject
             
         case .contains(let name, let pattern, let options):
-            return [name: ["$regex" : pattern, "$options" : options]]
+            return [name: ["$regex" : pattern, "$options" : options]] as AnyObject
             
         case .startsWith(let name, let pattern, let options):
-            return [name: ["$regex" : "^" + pattern, "$options" : options]]
+            return [name: ["$regex" : "^" + pattern, "$options" : options]] as AnyObject
             
         case .endsWith(let name, let pattern, let options):
-            return [name: ["$regex" : pattern + "$", "$options" : options]]
+            return [name: ["$regex" : pattern + "$", "$options" : options]] as AnyObject
             
         case .or(let operators):
-            return [ "$or": operators.map({ $0.expression }) ]
+            return [ "$or": operators.map({ $0.expression }) ] as AnyObject
             
         case .and(let operators):
-            return [ "$and": operators.map({ $0.expression }) ]
+            return [ "$and": operators.map({ $0.expression }) ] as AnyObject
         }
         
     }
 }
 
-func == (lhs: [SCOperator], rhs: [SCOperator]) -> Bool {
+public func == (lhs: [SCOperator], rhs: [SCOperator]) -> Bool {
     if lhs.count != rhs.count {
         return false
     }
@@ -188,12 +188,12 @@ func == (lhs: [SCOperator], rhs: [SCOperator]) -> Bool {
     return true
 }
 
-func !=(lhs: SCOperator, rhs: SCOperator) -> Bool {
+public func !=(lhs: SCOperator, rhs: SCOperator) -> Bool {
     return !(lhs == rhs)
 }
 
 
-func ==(lhs: SCOperator, rhs: SCOperator) -> Bool {
+public func ==(lhs: SCOperator, rhs: SCOperator) -> Bool {
     switch (lhs, rhs) {
         
     case (let SCOperator.equalTo(name1, v1), let SCOperator.equalTo(name2, v2)):
