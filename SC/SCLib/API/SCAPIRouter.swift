@@ -8,138 +8,135 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 
-enum SCAPIRouter: URLRequestConvertible {
+public enum SCAPIRouter: URLRequestConvertible {
     
-    private static let baseURLString = "https://api.scorocode.ru/api/v1/"
+    fileprivate static let baseURLString = "https://api.scorocode.ru/api/v1/"
     
-    case Login([String: AnyObject])
-    case Logout([String: AnyObject])
-    case Register([String: AnyObject])
-    case Insert([String: AnyObject])
-    case Remove([String: AnyObject])
-    case Update([String: AnyObject])
-    case UpdateById([String: AnyObject])
-    case Find([String: AnyObject])
-    case Count([String: AnyObject])
-    case Upload([String: AnyObject])
-    case DeleteFile([String: AnyObject])
-    case GetFile(String, String, String)
-    case GetFileLink([String: AnyObject])
-    case SendEmail([String: AnyObject])
-    case SendPush([String: AnyObject])
-    case SendSms([String: AnyObject])
-    case Scripts([String: AnyObject])
-    case Stat([String: AnyObject])
+    case login([String: AnyObject])
+    case logout([String: AnyObject])
+    case register([String: AnyObject])
+    case insert([String: AnyObject])
+    case remove([String: AnyObject])
+    case update([String: AnyObject])
+    case updateById([String: AnyObject])
+    case find([String: AnyObject])
+    case count([String: AnyObject])
+    case upload([String: AnyObject])
+    case deleteFile([String: AnyObject])
+    case getFile(String, String, String)
+    case getFileLink([String: AnyObject])
+    case sendEmail([String: AnyObject])
+    case sendPush([String: AnyObject])
+    case sendSms([String: AnyObject])
+    case scripts([String: AnyObject])
+    case stat([String: AnyObject])
     
-    var URLRequest: NSMutableURLRequest {
-        
-        var method: Alamofire.Method {
-        
+    public func asURLRequest() throws -> URLRequest {
+        var method: Alamofire.HTTPMethod {
+            
             switch self {
                 
-            case .Login: return .POST
-            case .Logout: return .POST
-            case .Register: return .POST
+            case .login: return .post
+            case .logout: return .post
+            case .register: return .post
                 
-            case .Insert: return .POST
-            case .Remove: return .POST
-            case .Update: return .POST
-            case .UpdateById: return .POST
-            case .Find: return .POST
-            case .Count: return .POST
+            case .insert: return .post
+            case .remove: return .post
+            case .update: return .post
+            case .updateById: return .post
+            case .find: return .post
+            case .count: return .post
                 
-            case .Upload: return .POST
-            case .DeleteFile: return .POST
-            case .GetFile: return .GET
-            case .GetFileLink: return .POST
+            case .upload: return .post
+            case .deleteFile: return .post
+            case .getFile: return .get
+            case .getFileLink: return .post
                 
-            case .SendEmail: return .POST
-            case .SendPush: return .POST
-            case .SendSms: return .POST
+            case .sendEmail: return .post
+            case .sendPush: return .post
+            case .sendSms: return .post
                 
-            case .Scripts: return .POST
+            case .scripts: return .post
                 
-            case .Stat: return .POST
+            case .stat: return .post
             }
         }
         
-        let result: (path: String, parameters: [String: AnyObject]?) = {
+        let result: (path: String, parameters: [String: Any]?) = {
             switch self {
                 
-            case .Login(let body):
+            case .login(let body):
                 return ("login", body)
                 
-            case .Logout(let body):
+            case .logout(let body):
                 return ("logout", body)
                 
-            case .Register(let body):
+            case .register(let body):
                 return ("register", body)
                 
-            case .Insert(let body):
+            case .insert(let body):
                 return ("data/insert", body)
                 
-            case .Remove(let body):
+            case .remove(let body):
                 return ("data/remove", body)
                 
-            case .Update(let body):
+            case .update(let body):
                 return ("data/update", body)
                 
-            case .UpdateById(let body):
+            case .updateById(let body):
                 return ("data/updatebyid", body)
                 
-            case .Find(let body):
+            case .find(let body):
                 return ("data/find", body)
                 
-            case .Count(let body):
+            case .count(let body):
                 return ("data/count", body)
                 
-            case .Upload(let body):
+            case .upload(let body):
                 return ("upload", body)
                 
-            case .DeleteFile(let body):
+            case .deleteFile(let body):
                 return ("deletefile", body)
                 
-            case .GetFile(let collection, let field, let filename):
+            case .getFile(let collection, let field, let filename):
                 return ("getfile/\(SCAPI.sharedInstance.applicationId)/\(collection)/\(field)/\(filename)", nil)
                 
-            case .GetFileLink(let body):
+            case .getFileLink(let body):
                 return ("getfilelink", body)
                 
-            case .SendEmail(let body):
+            case .sendEmail(let body):
                 return ("sendemail", body)
                 
-            case .SendPush(let body):
+            case .sendPush(let body):
                 return ("sendpush", body)
                 
-            case .SendSms(let body):
+            case .sendSms(let body):
                 return ("sendsms", body)
                 
-            case .Scripts(let body):
+            case .scripts(let body):
                 return ("scripts", body)
                 
-            case .Stat(let body):
+            case .stat(let body):
                 return ("stat", body)
             }
         }()
         
-        let baseURL = NSURL(string: SCAPIRouter.baseURLString)
-        let URL = NSURL(string: result.path, relativeToURL: baseURL)
-        let URLRequest = NSMutableURLRequest(URL: URL!)
-        URLRequest.setValue(String("application/json"), forHTTPHeaderField: "Content-Type")
+        let baseURL = Foundation.URL(string: SCAPIRouter.baseURLString)
+        let URL = Foundation.URL(string: result.path, relativeTo: baseURL)
+        var request = Foundation.URLRequest(url: URL!)
+        request.setValue(String("application/json"), forHTTPHeaderField: "Content-Type")
         
-        let encoding = method == Alamofire.Method.POST ? Alamofire.ParameterEncoding.JSON : Alamofire.ParameterEncoding.URL
-        let (encodedRequest, _) = encoding.encode(URLRequest, parameters: result.parameters)
-        
-        encodedRequest.HTTPMethod = method.rawValue
-        
-        if let httpBody = encodedRequest.HTTPBody {
-            let s = String(data: httpBody, encoding: NSUTF8StringEncoding)
-            print(s)
+        let encoding: ParameterEncoding = method == Alamofire.HTTPMethod.post ? Alamofire.JSONEncoding.default : Alamofire.URLEncoding.default
+        do {
+            var encodedRequest = try? encoding.encode(request, with: result.parameters! )
+            encodedRequest?.httpMethod = method.rawValue
+            if let httpBody = encodedRequest?.httpBody {
+                let s = String(data: httpBody, encoding: String.Encoding.utf8)
+                print(s)
+            }
+            return encodedRequest!
         }
-        
-        return encodedRequest
     }
-    
+  
 }

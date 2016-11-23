@@ -11,21 +11,21 @@ import XCTest
 
 class TestSCAPI: XCTestCase {
     
-    private let username = "juggle"
-    private let email = "ara@juggle.ru"
-    private let password = "select"
+    fileprivate let username = "juggle"
+    fileprivate let email = "ara@juggle.ru"
+    fileprivate let password = "select"
     
-    private let applicationId = ""
-    private let clientId = ""
-    private let accessKey = ""
-    private let fileKey = ""
-    private let messageKey = ""
+    fileprivate let applicationId = ""
+    fileprivate let clientId = ""
+    fileprivate let accessKey = ""
+    fileprivate let fileKey = ""
+    fileprivate let messageKey = ""
     
-    private let collection = "testcoll"
+    fileprivate let collection = "testcoll"
     
-    private let timeout = 3.0
+    fileprivate let timeout = 3.0
     
-    private var insertedDocId: String!
+    fileprivate var insertedDocId: String!
     
     override func setUp() {
         super.setUp()
@@ -41,7 +41,7 @@ class TestSCAPI: XCTestCase {
     
     func testLogin() {
         
-        let expectation = expectationWithDescription("Login")
+        let expectation = self.expectation(description: "Login")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -53,12 +53,12 @@ class TestSCAPI: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testLogout() {
         
-        let expectation = expectationWithDescription("Logout")
+        let expectation = self.expectation(description: "Logout")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -74,15 +74,15 @@ class TestSCAPI: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testRegister() {
         
-        let expectation = expectationWithDescription("Logout")
+        let expectation = self.expectation(description: "Logout")
         
         let username = "newUser"
-        let email = "\(NSUUID().UUIDString)@domain.ru"
+        let email = "\(UUID().uuidString)@domain.ru"
         let password = "password"
         
         SCAPI.sharedInstance.register(username, email: email, password: password) {
@@ -99,12 +99,12 @@ class TestSCAPI: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testCount() {
         
-        let expectation = expectationWithDescription("Count")
+        let expectation = self.expectation(description: "Count")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -121,13 +121,13 @@ class TestSCAPI: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
 
     }
     
     func testFind() {
         
-        let expectation = expectationWithDescription("Find")
+        let expectation = self.expectation(description: "Find")
         
         let user = SCUser()
         user.login(email, password: password) {
@@ -153,13 +153,13 @@ class TestSCAPI: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     func testInsert() {
         
-        let expectation = expectationWithDescription("Insert")
+        let expectation = self.expectation(description: "Insert")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -183,13 +183,13 @@ class TestSCAPI: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     func testUpdate() {
         
-        let expectation = expectationWithDescription("Update")
+        let expectation = self.expectation(description: "Update")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -233,13 +233,13 @@ class TestSCAPI: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     func testRemove() {
         
-        let expectation = expectationWithDescription("Remove")
+        let expectation = self.expectation(description: "Remove")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -280,13 +280,13 @@ class TestSCAPI: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     func testUpdateById() {
         
-        let expectation = expectationWithDescription("UpdateById")
+        let expectation = self.expectation(description: "UpdateById")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -322,13 +322,13 @@ class TestSCAPI: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     func testSendEmail() {
         
-        let expectation = expectationWithDescription("SendEmail")
+        let expectation = self.expectation(description: "SendEmail")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -344,13 +344,13 @@ class TestSCAPI: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     func testSendPush() {
         
-        let expectation = expectationWithDescription("SendPush")
+        let expectation = self.expectation(description: "SendPush")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -366,13 +366,13 @@ class TestSCAPI: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     func testSendSMS() {
         
-        let expectation = expectationWithDescription("SendSMS")
+        let expectation = self.expectation(description: "SendSMS")
         
         SCAPI.sharedInstance.login(email, password: password) {
             success, error, result in
@@ -388,13 +388,13 @@ class TestSCAPI: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     func testScripts() {
         
-        let expectation = expectationWithDescription("Scripts")
+        let expectation = self.expectation(description: "Scripts")
         
         // TODO: успешное выполнение
         
@@ -406,14 +406,14 @@ class TestSCAPI: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     
     func testStat() {
         
-        let expectation = expectationWithDescription("Stat")
+        let expectation = self.expectation(description: "Stat")
         
         // TODO: успешное выполнение
         
@@ -425,7 +425,7 @@ class TestSCAPI: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     

@@ -9,124 +9,116 @@
 import Foundation
 import SwiftyJSON
 
-enum SCUpdateOperator: Equatable {
-    
-//    case Set(String, SCValue)
-    case Set([String: SCValue])
-    case Push(name: String, value: SCValue, each: Bool)
-    case Pull(String, SCPullable)
-    case PullAll(String, SCValue)
-    case AddToSet(name: String, value: SCValue, each: Bool)
-    case Pop(String, Int)
-    case Inc(String, SCValue)
-    case CurrentDate(String, String)
-    case Mul(String, SCValue)
-    case Min(String, SCValue)
-    case Max(String, SCValue)
+public enum SCUpdateOperator: Equatable {
+  
+    case set([String: SCValue])
+    case push(name: String, value: SCValue, each: Bool)
+    case pull(String, SCPullable)
+    case pullAll(String, SCValue)
+    case addToSet(name: String, value: SCValue, each: Bool)
+    case pop(String, Int)
+    case inc(String, SCValue)
+    case currentDate(String, String)
+    case mul(String, SCValue)
+    case min(String, SCValue)
+    case max(String, SCValue)
 
-    var name: String {
+    public var name: String {
         switch self {
-        case .Set:
+        case .set:
             return "$set"
-        case .Push:
+        case .push:
             return "$push"
-        case .Pull:
+        case .pull:
             return "$pull"
-        case .PullAll:
+        case .pullAll:
             return "$pullAll"
-        case .AddToSet:
+        case .addToSet:
             return "$addToSet"
-        case .Pop:
+        case .pop:
             return "$pop"
-        case .Inc:
+        case .inc:
             return "$inc"
-        case .CurrentDate:
+        case .currentDate:
             return "$currentDate"
-        case .Mul:
+        case .mul:
             return "$mul"
-        case .Min:
+        case .min:
             return "$min"
-        case .Max:
+        case .max:
             return "$max"
         }
     }
     
-    var dic: AnyObject {
+    public var dic: AnyObject {
         
         switch self {
-            
-//        case .Set(let name, let value):
-//            return [name : value.apiValue]
-        case .Set(let dic):
+        case .set(let dic):
             var result = [String: AnyObject]()
             for (name, value) in dic {
                 result[name] = value.apiValue
             }
-            return result
+            return result as AnyObject
 
-        // TODO: $sort, $slice, $position
-        case .Push(let name, let value, let each):
+        case .push(let name, let value, let each):
             if !each {
-                return [name : value.apiValue]
+                return [name : value.apiValue] as AnyObject
             } else {
-                return [name: ["$each" : value.apiValue]]
+                return [name: ["$each" : value.apiValue]] as AnyObject
             }
     
-        case .Pull(let name, let value):
+        case .pull(let name, let value):
             if let val = value as? SCValue {
-                return [name : val.apiValue]
+                return [name : val.apiValue] as AnyObject
             } else {
                 let cond = value as! SCOperator
-                return [name : cond.dic]
+                return [name : cond.dic] as AnyObject
             }
 
-        case .PullAll(let name, let value):
-            return [name : value.apiValue]
+        case .pullAll(let name, let value):
+            return [name : value.apiValue] as AnyObject
             
-        case .AddToSet(let name, let value, let each):
+        case .addToSet(let name, let value, let each):
             if !each {
-                return [name : value.apiValue]
+                return [name : value.apiValue] as AnyObject
             } else {
-                return [name: ["$each" : value.apiValue]]
+                return [name: ["$each" : value.apiValue]] as AnyObject
             }
             
-        case .Pop(let name, let value):
-            return [name : SCInt(value).apiValue]
+        case .pop(let name, let value):
+            return [name : SCInt(value).apiValue] as AnyObject
             
-        case .Inc(let name, let value):
-            return [name : value.apiValue]
+        case .inc(let name, let value):
+            return [name : value.apiValue] as AnyObject
             
-        case .CurrentDate(let name, let typeSpec):
+        case .currentDate(let name, let typeSpec):
             let value = ["$type" : typeSpec]
-            return [name : value]
+            return [name : value] as AnyObject
             
-        case .Mul(let name, let value):
-            return [name : value.apiValue]
+        case .mul(let name, let value):
+            return [name : value.apiValue] as AnyObject
             
-        case .Min(let name, let value):
-            return [name : value.apiValue]
+        case .min(let name, let value):
+            return [name : value.apiValue] as AnyObject
             
-        case .Max(let name, let value):
-            return [name : value.apiValue]
+        case .max(let name, let value):
+            return [name : value.apiValue] as AnyObject
         }
 
     }
     
 }
 
-func ==(lhs: SCUpdateOperator, rhs: SCUpdateOperator) -> Bool {
+public func ==(lhs: SCUpdateOperator, rhs: SCUpdateOperator) -> Bool {
     switch (lhs, rhs) {
-        
-//    case (let SCUpdateOperator.Set(name1, v1), let SCUpdateOperator.Set(name2, v2)):
-//        return name1 == name2 && v1 == v2
-    case (let SCUpdateOperator.Set(dic1), let SCUpdateOperator.Set(dic2)):
+      
+    case (let SCUpdateOperator.set(dic1), let SCUpdateOperator.set(dic2)):
         return dic1 == dic2
         
-    case (let SCUpdateOperator.Push(name1, v1, each1), let SCUpdateOperator.Push(name2, v2, each2)):
+    case (let SCUpdateOperator.push(name1, v1, each1), let SCUpdateOperator.push(name2, v2, each2)):
         return name1 == name2 && v1 == v2 && each1 == each2
 
-        // TODO: Pull
-    case (let SCUpdateOperator.Pull(name1, v1), let SCUpdateOperator.Pull(name2, v2)):
+    case (let SCUpdateOperator.pull(name1, v1), let SCUpdateOperator.pull(name2, v2)):
         if name1 != name2 { return false }
         
         switch (v1, v2) {
@@ -136,28 +128,28 @@ func ==(lhs: SCUpdateOperator, rhs: SCUpdateOperator) -> Bool {
             return false
         }
         
-    case (let SCUpdateOperator.PullAll(name1, v1), let SCUpdateOperator.PullAll(name2, v2)):
+    case (let SCUpdateOperator.pullAll(name1, v1), let SCUpdateOperator.pullAll(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCUpdateOperator.AddToSet(name1, v1, each1), let SCUpdateOperator.AddToSet(name2, v2, each2)):
+    case (let SCUpdateOperator.addToSet(name1, v1, each1), let SCUpdateOperator.addToSet(name2, v2, each2)):
         return name1 == name2 && v1 == v2 && each1 == each2
         
-    case (let SCUpdateOperator.Pop(name1, v1), let SCUpdateOperator.Pop(name2, v2)):
+    case (let SCUpdateOperator.pop(name1, v1), let SCUpdateOperator.pop(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCUpdateOperator.Inc(name1, v1), let SCUpdateOperator.Inc(name2, v2)):
+    case (let SCUpdateOperator.inc(name1, v1), let SCUpdateOperator.inc(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCUpdateOperator.CurrentDate(name1, type1), let SCUpdateOperator.CurrentDate(name2, type2)):
+    case (let SCUpdateOperator.currentDate(name1, type1), let SCUpdateOperator.currentDate(name2, type2)):
         return name1 == name2 && type1 == type2
         
-    case (let SCUpdateOperator.Mul(name1, v1), let SCUpdateOperator.Mul(name2, v2)):
+    case (let SCUpdateOperator.mul(name1, v1), let SCUpdateOperator.mul(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCUpdateOperator.Min(name1, v1), let SCUpdateOperator.Min(name2, v2)):
+    case (let SCUpdateOperator.min(name1, v1), let SCUpdateOperator.min(name2, v2)):
         return name1 == name2 && v1 == v2
         
-    case (let SCUpdateOperator.Max(name1, v1), let SCUpdateOperator.Max(name2, v2)):
+    case (let SCUpdateOperator.max(name1, v1), let SCUpdateOperator.max(name2, v2)):
         return name1 == name2 && v1 == v2
         
     default: return false

@@ -1,0 +1,27 @@
+[
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCQuery.swift",
+  "offset": 1362,
+  "text": "@escaping ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCQuery.swift",
+  "offset": 1645,
+  "text": "@escaping ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCQuery.swift",
+  "offset": 1913,
+  "text": "@escaping ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCQuery.swift",
+  "offset": 2192,
+  "text": "@escaping ",
+ },
+ {
+  "file": "/Users/instarobot/Desktop/Public GitHub/scorocode-SDK-swift/SC/SCLib/Model/SCQuery.swift",
+  "offset": 3456,
+  "text": " as [String : AnyObject]?",
+ }
+]

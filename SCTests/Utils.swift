@@ -9,14 +9,14 @@
 import XCTest
 @testable import SC
 
-func assertSuccess(success: Bool, _ error: SCError?, _ result: AnyObject?) {
+func assertSuccess(_ success: Bool, _ error: SCError?, _ result: AnyObject?) {
     
     XCTAssertTrue(success)
     XCTAssertNil(error)
     XCTAssertNotNil(result)
 }
 
-func assertError(success: Bool, _ error: SCError?, _ result: AnyObject?) {
+func assertError(_ success: Bool, _ error: SCError?, _ result: AnyObject?) {
     
     XCTAssertFalse(success)
     XCTAssertNotNil(error)

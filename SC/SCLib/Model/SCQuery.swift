@@ -9,88 +9,88 @@
 import Foundation
 import SwiftyJSON
 
-struct SCQuery {
+public struct SCQuery {
     
-    private let _collection: String
-    var collection: String {
+    fileprivate let _collection: String
+    public var collection: String {
         return _collection
     }
     
-    private var _userQuery: [String: AnyObject]?
-    var userQuery: [String: AnyObject]? {
+    fileprivate var _userQuery: [String: AnyObject]?
+    public var userQuery: [String: AnyObject]? {
         return _userQuery
     }
     
-    private var _operators: [String: SCOperator]?
-    var operators: [String: SCOperator]? {
+    fileprivate var _operators: [String: SCOperator]?
+    public var operators: [String: SCOperator]? {
         return _operators
     }
     
-    private var _andOr: SCOperator?
-    var andOr: SCOperator? {
+    fileprivate var _andOr: SCOperator?
+    public var andOr: SCOperator? {
         return _andOr
     }
     
-    private var _limit: Int?
-    var limit: Int? {
+    fileprivate var _limit: Int?
+    public var limit: Int? {
         return _limit
     }
     
-    private var _skip: Int?
-    var skip: Int? {
+    fileprivate var _skip: Int?
+    public var skip: Int? {
         return _skip
     }
     
-    private var _sort: [String: Int]?
-    var sort: [String: Int]? {
+    fileprivate var _sort: [String: Int]?
+    public var sort: [String: Int]? {
         return _sort
     }
     
-    private var _fields: [String]?
-    var fields: [String]? {
+    fileprivate var _fields: [String]?
+    public var fields: [String]? {
         return _fields
     }
         
-    init(collection: String) {
+    public init(collection: String) {
         self._collection = collection
     }
     
     // Поиск документов, на основе сформированного условия выборки. Возвращает ошибку или массив документов.
-    func find(callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    public func find(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
 
         SCAPI.sharedInstance.find(self, callback: callback)
     }
     
     // Подсчет количества документов в коллекции согласно условию выборки.
-    func count(callback: (Bool, SCError?, Int?) -> Void) {
+    public func count(_ callback: @escaping (Bool, SCError?, Int?) -> Void) {
         
         SCAPI.sharedInstance.count(self, callback: callback)
     }
     
     // Обновляет документы соответствующие условию выборки.
-    func update(update: SCUpdate, callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    public func update(_ update: SCUpdate, callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         
         SCAPI.sharedInstance.update(self, update: update, callback: callback)
     }
     
     // Удаляет документы соответствующие условию выборки.
-    func remove(callback: (Bool, SCError?, [String: AnyObject]?) -> Void) {
+    public func remove(_ callback: @escaping (Bool, SCError?, [String: AnyObject]?) -> Void) {
         
         SCAPI.sharedInstance.remove(self, callback: callback)
     }
     
     // Устанавливает лимит выборки (параметр limit протокола).
-    mutating func limit(limit: Int) {
+    public mutating func limit(_ limit: Int) {
         _limit = limit
     }
     
     // Метод для установки количества пропускаемых документов (параметр skip протокола).
-    mutating func skip(skip: Int) {
+    public mutating func skip(_ skip: Int) {
         _skip = skip
     }
     
     // Метод для рассчета skip, соответствующего номеру страницы на основе установленного значения limit.
-    mutating func page(page: Int) {
+    public mutating func page(_ page: Int) {
         guard page > 0 else { return }
         if let limit = _limit {
             _skip = (page - 1) * limit
@@ -100,16 +100,16 @@ struct SCQuery {
     }
     
     // Установка пользовательского условия выборки
-    mutating func raw(json: String) {
+    public mutating func raw(_ json: String) {
         
-        if let dataFromString = json.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+        if let dataFromString = json.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             let json = JSON(data: dataFromString)
-            _userQuery = json.dictionaryObject
+            _userQuery = json.dictionaryObject as [String : AnyObject]?
         }
     }
     
     // Очистка условий выборки
-    mutating func reset() {
+    public mutating func reset() {
         _operators = nil
         _userQuery = nil
         _sort = nil
@@ -118,7 +118,7 @@ struct SCQuery {
     }
     
     // Сортировка по полю по возрастанию (параметр sort протокола)
-    mutating func ascending(name: String) {
+    public mutating func ascending(_ name: String) {
         if _sort == nil {
             _sort = [String: Int]()
         }
@@ -126,7 +126,7 @@ struct SCQuery {
     }
     
     // Сортировка по полю по убыванию (параметр sort протокола)
-    mutating func descending(name: String) {
+    public mutating func descending(_ name: String) {
         if _sort == nil {
             _sort = [String: Int]()
         }
@@ -134,94 +134,94 @@ struct SCQuery {
     }
     
     // Установка списка возвращаемых полей (параметр fields протокола)
-    mutating func fields(names: [String]) {
+    public mutating func fields(_ names: [String]) {
         _fields = names
     }
     
-    mutating func addOperator(name: String, oper: SCOperator) {
+    public mutating func addOperator(_ name: String, oper: SCOperator) {
         if _operators == nil {
             _operators = [String: SCOperator]()
         }
         _operators![name] = oper
     }
     
-    mutating func equalTo(name: String, _ value: SCValue) {
-        let op = SCOperator.EqualTo(name, value)
+    public mutating func equalTo(_ name: String, _ value: SCValue) {
+        let op = SCOperator.equalTo(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func notEqualTo(name: String, _ value: SCValue) {
-        let op = SCOperator.NotEqualTo(name, value)
+    public mutating func notEqualTo(_ name: String, _ value: SCValue) {
+        let op = SCOperator.notEqualTo(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func containedIn(name: String, _ value: SCArray) {
-        let op = SCOperator.ContainedIn(name, value)
+    public mutating func containedIn(_ name: String, _ value: SCArray) {
+        let op = SCOperator.containedIn(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func containsAll(name: String, _ value: SCArray) {
-        let op = SCOperator.ContainsAll(name, value)
+    public mutating func containsAll(_ name: String, _ value: SCArray) {
+        let op = SCOperator.containsAll(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func notContainedIn(name: String, _ value: SCArray) {
-        let op = SCOperator.NotContainedIn(name, value)
+    public mutating func notContainedIn(_ name: String, _ value: SCArray) {
+        let op = SCOperator.notContainedIn(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func greaterThan(name: String, _ value: SCValue) {
-        let op = SCOperator.GreaterThan(name, value)
+    public mutating func greaterThan(_ name: String, _ value: SCValue) {
+        let op = SCOperator.greaterThan(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func greaterThanOrEqualTo(name: String, _ value: SCValue) {
-        let op = SCOperator.GreaterThanOrEqualTo(name, value)
+    public mutating func greaterThanOrEqualTo(_ name: String, _ value: SCValue) {
+        let op = SCOperator.greaterThanOrEqualTo(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func lessThan(name: String, _ value: SCValue) {
-        let op = SCOperator.LessThan(name, value)
+    public mutating func lessThan(_ name: String, _ value: SCValue) {
+        let op = SCOperator.lessThan(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func lessThanOrEqualTo(name: String, _ value: SCValue) {
-        let op = SCOperator.LessThanOrEqualTo(name, value)
+    public mutating func lessThanOrEqualTo(_ name: String, _ value: SCValue) {
+        let op = SCOperator.lessThanOrEqualTo(name, value)
         addOperator(name, oper: op)
     }
     
-    mutating func exists(name: String) {
-        let op = SCOperator.Exists(name)
+    public mutating func exists(_ name: String) {
+        let op = SCOperator.exists(name)
         addOperator(name, oper: op)
     }
     
-    mutating func doesNotExist(name: String) {
-        let op = SCOperator.DoesNotExist(name)
+    public mutating func doesNotExist(_ name: String) {
+        let op = SCOperator.doesNotExist(name)
         addOperator(name, oper: op)
     }
     
-    mutating func contains(name: String, _ pattern: String) {
-        let op = SCOperator.Contains(name, pattern, "")
+    public mutating func contains(_ name: String, _ pattern: String) {
+        let op = SCOperator.contains(name, pattern, "")
         addOperator(name, oper: op)
     }
     
-    mutating func startsWith(name: String, _ pattern: String) {
-        let op = SCOperator.StartsWith(name, pattern, "")
+    public mutating func startsWith(_ name: String, _ pattern: String) {
+        let op = SCOperator.startsWith(name, pattern, "")
         addOperator(name, oper: op)
     }
     
-    mutating func endsWith(name: String, _ pattern: String) {
-        let op = SCOperator.EndsWith(name, pattern, "")
+    public mutating func endsWith(_ name: String, _ pattern: String) {
+        let op = SCOperator.endsWith(name, pattern, "")
         addOperator(name, oper: op)
     }
     
-    mutating func and(operators: [SCOperator]) {
-        let op = SCOperator.And(operators)
+    public mutating func and(_ operators: [SCOperator]) {
+        let op = SCOperator.and(operators)
         _andOr = op
     }
     
-    mutating func or(operators: [SCOperator]) {
-        let op = SCOperator.Or(operators)
+    public mutating func or(_ operators: [SCOperator]) {
+        let op = SCOperator.or(operators)
         _andOr = op
     }
     

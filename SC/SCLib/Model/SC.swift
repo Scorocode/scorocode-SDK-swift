@@ -8,9 +8,9 @@
 
 import Foundation
 
-class SC {
+open class SC {
     
-    class func initWith(applicationId applicationId: String, clientId: String, accessKey: String, fileKey: String, messageKey: String) {
+    open class func initWith(applicationId: String, clientId: String, accessKey: String, fileKey: String, messageKey: String) {
         SCAPI.sharedInstance.applicationId = applicationId
         SCAPI.sharedInstance.clientId = clientId
         SCAPI.sharedInstance.accessKey = accessKey

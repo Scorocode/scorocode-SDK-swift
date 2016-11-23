@@ -11,11 +11,11 @@ import XCTest
 
 class TestSCUser: XCTestCase {
     
-    private let username = "juggle"
-    private let email = "ara@juggle.ru"
-    private let password = "select"
+    fileprivate let username = "juggle"
+    fileprivate let email = "ara@juggle.ru"
+    fileprivate let password = "select"
     
-    private let timeout = 3.0
+    fileprivate let timeout = 3.0
     
     override func setUp() {
         super.setUp()
@@ -37,7 +37,7 @@ class TestSCUser: XCTestCase {
     
     func testLogin() {
         
-        let expectation = expectationWithDescription("Login")
+        let expectation = self.expectation(description: "Login")
         
         let user = SCUser()
         user.login(email, password: password) {
@@ -50,12 +50,12 @@ class TestSCUser: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testLogout() {
         
-        let expectation = expectationWithDescription("Logout")
+        let expectation = self.expectation(description: "Logout")
         
         let user = SCUser()
         user.login(email, password: password) {
@@ -75,15 +75,15 @@ class TestSCUser: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testSignup() {
         
-        let expectation = expectationWithDescription("Signup")
+        let expectation = self.expectation(description: "Signup")
         
         let user = SCUser()
-        user.signup(username, email: "\(NSUUID().UUIDString)@domain.ru", password: password) {
+        user.signup(username, email: "\(UUID().uuidString)@domain.ru", password: password) {
             success, error, result in
             
             assertSuccess(success, error, result)
@@ -92,7 +92,7 @@ class TestSCUser: XCTestCase {
             
             user.data["username"] = self.username
             user.data["password"] = self.password
-            user.data["email"] = "\(NSUUID().UUIDString)@domain.ru"
+            user.data["email"] = "\(UUID().uuidString)@domain.ru"
             
             user.signup() {
                 success, error, result in
@@ -103,7 +103,7 @@ class TestSCUser: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
 }

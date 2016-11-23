@@ -13,7 +13,7 @@ class TestSCObject: XCTestCase {
     
     let collection = "testcoll"
     
-    private let timeout = 3.0
+    fileprivate let timeout = 3.0
     
     override func setUp() {
         super.setUp()
@@ -43,19 +43,19 @@ class TestSCObject: XCTestCase {
     func testSet() {
         let obj = SCObject(collection: collection)
         obj.set(["fieldName": SCString("Value")])
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.Set(["fieldName": SCString("Value")]))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.set(["fieldName": SCString("Value")]))
     }
     
     func testPush() {
         let obj = SCObject(collection: collection)
         obj.push("fieldName", SCString("A"))
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.Push(name: "fieldName", value: SCString("A"), each: false))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.push(name: "fieldName", value: SCString("A"), each: false))
     }
     
     func testPushEach() {
         let obj = SCObject(collection: collection)
         obj.pushEach("fieldName", SCArray([SCString("A")]))
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.Push(name: "fieldName", value: SCArray([SCString("A")]), each: true))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.push(name: "fieldName", value: SCArray([SCString("A")]), each: true))
     }
     
     // TODO: Pull
@@ -64,54 +64,54 @@ class TestSCObject: XCTestCase {
     func testAddToSet() {
         let obj = SCObject(collection: collection)
         obj.addToSet("fieldName", SCString("A"))
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.AddToSet(name: "fieldName", value: SCString("A"), each: false))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.addToSet(name: "fieldName", value: SCString("A"), each: false))
     }
     
     func testAddToSetEach() {
         let obj = SCObject(collection: collection)
         obj.addToSetEach("fieldName", SCString("A"))
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.AddToSet(name: "fieldName", value: SCString("A"), each: true))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.addToSet(name: "fieldName", value: SCString("A"), each: true))
     }
     
     func testPop() {
         let obj = SCObject(collection: collection)
         obj.pop("fieldName", 1)
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.Pop("fieldName", 1))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.pop("fieldName", 1))
     }
     
     func testInc() {
         let obj = SCObject(collection: collection)
         obj.inc("fieldName", SCInt(5))
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.Inc("fieldName", SCInt(5)))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.inc("fieldName", SCInt(5)))
     }
     
     func testCurrentDate() {
         let obj = SCObject(collection: collection)
         obj.currentDate("fieldName", typeSpec: "timestamp")
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.CurrentDate("fieldName", "timestamp"))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.currentDate("fieldName", "timestamp"))
     }
     
     func testMul() {
         let obj = SCObject(collection: collection)
         obj.mul("fieldName", SCDouble(1.23))
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.Mul("fieldName", SCDouble(1.23)))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.mul("fieldName", SCDouble(1.23)))
     }
     
     func testMin() {
         let obj = SCObject(collection: collection)
         obj.min("fieldName", SCDouble(1.23))
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.Min("fieldName", SCDouble(1.23)))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.min("fieldName", SCDouble(1.23)))
     }
     
     func testMax() {
         let obj = SCObject(collection: collection)
         obj.max("fieldName", SCDouble(1.23))
-        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.Max("fieldName", SCDouble(1.23)))
+        XCTAssertEqual(obj.update.operators.last, SCUpdateOperator.max("fieldName", SCDouble(1.23)))
     }
     
     func testGetById() {
         
-        let expectation = expectationWithDescription("GetById")
+        let expectation = self.expectation(description: "GetById")
         
         let obj = SCObject(collection: collection)
         obj.set([
@@ -142,14 +142,14 @@ class TestSCObject: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
     
     
     func testSave() {
         
-        let expectation = expectationWithDescription("Save")
+        let expectation = self.expectation(description: "Save")
         
         let obj = SCObject(collection: collection)
         obj.set([
@@ -176,12 +176,12 @@ class TestSCObject: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testRemove() {
         
-        let expectation = expectationWithDescription("Remove")
+        let expectation = self.expectation(description: "Remove")
         
         let obj = SCObject(collection: collection)
         obj.set([
@@ -210,12 +210,12 @@ class TestSCObject: XCTestCase {
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testRemoveNullId() {
         
-        let expectation = expectationWithDescription("RemoveNullId")
+        let expectation = self.expectation(description: "RemoveNullId")
         
         let obj = SCObject(collection: collection)
         
@@ -226,7 +226,7 @@ class TestSCObject: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
         
     }
 }
