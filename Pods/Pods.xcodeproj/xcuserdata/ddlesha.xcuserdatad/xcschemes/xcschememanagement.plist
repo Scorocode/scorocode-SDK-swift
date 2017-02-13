@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-SC-SCTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SC.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -23,6 +28,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>3BFDAFB63AA2CFDFE85432D3A911C5AC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3E921DF50D9836845408D7DB7085D177</key>
 		<dict>
 			<key>primary</key>
 			<true/>

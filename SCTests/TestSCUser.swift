@@ -11,11 +11,11 @@ import XCTest
 
 class TestSCUser: XCTestCase {
     
-    private let username = "juggle"
-    private let email = "ara@juggle.ru"
-    private let password = "select"
+    private let username = "alexey"
+    private let email = "alexey@company.com"
+    private let password = "alexey"
     
-    private let timeout = 3.0
+    private let timeout = 5.0
     
     override func setUp() {
         super.setUp()

@@ -41,7 +41,7 @@ class SCObjectViewController: UIViewController {
     }
     
     fileprivate func getObjectForEdit() {
-        SCObject.getById(objectId!, collection: "testcoll") {
+        SCObject.getById(objectId!, collection: "testcollection") {
             success, error, result in
             self.data = result!["0"] as? [String: AnyObject]
             self.navigationItem.rightBarButtonItem?.title = "Update"
@@ -60,7 +60,7 @@ class SCObjectViewController: UIViewController {
             
             var updateDic = [String: SCValue]()
             
-            let obj = SCObject(collection: "testcoll")
+            let obj = SCObject(collection: "testcollection")
             if let string = stringTextField.text, string != "" {
                 updateDic["fieldString"] = SCString(string)
             }
@@ -75,17 +75,17 @@ class SCObjectViewController: UIViewController {
                     let alert = UIAlertController(title: "Успешно сохранено", message: nil, preferredStyle: .alert)
                     let ok = UIAlertAction(title: "OK", style: .default) {
                         action in
-                        self.navigationController?.popViewController(animated: true)
+                        let _ = self.navigationController?.popViewController(animated: true)
                     }
                     alert.addAction(ok)
                     self.present(alert, animated: true, completion: nil)
                 } else {
-                    print(error)
+                    print(error ?? "Ошибка при сохранении")
                 }
             }
             
         case "Edit":
-            let obj = SCObject(collection: "testcoll", id: objectId)
+            let obj = SCObject(collection: "testcollection", id: objectId)
             var updateDic = [String: SCValue]()
             
             if let string = stringTextField.text, string != "" {
@@ -101,7 +101,7 @@ class SCObjectViewController: UIViewController {
                     let alert = UIAlertController(title: "Успешно сохранено", message: nil, preferredStyle: .alert)
                     let ok = UIAlertAction(title: "OK", style: .default) {
                         action in
-                        self.navigationController?.popViewController(animated: true)
+                        let _ = self.navigationController?.popViewController(animated: true)
                     }
                     alert.addAction(ok)
                     self.present(alert, animated: true, completion: nil)
@@ -115,7 +115,7 @@ class SCObjectViewController: UIViewController {
     }
     
     @IBAction fileprivate func trashPressed() {
-        let obj = SCObject(collection: "testcoll", id: objectId)
+        let obj = SCObject(collection: "testcollection", id: objectId)
         obj.remove() {
             success, error, result in
             if success {
@@ -124,14 +124,14 @@ class SCObjectViewController: UIViewController {
                         let alert = UIAlertController(title: "Успешно удалено", message: nil, preferredStyle: .alert)
                         let ok = UIAlertAction(title: "OK", style: .default) {
                             action in
-                            self.navigationController?.popViewController(animated: true)
+                            let _ = self.navigationController?.popViewController(animated: true)
                         }
                         alert.addAction(ok)
                         self.present(alert, animated: true, completion: nil)
                     }
                 }
             } else {
-                print(error)
+                print(error ?? "Ошибка при удалении")
             }
         }
     }

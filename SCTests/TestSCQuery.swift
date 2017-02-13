@@ -22,7 +22,7 @@ class TestSCQuery: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        query = SCQuery(collection: "testcoll")
+        query = SCQuery(collection: "testcollection")
     }
     
     override func tearDown() {
@@ -32,7 +32,7 @@ class TestSCQuery: XCTestCase {
     
 
     func testCollection() {
-        XCTAssertEqual(query.collection, "testcoll")
+        XCTAssertEqual(query.collection, "testcollection")
     }
     
     func testUserQuery() {

@@ -7,29 +7,6 @@
 //
 
 import UIKit
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
 
 
 class SCListViewController: UIViewController {
@@ -37,7 +14,7 @@ class SCListViewController: UIViewController {
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate weak var searchField: UITextField!
     
-    fileprivate var data = [[String: AnyObject]]()
+    var data = [[String: String]]()
     fileprivate var selectedIndex = 0
     
     override func viewDidLoad() {
@@ -55,20 +32,21 @@ class SCListViewController: UIViewController {
     }
     
     fileprivate func getObjects() {
-        var query = SCQuery(collection: "testcoll")
-        query.descending("createdAt")
+        var query = SCQuery(collection: "users")
         if let search = searchField.text, search != "" {
-            query.equalTo("fieldString", SCString(search))
+            query.equalTo("email", SCString(search))
         }
         query.find() {
             success, error, result in
-            self.data.removeAll()
-            let keys = result!.keys
-            let sortedKeys = keys.sorted() {
-                Double($1) > Double($0)
+            guard (result?.values.count)! > 0 else {
+                return
             }
-            for key in sortedKeys {
-                self.data.append(result![key] as! [String: AnyObject])
+            self.data.removeAll()
+            for elem in (result?.values)! {
+                let e = elem as! [String:AnyObject]
+                if let username = e["username"] as? String, let email = e["email"] as? String {
+                    self.data.append(["username":username, "email":email])
+                }
             }
             self.tableView.reloadData()
         }
@@ -97,7 +75,7 @@ class SCListViewController: UIViewController {
             let mode = sender as! String
             vc.mode = mode
             if mode == "Edit" {
-                vc.objectId = (data[selectedIndex]["_id"] as! String)
+                //vc.objectId = (data[selectedIndex]["_id"] as! String)
             }
         }
     }
@@ -120,18 +98,7 @@ extension SCListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ObjectCell", for: indexPath)
-        let object = data[indexPath.row]
-        var text = ""
-        if let fieldString = object["fieldString"] as? String {
-            text += fieldString
-        }
-        if let fieldNumber = object["fieldNumber"] as? Double {
-            if text.characters.count > 0 {
-                text += ";"
-            }
-            text += String(fieldNumber)
-        }
-        cell.textLabel?.text = text
+        
         return cell
     }
     

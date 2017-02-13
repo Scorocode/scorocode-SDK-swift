@@ -63,8 +63,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.login(body as [String : Any])).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -95,8 +95,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.logout(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error)
                 return
             }
@@ -125,8 +125,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.register(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -166,8 +166,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.insert(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -201,8 +201,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.remove(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -232,8 +232,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.update(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -263,8 +263,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.updateById(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -311,8 +311,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.find(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -321,10 +321,11 @@ class SCAPI {
                 let response = JSON(responseValue)
                 if !response["error"].boolValue {
                     let base64String = response["result"].stringValue
-                    let data = Data(base64Encoded: base64String.data(using: String.Encoding.utf8)!, options: NSData.Base64DecodingOptions())
+                    let data = Data(base64Encoded: base64String.data(using: String.Encoding.utf8)!, options: Data.Base64DecodingOptions())
                     let bson = BSON()
-                    let dictionary = bson.dictionaryFromBSONData(BSONData: data!)
-                    callback(true, nil, dictionary as [String : Any]?)
+                    let dictionary = bson.dictionaryFromBSONData(BSONData: data!) as [String:AnyObject]
+                    //print(dictionary)
+                    callback(true, nil, dictionary)
                 } else {
                     callback(false, self.makeError(response), nil)
                 }
@@ -345,8 +346,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.count(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -390,8 +391,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.getFileLink(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -424,8 +425,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.upload(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error)
                 return
             }
@@ -456,8 +457,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.deleteFile(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error)
                 return
             }
@@ -489,8 +490,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.sendEmail(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -520,8 +521,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.sendPush(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -551,8 +552,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.sendSms(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }
@@ -582,8 +583,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.scripts(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error)
                 return
             }
@@ -608,8 +609,8 @@ class SCAPI {
         Alamofire.request(SCAPIRouter.stat(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
-                print(responseJSON.result.error)
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
                 callback(false, error, nil)
                 return
             }

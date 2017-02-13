@@ -11,7 +11,7 @@ import XCTest
 
 class TestSCObject: XCTestCase {
     
-    let collection = "testcoll"
+    let collection = "testcollection"
     
     private let timeout = 3.0
     

@@ -105,8 +105,8 @@ class BSON {
                 value = dictionaryFromBSONBytes(byteArray: Array(byteArray[pointer...pointer + size - 1]))
                 pointer = pointer + size
             }
-            debugPrint("added type: \(type) name: \(name) value: \(value)")
-            dictionary[name] = value
+            //debugPrint("added type: \(type) name: \(name) value: \(value)")
+            dictionary[name] = value as Any
         }
         return dictionary
     }

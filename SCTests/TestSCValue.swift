@@ -46,7 +46,7 @@ class TestSCValue: XCTestCase {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let scDate = SCDate(dateFormatter.date(from: "2016-05-31")!)
-        XCTAssert((scDate.apiValue as! String) == "2016-05-30T21:00:00Z")
+        XCTAssert((scDate.apiValue as! String) == "2016-05-30T20:00:00Z")
     }
     
     func testSCArray() {
@@ -57,9 +57,13 @@ class TestSCValue: XCTestCase {
     }
     
     func testSCDictionary() {
+        // let dic = SCDictionary(["key1": SCString("AB"), "key2": SCBool(false)])
+        //XCTAssert(dic.apiValue as! NSObject == ["key1": "AB", "key2": false])
         let dic = SCDictionary(["key1": SCString("AB"), "key2": SCBool(false)])
-        XCTAssertEqual((dic.apiValue as! Dictionary)["key1"]!, "AB")
-        XCTAssertEqual((dic.apiValue as! Dictionary)["key2"]!, false)
+        let dic2 = (dic.apiValue as! [String:AnyObject])
+        let dic3 = ["key1": "AB" as AnyObject, "key2": false as AnyObject]
+        
+        XCTAssertEqual(NSDictionary(dictionary: dic2).isEqual(to: dic3), true)
     }
     
     func testEqualBool() {
