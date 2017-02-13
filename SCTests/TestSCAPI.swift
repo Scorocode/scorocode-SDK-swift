@@ -15,18 +15,12 @@ class TestSCAPI: XCTestCase {
     private let email = "alexey@company.com"
     private let password = "alexey"
     
-    /*private let applicationId = ""
+    private let applicationId = ""
     private let clientId = ""
     private let accessKey = ""
     private let fileKey = ""
     private let messageKey = ""
-    */
-    let applicationId = "98bc4bacb5edea727cfb8fae25f71b59"
-    let clientId = "39169707deb69fc061c5c995aa4cdefe"
-    let accessKey = "61ad813bd71bd4f05aea53a3c996d53a"
-    let fileKey = "351cb3d71efef69e346ac5657dd16c1c"
-    let messageKey = "35d5a173e0391ae83d60a6a756a44051"
-    
+ 
     private let collection = "testcollection"
     
     private let timeout = 3.0

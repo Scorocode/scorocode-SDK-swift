@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		05ECCC9848E91DDD5810D5FD /* Pods_SC_SCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB9E7A367E603946D665A379 /* Pods_SC_SCTests.framework */; };
-		34A2311A1CF4448600F5B9A8 /* SCLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A231191CF4448600F5B9A8 /* SCLoginViewController.swift */; };
-		34A2311C1CF444D200F5B9A8 /* SCSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2311B1CF444D200F5B9A8 /* SCSignupViewController.swift */; };
-		34A2311E1CF44F9600F5B9A8 /* SCListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2311D1CF44F9600F5B9A8 /* SCListViewController.swift */; };
-		34A231201CF4543F00F5B9A8 /* SCObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2311F1CF4543F00F5B9A8 /* SCObjectViewController.swift */; };
 		34AA50861CFB994200633BF7 /* SC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA507C1CFB994200633BF7 /* SC.swift */; };
 		34AA50871CFB994200633BF7 /* SCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA507D1CFB994200633BF7 /* SCMessage.swift */; };
 		34AA50881CFB994200633BF7 /* SCObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AA507E1CFB994200633BF7 /* SCObject.swift */; };
@@ -56,10 +52,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		34A231191CF4448600F5B9A8 /* SCLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLoginViewController.swift; sourceTree = "<group>"; };
-		34A2311B1CF444D200F5B9A8 /* SCSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCSignupViewController.swift; sourceTree = "<group>"; };
-		34A2311D1CF44F9600F5B9A8 /* SCListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCListViewController.swift; sourceTree = "<group>"; };
-		34A2311F1CF4543F00F5B9A8 /* SCObjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCObjectViewController.swift; sourceTree = "<group>"; };
 		34AA507C1CFB994200633BF7 /* SC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SC.swift; sourceTree = "<group>"; };
 		34AA507D1CFB994200633BF7 /* SCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCMessage.swift; sourceTree = "<group>"; };
 		34AA507E1CFB994200633BF7 /* SCObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCObject.swift; sourceTree = "<group>"; };
@@ -182,10 +174,6 @@
 				34AA50761CFB991700633BF7 /* SCLib */,
 				34EB67A61CD1E3C20052A8D3 /* AppDelegate.swift */,
 				34EB67AA1CD1E3C20052A8D3 /* Main.storyboard */,
-				34A231191CF4448600F5B9A8 /* SCLoginViewController.swift */,
-				34A2311B1CF444D200F5B9A8 /* SCSignupViewController.swift */,
-				34A2311D1CF44F9600F5B9A8 /* SCListViewController.swift */,
-				34A2311F1CF4543F00F5B9A8 /* SCObjectViewController.swift */,
 				34EB67AD1CD1E3C20052A8D3 /* Assets.xcassets */,
 				34EB67AF1CD1E3C20052A8D3 /* LaunchScreen.storyboard */,
 				34EB67B21CD1E3C20052A8D3 /* Info.plist */,
@@ -444,16 +432,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34A2311C1CF444D200F5B9A8 /* SCSignupViewController.swift in Sources */,
 				34AA50881CFB994200633BF7 /* SCObject.swift in Sources */,
 				34AA50861CFB994200633BF7 /* SC.swift in Sources */,
-				34A231201CF4543F00F5B9A8 /* SCObjectViewController.swift in Sources */,
 				34AA50891CFB994200633BF7 /* SCOperator.swift in Sources */,
 				34AA508D1CFB994200633BF7 /* SCUpdateOperator.swift in Sources */,
 				34AA508B1CFB994200633BF7 /* SCScript.swift in Sources */,
 				34AA50941CFB996B00633BF7 /* SCAPIRouter.swift in Sources */,
-				34A2311A1CF4448600F5B9A8 /* SCLoginViewController.swift in Sources */,
-				34A2311E1CF44F9600F5B9A8 /* SCListViewController.swift in Sources */,
 				34AA50931CFB996B00633BF7 /* SCAPI.swift in Sources */,
 				6228AF211E51983B0098AEB8 /* bson.swift in Sources */,
 				34AA50871CFB994200633BF7 /* SCMessage.swift in Sources */,

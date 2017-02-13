@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCTests/TestSCAPI.swift"
-            timestampString = "508673324.140154"
+            timestampString = "508677906.643284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "testUpdate()"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCTests/TestSCAPI.swift"
-            timestampString = "508673324.140154"
+            timestampString = "508677906.643284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
             landmarkName = "testSendSMS()"
             landmarkType = "7">
          </BreakpointContent>
