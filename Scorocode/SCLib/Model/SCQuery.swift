@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-struct SCQuery {
+public struct SCQuery {
     
     fileprivate let _collection: String
     var collection: String {

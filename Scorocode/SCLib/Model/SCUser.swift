@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SCUser: SCObject {
+public class SCUser: SCObject {
     
     init() {
         super.init(collection: "users", id: nil)

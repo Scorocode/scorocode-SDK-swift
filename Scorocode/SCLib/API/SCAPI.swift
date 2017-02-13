@@ -15,7 +15,7 @@ enum SCError {
     case api(String, String)
 }
 
-class SCAPI {
+public class SCAPI {
     
     fileprivate let kApplicationId = "app"
     fileprivate let kClientKey = "cli"

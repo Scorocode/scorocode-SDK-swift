@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SCScript {
+public struct SCScript {
     
     static func run(_ scriptId: String, pool: [String: AnyObject], callback: @escaping (Bool, SCError?) -> Void) {
         

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SCMessage {
+public struct SCMessage {
     
     static func sendEmail(_ query: SCQuery, subject: String, text: String, callback: @escaping (Bool, SCError?, Int?) -> Void) {
         

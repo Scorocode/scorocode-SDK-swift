@@ -21,7 +21,7 @@ struct SCNewObjectAttributes {
     }
 }
 
-class SCObject {
+public class SCObject {
     
     fileprivate var _id: String?
     var id: String? {

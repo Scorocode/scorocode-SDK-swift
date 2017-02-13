@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BSON {
+public class BSON {
     //BSON types
     enum BSONType: UInt8 {
         case double = 0x01
@@ -51,11 +51,11 @@ class BSON {
     }
 
     //MARK: Deserialization
-    public func dictionaryFromBSONData(BSONData: Data) -> [String:Any] {
+    func dictionaryFromBSONData(BSONData: Data) -> [String:Any] {
         return dictionaryFromBSONBytes(byteArray: [UInt8](BSONData))
     }
     
-    private func dictionaryFromBSONBytes(byteArray: [UInt8]) -> [String:Any] {
+    func dictionaryFromBSONBytes(byteArray: [UInt8]) -> [String:Any] {
         var pointer: Int = 4 //skip size
         let length = byteArray.count
         var dictionary = [String:Any]()
@@ -111,7 +111,7 @@ class BSON {
         return dictionary
     }
 
-    private func arrayFromBSONBytes(byteArray: [UInt8]) -> [Any] {
+    func arrayFromBSONBytes(byteArray: [UInt8]) -> [Any] {
         let dictionary = dictionaryFromBSONBytes(byteArray: byteArray)
         return dictionary.sorted(by: { Int($0.0.0)! < Int($0.1.0)! }).map({$0.1})
     }
