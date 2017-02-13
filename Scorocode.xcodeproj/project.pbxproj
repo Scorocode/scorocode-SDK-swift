@@ -1,0 +1,691 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6283030B1E51E7A0007EA347 /* Scorocode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 628303011E51E7A0007EA347 /* Scorocode.framework */; };
+		628303121E51E7A0007EA347 /* Scorocode.h in Headers */ = {isa = PBXBuildFile; fileRef = 628303041E51E7A0007EA347 /* Scorocode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6283032C1E51E7D3007EA347 /* SCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283031D1E51E7D3007EA347 /* SCAPI.swift */; };
+		6283032D1E51E7D3007EA347 /* SCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283031D1E51E7D3007EA347 /* SCAPI.swift */; };
+		6283032E1E51E7D3007EA347 /* SCAPIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283031E1E51E7D3007EA347 /* SCAPIRouter.swift */; };
+		6283032F1E51E7D3007EA347 /* SCAPIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283031E1E51E7D3007EA347 /* SCAPIRouter.swift */; };
+		628303301E51E7D3007EA347 /* bson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303201E51E7D3007EA347 /* bson.swift */; };
+		628303311E51E7D3007EA347 /* bson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303201E51E7D3007EA347 /* bson.swift */; };
+		628303321E51E7D3007EA347 /* SC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303221E51E7D3007EA347 /* SC.swift */; };
+		628303331E51E7D3007EA347 /* SC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303221E51E7D3007EA347 /* SC.swift */; };
+		628303341E51E7D3007EA347 /* SCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303231E51E7D3007EA347 /* SCMessage.swift */; };
+		628303351E51E7D3007EA347 /* SCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303231E51E7D3007EA347 /* SCMessage.swift */; };
+		628303361E51E7D3007EA347 /* SCObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303241E51E7D3007EA347 /* SCObject.swift */; };
+		628303371E51E7D3007EA347 /* SCObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303241E51E7D3007EA347 /* SCObject.swift */; };
+		628303381E51E7D3007EA347 /* SCOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303251E51E7D3007EA347 /* SCOperator.swift */; };
+		628303391E51E7D3007EA347 /* SCOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303251E51E7D3007EA347 /* SCOperator.swift */; };
+		6283033A1E51E7D3007EA347 /* SCQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303261E51E7D3007EA347 /* SCQuery.swift */; };
+		6283033B1E51E7D3007EA347 /* SCQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303261E51E7D3007EA347 /* SCQuery.swift */; };
+		6283033C1E51E7D3007EA347 /* SCScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303271E51E7D3007EA347 /* SCScript.swift */; };
+		6283033D1E51E7D3007EA347 /* SCScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303271E51E7D3007EA347 /* SCScript.swift */; };
+		6283033E1E51E7D3007EA347 /* SCUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303281E51E7D3007EA347 /* SCUpdate.swift */; };
+		6283033F1E51E7D3007EA347 /* SCUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303281E51E7D3007EA347 /* SCUpdate.swift */; };
+		628303401E51E7D3007EA347 /* SCUpdateOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303291E51E7D3007EA347 /* SCUpdateOperator.swift */; };
+		628303411E51E7D3007EA347 /* SCUpdateOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303291E51E7D3007EA347 /* SCUpdateOperator.swift */; };
+		628303421E51E7D3007EA347 /* SCUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283032A1E51E7D3007EA347 /* SCUser.swift */; };
+		628303431E51E7D3007EA347 /* SCUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283032A1E51E7D3007EA347 /* SCUser.swift */; };
+		628303441E51E7D3007EA347 /* SCValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283032B1E51E7D3007EA347 /* SCValue.swift */; };
+		628303451E51E7D3007EA347 /* SCValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283032B1E51E7D3007EA347 /* SCValue.swift */; };
+		628303531E51E815007EA347 /* TestSCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303461E51E815007EA347 /* TestSCAPI.swift */; };
+		628303551E51E815007EA347 /* TestSCValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303471E51E815007EA347 /* TestSCValue.swift */; };
+		628303571E51E815007EA347 /* TestSCUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303481E51E815007EA347 /* TestSCUser.swift */; };
+		628303591E51E815007EA347 /* TestSCQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303491E51E815007EA347 /* TestSCQuery.swift */; };
+		6283035B1E51E815007EA347 /* TestSCObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283034A1E51E815007EA347 /* TestSCObject.swift */; };
+		6283035D1E51E815007EA347 /* TestSCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283034B1E51E815007EA347 /* TestSCMessage.swift */; };
+		6283035F1E51E815007EA347 /* TestSCUpdateOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283034C1E51E815007EA347 /* TestSCUpdateOperator.swift */; };
+		628303611E51E815007EA347 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283034D1E51E815007EA347 /* Utils.swift */; };
+		628303631E51E815007EA347 /* TestSCAPIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283034E1E51E815007EA347 /* TestSCAPIRouter.swift */; };
+		628303651E51E815007EA347 /* TestSCOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283034F1E51E815007EA347 /* TestSCOperator.swift */; };
+		628303671E51E815007EA347 /* TestSCUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303501E51E815007EA347 /* TestSCUpdate.swift */; };
+		628303691E51E815007EA347 /* TestSC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303511E51E815007EA347 /* TestSC.swift */; };
+		8BB5EF239B3B52124562EB4C /* Pods_Scorocode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B217DB4E5BAEC28601AC230 /* Pods_Scorocode.framework */; };
+		ED905BF29DDFDD7CBF26152C /* Pods_Scorocode_ScorocodeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B9112C348AA9C0E77837B0F /* Pods_Scorocode_ScorocodeTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6283030C1E51E7A0007EA347 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 628302F81E51E7A0007EA347 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 628303001E51E7A0007EA347;
+			remoteInfo = Scorocode;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0E3A526309AD8B01F87D00B9 /* Pods-Scorocode-ScorocodeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode-ScorocodeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode-ScorocodeTests/Pods-Scorocode-ScorocodeTests.release.xcconfig"; sourceTree = "<group>"; };
+		3B9112C348AA9C0E77837B0F /* Pods_Scorocode_ScorocodeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scorocode_ScorocodeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B217DB4E5BAEC28601AC230 /* Pods_Scorocode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scorocode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		628303011E51E7A0007EA347 /* Scorocode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Scorocode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		628303041E51E7A0007EA347 /* Scorocode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scorocode.h; sourceTree = "<group>"; };
+		628303051E51E7A0007EA347 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6283030A1E51E7A0007EA347 /* ScorocodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScorocodeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		628303111E51E7A0007EA347 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6283031D1E51E7D3007EA347 /* SCAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCAPI.swift; sourceTree = "<group>"; };
+		6283031E1E51E7D3007EA347 /* SCAPIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCAPIRouter.swift; sourceTree = "<group>"; };
+		628303201E51E7D3007EA347 /* bson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bson.swift; sourceTree = "<group>"; };
+		628303221E51E7D3007EA347 /* SC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SC.swift; sourceTree = "<group>"; };
+		628303231E51E7D3007EA347 /* SCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCMessage.swift; sourceTree = "<group>"; };
+		628303241E51E7D3007EA347 /* SCObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCObject.swift; sourceTree = "<group>"; };
+		628303251E51E7D3007EA347 /* SCOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOperator.swift; sourceTree = "<group>"; };
+		628303261E51E7D3007EA347 /* SCQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCQuery.swift; sourceTree = "<group>"; };
+		628303271E51E7D3007EA347 /* SCScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCScript.swift; sourceTree = "<group>"; };
+		628303281E51E7D3007EA347 /* SCUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCUpdate.swift; sourceTree = "<group>"; };
+		628303291E51E7D3007EA347 /* SCUpdateOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCUpdateOperator.swift; sourceTree = "<group>"; };
+		6283032A1E51E7D3007EA347 /* SCUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCUser.swift; sourceTree = "<group>"; };
+		6283032B1E51E7D3007EA347 /* SCValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCValue.swift; sourceTree = "<group>"; };
+		628303461E51E815007EA347 /* TestSCAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCAPI.swift; sourceTree = "<group>"; };
+		628303471E51E815007EA347 /* TestSCValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCValue.swift; sourceTree = "<group>"; };
+		628303481E51E815007EA347 /* TestSCUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCUser.swift; sourceTree = "<group>"; };
+		628303491E51E815007EA347 /* TestSCQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCQuery.swift; sourceTree = "<group>"; };
+		6283034A1E51E815007EA347 /* TestSCObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCObject.swift; sourceTree = "<group>"; };
+		6283034B1E51E815007EA347 /* TestSCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCMessage.swift; sourceTree = "<group>"; };
+		6283034C1E51E815007EA347 /* TestSCUpdateOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCUpdateOperator.swift; sourceTree = "<group>"; };
+		6283034D1E51E815007EA347 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		6283034E1E51E815007EA347 /* TestSCAPIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCAPIRouter.swift; sourceTree = "<group>"; };
+		6283034F1E51E815007EA347 /* TestSCOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCOperator.swift; sourceTree = "<group>"; };
+		628303501E51E815007EA347 /* TestSCUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCUpdate.swift; sourceTree = "<group>"; };
+		628303511E51E815007EA347 /* TestSC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSC.swift; sourceTree = "<group>"; };
+		89B635100CEF9CBD4395B4D2 /* Pods-Scorocode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode/Pods-Scorocode.release.xcconfig"; sourceTree = "<group>"; };
+		8F7FCA537D6E69B20F06D4A8 /* Pods-Scorocode-ScorocodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode-ScorocodeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode-ScorocodeTests/Pods-Scorocode-ScorocodeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BD492AAB02E73C88894BE2A0 /* Pods-Scorocode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode/Pods-Scorocode.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		628302FD1E51E7A0007EA347 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BB5EF239B3B52124562EB4C /* Pods_Scorocode.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		628303071E51E7A0007EA347 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6283030B1E51E7A0007EA347 /* Scorocode.framework in Frameworks */,
+				ED905BF29DDFDD7CBF26152C /* Pods_Scorocode_ScorocodeTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		26424AB247FA7C5942EAD4B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4B217DB4E5BAEC28601AC230 /* Pods_Scorocode.framework */,
+				3B9112C348AA9C0E77837B0F /* Pods_Scorocode_ScorocodeTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		47F53EE8C2C48B1E8D13C3BF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BD492AAB02E73C88894BE2A0 /* Pods-Scorocode.debug.xcconfig */,
+				89B635100CEF9CBD4395B4D2 /* Pods-Scorocode.release.xcconfig */,
+				8F7FCA537D6E69B20F06D4A8 /* Pods-Scorocode-ScorocodeTests.debug.xcconfig */,
+				0E3A526309AD8B01F87D00B9 /* Pods-Scorocode-ScorocodeTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		628302F71E51E7A0007EA347 = {
+			isa = PBXGroup;
+			children = (
+				6283031B1E51E7D3007EA347 /* SCLib */,
+				628303031E51E7A0007EA347 /* Scorocode */,
+				6283030E1E51E7A0007EA347 /* ScorocodeTests */,
+				628303021E51E7A0007EA347 /* Products */,
+				47F53EE8C2C48B1E8D13C3BF /* Pods */,
+				26424AB247FA7C5942EAD4B3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		628303021E51E7A0007EA347 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				628303011E51E7A0007EA347 /* Scorocode.framework */,
+				6283030A1E51E7A0007EA347 /* ScorocodeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		628303031E51E7A0007EA347 /* Scorocode */ = {
+			isa = PBXGroup;
+			children = (
+				628303041E51E7A0007EA347 /* Scorocode.h */,
+				628303051E51E7A0007EA347 /* Info.plist */,
+			);
+			path = Scorocode;
+			sourceTree = "<group>";
+		};
+		6283030E1E51E7A0007EA347 /* ScorocodeTests */ = {
+			isa = PBXGroup;
+			children = (
+				628303461E51E815007EA347 /* TestSCAPI.swift */,
+				628303471E51E815007EA347 /* TestSCValue.swift */,
+				628303481E51E815007EA347 /* TestSCUser.swift */,
+				628303491E51E815007EA347 /* TestSCQuery.swift */,
+				6283034A1E51E815007EA347 /* TestSCObject.swift */,
+				6283034B1E51E815007EA347 /* TestSCMessage.swift */,
+				6283034C1E51E815007EA347 /* TestSCUpdateOperator.swift */,
+				6283034D1E51E815007EA347 /* Utils.swift */,
+				6283034E1E51E815007EA347 /* TestSCAPIRouter.swift */,
+				6283034F1E51E815007EA347 /* TestSCOperator.swift */,
+				628303501E51E815007EA347 /* TestSCUpdate.swift */,
+				628303511E51E815007EA347 /* TestSC.swift */,
+				628303111E51E7A0007EA347 /* Info.plist */,
+			);
+			path = ScorocodeTests;
+			sourceTree = "<group>";
+		};
+		6283031B1E51E7D3007EA347 /* SCLib */ = {
+			isa = PBXGroup;
+			children = (
+				6283031C1E51E7D3007EA347 /* API */,
+				6283031F1E51E7D3007EA347 /* BSON */,
+				628303211E51E7D3007EA347 /* Model */,
+			);
+			name = SCLib;
+			path = Scorocode/SCLib;
+			sourceTree = "<group>";
+		};
+		6283031C1E51E7D3007EA347 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				6283031D1E51E7D3007EA347 /* SCAPI.swift */,
+				6283031E1E51E7D3007EA347 /* SCAPIRouter.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		6283031F1E51E7D3007EA347 /* BSON */ = {
+			isa = PBXGroup;
+			children = (
+				628303201E51E7D3007EA347 /* bson.swift */,
+			);
+			path = BSON;
+			sourceTree = "<group>";
+		};
+		628303211E51E7D3007EA347 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				628303221E51E7D3007EA347 /* SC.swift */,
+				628303231E51E7D3007EA347 /* SCMessage.swift */,
+				628303241E51E7D3007EA347 /* SCObject.swift */,
+				628303251E51E7D3007EA347 /* SCOperator.swift */,
+				628303261E51E7D3007EA347 /* SCQuery.swift */,
+				628303271E51E7D3007EA347 /* SCScript.swift */,
+				628303281E51E7D3007EA347 /* SCUpdate.swift */,
+				628303291E51E7D3007EA347 /* SCUpdateOperator.swift */,
+				6283032A1E51E7D3007EA347 /* SCUser.swift */,
+				6283032B1E51E7D3007EA347 /* SCValue.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		628302FE1E51E7A0007EA347 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				628303121E51E7A0007EA347 /* Scorocode.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		628303001E51E7A0007EA347 /* Scorocode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 628303151E51E7A0007EA347 /* Build configuration list for PBXNativeTarget "Scorocode" */;
+			buildPhases = (
+				838A3AD7094C176A73B85E53 /* [CP] Check Pods Manifest.lock */,
+				628302FC1E51E7A0007EA347 /* Sources */,
+				628302FD1E51E7A0007EA347 /* Frameworks */,
+				628302FE1E51E7A0007EA347 /* Headers */,
+				628302FF1E51E7A0007EA347 /* Resources */,
+				2638D8FA4090C9860B9B9C66 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Scorocode;
+			productName = Scorocode;
+			productReference = 628303011E51E7A0007EA347 /* Scorocode.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		628303091E51E7A0007EA347 /* ScorocodeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 628303181E51E7A0007EA347 /* Build configuration list for PBXNativeTarget "ScorocodeTests" */;
+			buildPhases = (
+				9E432F846F607D0D688A4099 /* [CP] Check Pods Manifest.lock */,
+				628303061E51E7A0007EA347 /* Sources */,
+				628303071E51E7A0007EA347 /* Frameworks */,
+				628303081E51E7A0007EA347 /* Resources */,
+				93EB8C6B527ABAEA85ACDB9C /* [CP] Embed Pods Frameworks */,
+				37F622E1943A975A29B7F7EE /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6283030D1E51E7A0007EA347 /* PBXTargetDependency */,
+			);
+			name = ScorocodeTests;
+			productName = ScorocodeTests;
+			productReference = 6283030A1E51E7A0007EA347 /* ScorocodeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		628302F81E51E7A0007EA347 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Prof-IT Group OOO";
+				TargetAttributes = {
+					628303001E51E7A0007EA347 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = Q9F94SAMUV;
+						ProvisioningStyle = Automatic;
+					};
+					628303091E51E7A0007EA347 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = Q9F94SAMUV;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 628302FB1E51E7A0007EA347 /* Build configuration list for PBXProject "Scorocode" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 628302F71E51E7A0007EA347;
+			productRefGroup = 628303021E51E7A0007EA347 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				628303001E51E7A0007EA347 /* Scorocode */,
+				628303091E51E7A0007EA347 /* ScorocodeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		628302FF1E51E7A0007EA347 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		628303081E51E7A0007EA347 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2638D8FA4090C9860B9B9C66 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Scorocode/Pods-Scorocode-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		37F622E1943A975A29B7F7EE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Scorocode-ScorocodeTests/Pods-Scorocode-ScorocodeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		838A3AD7094C176A73B85E53 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		93EB8C6B527ABAEA85ACDB9C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Scorocode-ScorocodeTests/Pods-Scorocode-ScorocodeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E432F846F607D0D688A4099 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		628302FC1E51E7A0007EA347 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6283032C1E51E7D3007EA347 /* SCAPI.swift in Sources */,
+				628303321E51E7D3007EA347 /* SC.swift in Sources */,
+				6283033E1E51E7D3007EA347 /* SCUpdate.swift in Sources */,
+				628303361E51E7D3007EA347 /* SCObject.swift in Sources */,
+				6283033C1E51E7D3007EA347 /* SCScript.swift in Sources */,
+				628303341E51E7D3007EA347 /* SCMessage.swift in Sources */,
+				628303441E51E7D3007EA347 /* SCValue.swift in Sources */,
+				628303401E51E7D3007EA347 /* SCUpdateOperator.swift in Sources */,
+				6283033A1E51E7D3007EA347 /* SCQuery.swift in Sources */,
+				628303421E51E7D3007EA347 /* SCUser.swift in Sources */,
+				6283032E1E51E7D3007EA347 /* SCAPIRouter.swift in Sources */,
+				628303301E51E7D3007EA347 /* bson.swift in Sources */,
+				628303381E51E7D3007EA347 /* SCOperator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		628303061E51E7A0007EA347 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6283035B1E51E815007EA347 /* TestSCObject.swift in Sources */,
+				628303571E51E815007EA347 /* TestSCUser.swift in Sources */,
+				628303591E51E815007EA347 /* TestSCQuery.swift in Sources */,
+				628303431E51E7D3007EA347 /* SCUser.swift in Sources */,
+				6283033D1E51E7D3007EA347 /* SCScript.swift in Sources */,
+				628303531E51E815007EA347 /* TestSCAPI.swift in Sources */,
+				628303691E51E815007EA347 /* TestSC.swift in Sources */,
+				6283032D1E51E7D3007EA347 /* SCAPI.swift in Sources */,
+				628303631E51E815007EA347 /* TestSCAPIRouter.swift in Sources */,
+				6283035D1E51E815007EA347 /* TestSCMessage.swift in Sources */,
+				6283032F1E51E7D3007EA347 /* SCAPIRouter.swift in Sources */,
+				6283033F1E51E7D3007EA347 /* SCUpdate.swift in Sources */,
+				628303331E51E7D3007EA347 /* SC.swift in Sources */,
+				628303411E51E7D3007EA347 /* SCUpdateOperator.swift in Sources */,
+				628303371E51E7D3007EA347 /* SCObject.swift in Sources */,
+				628303391E51E7D3007EA347 /* SCOperator.swift in Sources */,
+				6283035F1E51E815007EA347 /* TestSCUpdateOperator.swift in Sources */,
+				628303311E51E7D3007EA347 /* bson.swift in Sources */,
+				628303351E51E7D3007EA347 /* SCMessage.swift in Sources */,
+				628303651E51E815007EA347 /* TestSCOperator.swift in Sources */,
+				628303611E51E815007EA347 /* Utils.swift in Sources */,
+				6283033B1E51E7D3007EA347 /* SCQuery.swift in Sources */,
+				628303551E51E815007EA347 /* TestSCValue.swift in Sources */,
+				628303671E51E815007EA347 /* TestSCUpdate.swift in Sources */,
+				628303451E51E7D3007EA347 /* SCValue.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6283030D1E51E7A0007EA347 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 628303001E51E7A0007EA347 /* Scorocode */;
+			targetProxy = 6283030C1E51E7A0007EA347 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		628303131E51E7A0007EA347 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		628303141E51E7A0007EA347 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		628303161E51E7A0007EA347 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD492AAB02E73C88894BE2A0 /* Pods-Scorocode.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = Q9F94SAMUV;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Scorocode/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.scorocode.Scorocode;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		628303171E51E7A0007EA347 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89B635100CEF9CBD4395B4D2 /* Pods-Scorocode.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = Q9F94SAMUV;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Scorocode/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.scorocode.Scorocode;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		628303191E51E7A0007EA347 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F7FCA537D6E69B20F06D4A8 /* Pods-Scorocode-ScorocodeTests.debug.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = Q9F94SAMUV;
+				INFOPLIST_FILE = ScorocodeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.scorocode.ScorocodeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		6283031A1E51E7A0007EA347 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E3A526309AD8B01F87D00B9 /* Pods-Scorocode-ScorocodeTests.release.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = Q9F94SAMUV;
+				INFOPLIST_FILE = ScorocodeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.scorocode.ScorocodeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		628302FB1E51E7A0007EA347 /* Build configuration list for PBXProject "Scorocode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				628303131E51E7A0007EA347 /* Debug */,
+				628303141E51E7A0007EA347 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		628303151E51E7A0007EA347 /* Build configuration list for PBXNativeTarget "Scorocode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				628303161E51E7A0007EA347 /* Debug */,
+				628303171E51E7A0007EA347 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		628303181E51E7A0007EA347 /* Build configuration list for PBXNativeTarget "ScorocodeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				628303191E51E7A0007EA347 /* Debug */,
+				6283031A1E51E7A0007EA347 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 628302F81E51E7A0007EA347 /* Project object */;
+}

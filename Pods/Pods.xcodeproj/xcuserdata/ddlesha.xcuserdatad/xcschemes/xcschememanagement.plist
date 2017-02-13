@@ -9,12 +9,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-SC-SCTests.xcscheme</key>
+		<key>Pods-Scorocode-ScorocodeTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-SC.xcscheme</key>
+		<key>Pods-Scorocode.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3BFDAFB63AA2CFDFE85432D3A911C5AC</key>
+		<key>2FB8859FDBAC38B78DEC9854EB99A5A6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3E921DF50D9836845408D7DB7085D177</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>677405002E0560E6B008A7E36802E4D7</key>
+		<key>4DB8EFF80C49B1802A4926820449D5FA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B506BF60FB9CB5C971F49D3CF424F8D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
