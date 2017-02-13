@@ -2,8 +2,8 @@
 //  TestSCValue.swift
 //  SC
 //
-//  Created by Aleksandr Konakov on 16/05/16.
-//  Copyright © 2016 Aleksandr Konakov. All rights reserved.
+//  Created by Alexey Kuznetsov on 27/12/2016.
+//  Copyright © 2016 Prof-IT Group OOO. All rights reserved.
 //
 
 import XCTest
@@ -43,9 +43,9 @@ class TestSCValue: XCTestCase {
     }
     
     func testSCDate() {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let scDate = SCDate(dateFormatter.dateFromString("2016-05-31")!)
+        let scDate = SCDate(dateFormatter.date(from: "2016-05-31")!)
         XCTAssert((scDate.apiValue as! String) == "2016-05-30T21:00:00Z")
     }
     
@@ -53,12 +53,13 @@ class TestSCValue: XCTestCase {
         let v1 = SCString("AB")
         let v2 = SCString("CD")
         let arr = SCArray([v1, v2])
-        XCTAssert(arr.apiValue as! NSObject == ["AB", "CD"])
+        XCTAssert((arr.apiValue as! NSObject) as! Array<String> == ["AB", "CD"])
     }
     
     func testSCDictionary() {
         let dic = SCDictionary(["key1": SCString("AB"), "key2": SCBool(false)])
-        XCTAssert(dic.apiValue as! NSObject == ["key1": "AB", "key2": false])
+        XCTAssertEqual((dic.apiValue as! Dictionary)["key1"]!, "AB")
+        XCTAssertEqual((dic.apiValue as! Dictionary)["key2"]!, false)
     }
     
     func testEqualBool() {
@@ -98,10 +99,10 @@ class TestSCValue: XCTestCase {
     }
     
     func testEqualDate() {
-        let now = NSDate()
+        let now = Date()
         let v1 = SCDate(now)
         let v2 = SCDate(now)
-        let v3 = SCDate(now.dateByAddingTimeInterval(1))
+        let v3 = SCDate(now.addingTimeInterval(1))
         
         XCTAssertEqual(true, v1 == v2)
         XCTAssertNotEqual(true, v1 == v3)

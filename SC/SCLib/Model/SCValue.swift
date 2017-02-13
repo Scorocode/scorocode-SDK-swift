@@ -2,8 +2,8 @@
 //  SCFieldType.swift
 //  SC
 //
-//  Created by Aleksandr Konakov on 04/05/16.
-//  Copyright © 2016 Aleksandr Konakov. All rights reserved.
+//  Created by Alexey Kuznetsov on 27/12/2016.
+//  Copyright © 2016 Prof-IT Group OOO. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ protocol SCPullable {
 }
 
 protocol SCValue: SCPullable {
-    var apiValue: AnyObject { get }
+    var apiValue: Any { get }
 }
 
 struct SCBool: SCValue {
@@ -23,8 +23,8 @@ struct SCBool: SCValue {
         self.value = value
     }
 
-    var apiValue: AnyObject {
-        return value
+    var apiValue: Any {
+        return value as Any
     }
 }
 
@@ -35,8 +35,8 @@ struct SCString: SCValue {
         self.value = value
     }
 
-    var apiValue: AnyObject {
-        return value
+    var apiValue: Any {
+        return value as Any
     }
 }
 
@@ -47,8 +47,8 @@ struct SCInt: SCValue {
         self.value = value
     }
     
-    var apiValue: AnyObject {
-        return value
+    var apiValue: Any {
+        return value as Any
     }
 }
 
@@ -59,25 +59,25 @@ struct SCDouble: SCValue {
         self.value = value
     }
     
-    var apiValue: AnyObject {
-        return value
+    var apiValue: Any {
+        return value as Any
     }
 }
 
 struct SCDate: SCValue {
-    let value: NSDate
+    let value: Date
     
-    init(_ value: NSDate) {
+    init(_ value: Date) {
         self.value = value
     }
     
-    var apiValue: AnyObject {
-        let en_US_POSIX = NSLocale(localeIdentifier: "en_US_POSIX")
-        let rfc3339DateFormatter = NSDateFormatter()
+    var apiValue: Any {
+        let en_US_POSIX = Locale(identifier: "en_US_POSIX")
+        let rfc3339DateFormatter = DateFormatter()
         rfc3339DateFormatter.locale = en_US_POSIX
         rfc3339DateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssXXX"
-        rfc3339DateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-        return rfc3339DateFormatter.stringFromDate(value)
+        rfc3339DateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return rfc3339DateFormatter.string(from: value) as Any
     }
 }
 
@@ -88,7 +88,7 @@ struct SCArray: SCValue {
         self.value = value
     }
     
-    var apiValue: AnyObject {
+    var apiValue: Any {
         return value.map({ $0.apiValue })
     }
 }
@@ -100,12 +100,12 @@ struct SCDictionary: SCValue {
         self.value = value
     }
     
-    var apiValue: AnyObject {
-        var result = [String: AnyObject]()
+    var apiValue: Any {
+        var result = [String: Any]()
         for (key, val) in value {
             result[key] = val.apiValue
         }
-        return result
+        return result as Any
     }
 }
 
@@ -113,7 +113,7 @@ func == (lhs: [SCValue], rhs: [SCValue]) -> Bool {
     if lhs.count != rhs.count {
         return false
     }
-    for (index, leftValue) in lhs.enumerate() {
+    for (index, leftValue) in lhs.enumerated() {
         if leftValue != rhs[index] {
             return false
         }

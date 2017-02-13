@@ -2,8 +2,8 @@
 //  TestSCUser.swift
 //  SC
 //
-//  Created by Aleksandr Konakov on 20/05/16.
-//  Copyright © 2016 Aleksandr Konakov. All rights reserved.
+//  Created by Alexey Kuznetsov on 27/12/2016.
+//  Copyright © 2016 Prof-IT Group OOO. All rights reserved.
 //
 
 import XCTest
@@ -37,31 +37,31 @@ class TestSCUser: XCTestCase {
     
     func testLogin() {
         
-        let expectation = expectationWithDescription("Login")
+        let exp = expectation(description: "Login")
         
         let user = SCUser()
         user.login(email, password: password) {
             success, error, result in
             
-            assertSuccess(success, error, result)
+            assertSuccess(success: success, error: error, result: result)
             
             XCTAssertNotNil(result!["sessionId"])
             
-            expectation.fulfill()
+            exp.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testLogout() {
         
-        let expectation = expectationWithDescription("Logout")
+        let exp = expectation(description: "Logout")
         
         let user = SCUser()
         user.login(email, password: password) {
             success, error, result in
             
-            assertSuccess(success, error, result)
+            assertSuccess(success: success, error: error, result: result)
             
             XCTAssertNotNil(result!["sessionId"])
             
@@ -71,39 +71,39 @@ class TestSCUser: XCTestCase {
                 XCTAssertTrue(success)
                 XCTAssertNil(error)
                 
-                expectation.fulfill()
+                exp.fulfill()
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testSignup() {
         
-        let expectation = expectationWithDescription("Signup")
+        let exp = expectation(description: "Signup")
         
         let user = SCUser()
-        user.signup(username, email: "\(NSUUID().UUIDString)@domain.ru", password: password) {
+        user.signup(username, email: "\(NSUUID().uuidString)@domain.ru", password: password) {
             success, error, result in
             
-            assertSuccess(success, error, result)
+            assertSuccess(success: success, error: error, result: result)
             
             XCTAssertNotNil(result!["_id"])
             
             user.data["username"] = self.username
             user.data["password"] = self.password
-            user.data["email"] = "\(NSUUID().UUIDString)@domain.ru"
+            user.data["email"] = "\(NSUUID().uuidString)@domain.ru"
             
             user.signup() {
                 success, error, result in
-                assertSuccess(success, error, result)
+                assertSuccess(success: success, error: error, result: result)
                 XCTAssertNotNil(result!["_id"])
                 
-                expectation.fulfill()
+                exp.fulfill()
             }
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
 }

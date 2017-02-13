@@ -2,8 +2,8 @@
 //  TestSCMessage.swift
 //  SC
 //
-//  Created by Aleksandr Konakov on 20/05/16.
-//  Copyright © 2016 Aleksandr Konakov. All rights reserved.
+//  Created by Alexey Kuznetsov on 27/12/2016.
+//  Copyright © 2016 Prof-IT Group OOO. All rights reserved.
 //
 
 import XCTest
@@ -25,43 +25,43 @@ class TestSCMessage: XCTestCase {
     
     func testSendEmail() {
         
-        let expectation = expectationWithDescription("SendEmail")
+        let exp = expectation(description: "SendEmail")
         
         let query = SCQuery(collection: "users")
         SCMessage.sendEmail(query, subject: "Subject", text: "Mesage text") {
             success, error, result in
-            assertSuccess(success, error, result)
-            expectation.fulfill()
+            assertSuccess(success: success, error: error, result: result)
+            exp.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testSendPush() {
         
-        let expectation = expectationWithDescription("SendPush")
+        let exp = expectation(description: "SendPush")
         
         let query = SCQuery(collection: "devices")
         SCMessage.sendPush(query, subject: "Subject", text: "Mesage text") {
             success, error, result in
-            assertSuccess(success, error, result)
-            expectation.fulfill()
+            assertSuccess(success: success, error: error, result: result)
+            exp.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
     
     func testSendSms() {
         
-        let expectation = expectationWithDescription("SendSms")
+        let exp = expectation(description: "SendSms")
         
         let query = SCQuery(collection: "users")
         SCMessage.sendSms(query, subject: "Subject", text: "Mesage text") {
             success, error, result in
-            assertSuccess(success, error, result)
-            expectation.fulfill()
+            assertSuccess(success: success, error: error, result: result)
+            exp.fulfill()
         }
         
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
     }
 }

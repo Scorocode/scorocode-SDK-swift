@@ -2,15 +2,15 @@
 //  SC.swift
 //  SC
 //
-//  Created by Aleksandr Konakov on 28/04/16.
-//  Copyright © 2016 Aleksandr Konakov. All rights reserved.
+//  Created by Alexey Kuznetsov on 27/12/2016.
+//  Copyright © 2016 Prof-IT Group OOO. All rights reserved.
 //
 
 import Foundation
 
 class SC {
     
-    class func initWith(applicationId applicationId: String, clientId: String, accessKey: String, fileKey: String, messageKey: String) {
+    class func initWith(applicationId: String, clientId: String, accessKey: String, fileKey: String, messageKey: String) {
         SCAPI.sharedInstance.applicationId = applicationId
         SCAPI.sharedInstance.clientId = clientId
         SCAPI.sharedInstance.accessKey = accessKey

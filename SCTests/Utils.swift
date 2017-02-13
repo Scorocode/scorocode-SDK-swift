@@ -2,21 +2,21 @@
 //  Utils.swift
 //  SC
 //
-//  Created by Aleksandr Konakov on 20/05/16.
-//  Copyright © 2016 Aleksandr Konakov. All rights reserved.
+//  Created by Alexey Kuznetsov on 27/12/2016.
+//  Copyright © 2016 Prof-IT Group OOO. All rights reserved.
 //
 
 import XCTest
 @testable import SC
 
-func assertSuccess(success: Bool, _ error: SCError?, _ result: AnyObject?) {
+func assertSuccess(success: Bool, error: SCError?, result: Any?) {
     
     XCTAssertTrue(success)
     XCTAssertNil(error)
     XCTAssertNotNil(result)
 }
 
-func assertError(success: Bool, _ error: SCError?, _ result: AnyObject?) {
+func assertError(success: Bool, error: SCError?, result: Any?) {
     
     XCTAssertFalse(success)
     XCTAssertNotNil(error)

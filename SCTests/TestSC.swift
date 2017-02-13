@@ -2,8 +2,8 @@
 //  TestSC.swift
 //  SC
 //
-//  Created by Aleksandr Konakov on 18/05/16.
-//  Copyright © 2016 Aleksandr Konakov. All rights reserved.
+//  Created by Alexey Kuznetsov on 27/12/2016.
+//  Copyright © 2016 Prof-IT Group OOO. All rights reserved.
 //
 
 import XCTest
