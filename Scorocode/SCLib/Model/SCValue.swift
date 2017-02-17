@@ -19,7 +19,7 @@ public protocol SCValue: SCPullable {
 public struct SCBool: SCValue {
     let value: Bool
     
-    init(_ value: Bool) {
+    public init(_ value: Bool) {
         self.value = value
     }
 
@@ -31,7 +31,7 @@ public struct SCBool: SCValue {
 public struct SCString: SCValue {
     let value: String
     
-    init(_ value: String) {
+    public init(_ value: String) {
         self.value = value
     }
 
@@ -43,7 +43,7 @@ public struct SCString: SCValue {
 public struct SCInt: SCValue {
     let value: Int
     
-    init(_ value: Int) {
+    public init(_ value: Int) {
         self.value = value
     }
     
@@ -55,7 +55,7 @@ public struct SCInt: SCValue {
 public struct SCDouble: SCValue {
     let value: Double
     
-    init(_ value: Double) {
+    public init(_ value: Double) {
         self.value = value
     }
     
@@ -67,7 +67,7 @@ public struct SCDouble: SCValue {
 public struct SCDate: SCValue {
     let value: Date
     
-    init(_ value: Date) {
+    public init(_ value: Date) {
         self.value = value
     }
     
@@ -84,7 +84,7 @@ public struct SCDate: SCValue {
 public struct SCArray: SCValue {
     let value: [SCValue]
     
-    init(_ value: [SCValue]) {
+    public init(_ value: [SCValue]) {
         self.value = value
     }
     
@@ -96,7 +96,7 @@ public struct SCArray: SCValue {
 public struct SCDictionary: SCValue {
     let value: [String: SCValue]
     
-    init(_ value: [String: SCValue]) {
+    public init(_ value: [String: SCValue]) {
         self.value = value
     }
     
