@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-enum SCOperator: SCPullable {
+public enum SCOperator: SCPullable {
     
     case equalTo(String, SCValue)
     case notEqualTo(String, SCValue)
@@ -28,7 +28,7 @@ enum SCOperator: SCPullable {
     case or([SCOperator])
     case and([SCOperator])
     
-    var name: String? {
+    public var name: String? {
         switch self {
         case .equalTo(let name, _):
             return name
@@ -65,7 +65,7 @@ enum SCOperator: SCPullable {
         }
     }
     
-    var dic: Any {
+    public var dic: Any {
         
         switch self {
             
@@ -120,7 +120,7 @@ enum SCOperator: SCPullable {
         
     }
     
-    var expression: Any {
+    public var expression: Any {
         
         switch self {
             
@@ -176,7 +176,7 @@ enum SCOperator: SCPullable {
     }
 }
 
-func == (lhs: [SCOperator], rhs: [SCOperator]) -> Bool {
+public func == (lhs: [SCOperator], rhs: [SCOperator]) -> Bool {
     if lhs.count != rhs.count {
         return false
     }
@@ -188,12 +188,12 @@ func == (lhs: [SCOperator], rhs: [SCOperator]) -> Bool {
     return true
 }
 
-func !=(lhs: SCOperator, rhs: SCOperator) -> Bool {
+public func !=(lhs: SCOperator, rhs: SCOperator) -> Bool {
     return !(lhs == rhs)
 }
 
 
-func ==(lhs: SCOperator, rhs: SCOperator) -> Bool {
+public func ==(lhs: SCOperator, rhs: SCOperator) -> Bool {
     switch (lhs, rhs) {
         
     case (let SCOperator.equalTo(name1, v1), let SCOperator.equalTo(name2, v2)):

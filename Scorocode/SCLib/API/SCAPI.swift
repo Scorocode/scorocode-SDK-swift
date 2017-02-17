@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-enum SCError {
+public enum SCError {
     case system(String)
     case api(String, String)
 }

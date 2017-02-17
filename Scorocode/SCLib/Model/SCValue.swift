@@ -8,70 +8,70 @@
 
 import Foundation
 
-protocol SCPullable {
+public protocol SCPullable {
     
 }
 
-protocol SCValue: SCPullable {
+public protocol SCValue: SCPullable {
     var apiValue: Any { get }
 }
 
-struct SCBool: SCValue {
+public struct SCBool: SCValue {
     let value: Bool
     
     init(_ value: Bool) {
         self.value = value
     }
 
-    var apiValue: Any {
+    public var apiValue: Any {
         return value as Any
     }
 }
 
-struct SCString: SCValue {
+public struct SCString: SCValue {
     let value: String
     
     init(_ value: String) {
         self.value = value
     }
 
-    var apiValue: Any {
+    public var apiValue: Any {
         return value as Any
     }
 }
 
-struct SCInt: SCValue {
+public struct SCInt: SCValue {
     let value: Int
     
     init(_ value: Int) {
         self.value = value
     }
     
-    var apiValue: Any {
+    public var apiValue: Any {
         return value as Any
     }
 }
 
-struct SCDouble: SCValue {
+public struct SCDouble: SCValue {
     let value: Double
     
     init(_ value: Double) {
         self.value = value
     }
     
-    var apiValue: Any {
+    public var apiValue: Any {
         return value as Any
     }
 }
 
-struct SCDate: SCValue {
+public struct SCDate: SCValue {
     let value: Date
     
     init(_ value: Date) {
         self.value = value
     }
     
-    var apiValue: Any {
+    public var apiValue: Any {
         let en_US_POSIX = Locale(identifier: "en_US_POSIX")
         let rfc3339DateFormatter = DateFormatter()
         rfc3339DateFormatter.locale = en_US_POSIX
@@ -81,26 +81,26 @@ struct SCDate: SCValue {
     }
 }
 
-struct SCArray: SCValue {
+public struct SCArray: SCValue {
     let value: [SCValue]
     
     init(_ value: [SCValue]) {
         self.value = value
     }
     
-    var apiValue: Any {
+    public var apiValue: Any {
         return value.map({ $0.apiValue })
     }
 }
 
-struct SCDictionary: SCValue {
+public struct SCDictionary: SCValue {
     let value: [String: SCValue]
     
     init(_ value: [String: SCValue]) {
         self.value = value
     }
     
-    var apiValue: Any {
+    public var apiValue: Any {
         var result = [String: Any]()
         for (key, val) in value {
             result[key] = val.apiValue
@@ -109,7 +109,7 @@ struct SCDictionary: SCValue {
     }
 }
 
-func == (lhs: [SCValue], rhs: [SCValue]) -> Bool {
+public func == (lhs: [SCValue], rhs: [SCValue]) -> Bool {
     if lhs.count != rhs.count {
         return false
     }
@@ -121,7 +121,7 @@ func == (lhs: [SCValue], rhs: [SCValue]) -> Bool {
     return true
 }
 
-func == (lhs: [String: SCValue], rhs: [String: SCValue]) -> Bool {
+public func == (lhs: [String: SCValue], rhs: [String: SCValue]) -> Bool {
     if lhs.count != rhs.count {
         return false
     }
@@ -134,11 +134,11 @@ func == (lhs: [String: SCValue], rhs: [String: SCValue]) -> Bool {
 }
 
 
-func !=(lhs: SCValue, rhs: SCValue) -> Bool {
+public func !=(lhs: SCValue, rhs: SCValue) -> Bool {
     return !(lhs == rhs)
 }
 
-func ==(lhs: SCValue, rhs: SCValue) -> Bool {
+public func ==(lhs: SCValue, rhs: SCValue) -> Bool {
     if lhs is SCBool && rhs is SCBool {
         return (lhs as! SCBool).value == (rhs as! SCBool).value
     }
