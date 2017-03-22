@@ -45,8 +45,14 @@ public class BSON {
     }
     
     func fromByteArray<T>(_ value: [UInt8], _: T.Type) -> T {
+        /* crashes on 32bit arch.
         return value.withUnsafeBytes {
             $0.baseAddress!.load(as: T.self)
+        }*/
+        return value.withUnsafeBufferPointer {
+            $0.baseAddress!.withMemoryRebound(to: T.self, capacity: 1) {
+                $0.pointee
+            }
         }
     }
 
