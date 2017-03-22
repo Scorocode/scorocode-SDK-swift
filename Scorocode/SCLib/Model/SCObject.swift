@@ -154,7 +154,7 @@ public class SCObject {
     
     public func getFileLink(_ fieldName: String, fileName: String) -> String {
         guard let id = _id else {
-            SCError.system("Id не заполнен")
+            let _ = SCError.system("Id не заполнен")
             return ""
         }
         return SCAPI.sharedInstance.getFileLink(collectionId: _collection, documentId: id, fieldName: fieldName, fileName: fileName)

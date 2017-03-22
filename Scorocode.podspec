@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Scorocode'
-  s.version          = '0.1.5'
+  s.version          = '0.1.7'
   s.summary          = 'Scorocode ios SDK, swift 3'
  
   s.description      = <<-DESC
