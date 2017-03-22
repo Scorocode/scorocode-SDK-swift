@@ -363,49 +363,9 @@ public class SCAPI {
         }
     }
     
-    func getFile(_ collection: String, field: String, filename: String, callback: (Bool, SCError?) -> Void) {
-        
-        //let destination = Alamofire.Request.suggestedDownloadDestination(directory: .documentDirectory, domain: .userDomainMask)
-        let destination = DownloadRequest.suggestedDownloadDestination()
-        print("The file will be saved in \(destination)")
-        Alamofire.download(SCAPIRouter.getFile(collection, field, filename), to: destination).downloadProgress(queue: DispatchQueue.global(qos: .utility)) { progress in
-                print("Progress: \(progress.fractionCompleted)")
-            }
-            .response { response in
-                if let error = response.error {
-                    print("Failed with error: \(error)")
-                } else {
-                    print("Downloaded file successfully")
-                }
-        }
-    }
-    
-    func getFileLink(_ collection: String, fieldName: String, filename: String, callback: @escaping (Bool, SCError?, URL?) -> Void) {
-        var body = [String: Any]()
-        body[kApplicationId] = applicationId as Any?
-        body[kClientKey] = clientId as Any?
-        body[kCollection] = collection as Any?
-        body[kField] = fieldName as Any?
-        body[kFile] = filename as Any?
-        
-        Alamofire.request(SCAPIRouter.getFileLink(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].url)
-                } else {
-                    callback(false, self.makeError(response), nil)
-                }
-            }
-        }
+    func getFileLink(collectionId: String, documentId: String, fieldName: String, fileName: String) -> String {
+        return SCAPIRouter.baseURLString + "/getfile/\(applicationId)/\(collectionId)/\(fieldName)/\(documentId)/\(fileName)"
+        // https://api.scorocode.ru/api/v1/getfile/{app}/{coll}/{field}/{docId}/{file}
     }
     
     // MARK: File

@@ -12,7 +12,7 @@ import SwiftyJSON
 
 enum SCAPIRouter: URLRequestConvertible {
     
-    fileprivate static let baseURLString = "https://api.scorocode.ru/api/v1/"
+    public static let baseURLString = "https://api.scorocode.ru/api/v1/"
     
     case login([String: Any])
     case logout([String: Any])
@@ -25,8 +25,6 @@ enum SCAPIRouter: URLRequestConvertible {
     case count([String: Any])
     case upload([String: Any])
     case deleteFile([String: Any])
-    case getFile(String, String, String)
-    case getFileLink([String: Any])
     case sendEmail([String: Any])
     case sendPush([String: Any])
     case sendSms([String: Any])
@@ -71,12 +69,6 @@ enum SCAPIRouter: URLRequestConvertible {
                 
             case .deleteFile(let body):
                 return ("deletefile", body)
-                
-            case .getFile(let collection, let field, let filename):
-                return ("getfile/\(SCAPI.sharedInstance.applicationId)/\(collection)/\(field)/\(filename)", nil)
-                
-            case .getFileLink(let body):
-                return ("getfilelink", body)
                 
             case .sendEmail(let body):
                 return ("sendemail", body)
@@ -134,8 +126,6 @@ enum SCAPIRouter: URLRequestConvertible {
             
         case .upload: return .post
         case .deleteFile: return .post
-        case .getFile: return .get
-        case .getFileLink: return .post
             
         case .sendEmail: return .post
         case .sendPush: return .post

@@ -148,20 +148,16 @@ public class SCObject {
     }
     
     public func deleteFile(_ field: String, filename: String, callback: @escaping (Bool, SCError?) -> Void) {
-        
         guard let id = _id else { return }
-        
         SCAPI.sharedInstance.deleteFile(field, filename: filename, docId: id, collection: collection, callback: callback)
     }
     
-    public func getFile(_ field: String, filename: String, callback: (Bool, SCError?) -> Void) {
-        SCAPI.sharedInstance.getFile(self.collection, field: field, filename: filename, callback: callback)
-    }
-    
-    public func getFileLink(_ fieldName: String, callback: @escaping (Bool, SCError?, URL?) -> Void) {
-        if let filename = get(fieldName) as? String {
-            SCAPI.sharedInstance.getFileLink(_collection, fieldName: fieldName, filename: filename, callback: callback)
+    public func getFileLink(_ fieldName: String, fileName: String) -> String {
+        guard let id = _id else {
+            SCError.system("Id не заполнен")
+            return ""
         }
+        return SCAPI.sharedInstance.getFileLink(collectionId: _collection, documentId: id, fieldName: fieldName, fileName: fileName)
     }
     
 }
