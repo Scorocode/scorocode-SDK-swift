@@ -544,13 +544,14 @@ public class SCAPI {
     
     
     // MARK: Script
-    func scripts(_ scriptId: String, pool: [String: Any], callback: @escaping (Bool, SCError?) -> Void) {
+    func scripts(_ scriptId: String, pool: [String: Any], debug: Bool, callback: @escaping (Bool, SCError?) -> Void) {
         var body = [String: Any]()
         body[kApplicationId] = applicationId as Any?
         body[kClientKey] = clientId as Any?
         body[kAccessKey] = accessKey as Any?
         body[kScript] = scriptId as Any?
         body[kPool] = pool as Any?
+        body[kDebug] = debug ? NSNumber(value: true) : NSNumber(value: false)
         
         Alamofire.request(SCAPIRouter.scripts(body)).responseJSON() {
             responseJSON in
