@@ -364,7 +364,7 @@ public class SCAPI {
     }
     
     func getFileLink(collectionId: String, documentId: String, fieldName: String, fileName: String) -> String {
-        return SCAPIRouter.baseURLString + "/getfile/\(applicationId)/\(collectionId)/\(fieldName)/\(documentId)/\(fileName)"
+        return SCAPIRouter.baseURLString + "getfile/\(applicationId)/\(collectionId)/\(fieldName)/\(documentId)/\(fileName)"
         // https://api.scorocode.ru/api/v1/getfile/{app}/{coll}/{field}/{docId}/{file}
     }
     

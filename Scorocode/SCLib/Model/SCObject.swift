@@ -152,12 +152,12 @@ public class SCObject {
         SCAPI.sharedInstance.deleteFile(field, filename: filename, docId: id, collection: collection, callback: callback)
     }
     
-    public func getFileLink(_ fieldName: String, fileName: String) -> String {
-        guard let id = _id else {
+    public func getFileLink(documentId: String, fieldName: String, fileName: String) -> String {
+        guard documentId != "" else {
             let _ = SCError.system("Id не заполнен")
             return ""
         }
-        return SCAPI.sharedInstance.getFileLink(collectionId: _collection, documentId: id, fieldName: fieldName, fileName: fileName)
+        return SCAPI.sharedInstance.getFileLink(collectionId: _collection, documentId: documentId, fieldName: fieldName, fileName: fileName)
     }
     
 }
