@@ -25,7 +25,6 @@ enum SCAPIRouter: URLRequestConvertible {
     case count([String: Any])
     case upload([String: Any])
     case deleteFile([String: Any])
-    case sendEmail([String: Any])
     case sendPush([String: Any])
     case sendSms([String: Any])
     case scripts([String: Any])
@@ -69,9 +68,6 @@ enum SCAPIRouter: URLRequestConvertible {
                 
             case .deleteFile(let body):
                 return ("deletefile", body)
-                
-            case .sendEmail(let body):
-                return ("sendemail", body)
                 
             case .sendPush(let body):
                 return ("sendpush", body)
@@ -127,7 +123,6 @@ enum SCAPIRouter: URLRequestConvertible {
         case .upload: return .post
         case .deleteFile: return .post
             
-        case .sendEmail: return .post
         case .sendPush: return .post
         case .sendSms: return .post
             

@@ -26,7 +26,6 @@ public class SCAPI {
     fileprivate let kSessionId = "sess"
     fileprivate let kCollection = "coll"
     fileprivate let kMessage = "msg"
-    fileprivate let kMessageSubject = "subject"
     fileprivate let kMessageText = "text"
     fileprivate let kQuery = "query"
     fileprivate let kDoc = "doc"
@@ -40,6 +39,8 @@ public class SCAPI {
     fileprivate let kField = "field"
     fileprivate let kFile = "file"
     fileprivate let kContent = "content"
+    fileprivate let kDebug = "debug"
+    fileprivate let kData = "data"
     
     static let sharedInstance = SCAPI()
     
@@ -436,8 +437,7 @@ public class SCAPI {
 
     
     // MARK: Message
-    func sendEmail(_ query: SCQuery, subject: String, text: String, callback: @escaping (Bool, SCError?, Int?) -> Void) {
-        
+    func sendPush(_ query: SCQuery, data: Dictionary<String, Any>, debug: Bool, callback: @escaping (Bool, SCError?, Int?) -> Void) {
         var body = [String: Any]()
         body[kApplicationId] = applicationId as Any?
         body[kClientKey] = clientId as Any?
@@ -445,38 +445,8 @@ public class SCAPI {
         body[kSessionId] = sessionId as Any?
         body[kCollection] = query.collection as Any?
         body[kQuery] = makeBodyQuery(query) as Any?
-        body[kMessage] = makeMessage(subject, text: text) as Any?
-        
-        Alamofire.request(SCAPIRouter.sendEmail(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["count"].intValue)
-                } else {
-                    callback(false, self.makeError(response), nil)
-                }
-            }
-        }
-    }
-    
-    func sendPush(_ query: SCQuery, subject: String, text: String, callback: @escaping (Bool, SCError?, Int?) -> Void) {
-        var body = [String: Any]()
-        body[kApplicationId] = applicationId as Any?
-        body[kClientKey] = clientId as Any?
-        body[kAccessKey] = accessKey as Any?
-        body[kSessionId] = sessionId as Any?
-        body[kCollection] = query.collection as Any?
-        body[kQuery] = makeBodyQuery(query) as Any?
-        body[kMessage] = makeMessage(subject, text: text) as Any?
-        
+        body[kMessage] = ["data": data]
+        body[kDebug] = debug ? NSNumber(value: true) : NSNumber(value: false)
         
         Alamofire.request(SCAPIRouter.sendPush(body)).responseJSON() {
             responseJSON in
@@ -498,7 +468,7 @@ public class SCAPI {
         }
     }
     
-    func sendSms(_ query: SCQuery, subject: String, text: String, callback: @escaping (Bool, SCError?, Int?) -> Void) {
+    func sendPush(_ query: SCQuery, title: String, text: String, debug: Bool, callback: @escaping (Bool, SCError?, Int?) -> Void) {
         var body = [String: Any]()
         body[kApplicationId] = applicationId as Any?
         body[kClientKey] = clientId as Any?
@@ -506,7 +476,49 @@ public class SCAPI {
         body[kSessionId] = sessionId as Any?
         body[kCollection] = query.collection as Any?
         body[kQuery] = makeBodyQuery(query) as Any?
-        body[kMessage] = makeMessage(subject, text: text) as Any?
+        body[kDebug] = debug ? NSNumber(value: true) : NSNumber(value: false)
+        body[kMessage] =
+            ["data":
+                ["apns" :
+                    ["aps" :
+                        ["alert" :
+                            [ "title" : title,
+                              "body" : text]
+                        ]
+                    ]
+                ]
+            ]
+
+        Alamofire.request(SCAPIRouter.sendPush(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["count"].intValue)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+
+    
+    func sendSms(_ query: SCQuery, text: String, callback: @escaping (Bool, SCError?, Int?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kSessionId] = sessionId as Any?
+        body[kCollection] = query.collection as Any?
+        body[kQuery] = makeBodyQuery(query) as Any?
+        body[kMessage] = [kMessageText: text] as Any?
         
         
         Alamofire.request(SCAPIRouter.sendSms(body)).responseJSON() {
@@ -590,10 +602,6 @@ public class SCAPI {
         let errCode = response["errCode"].stringValue
         let errMsg = response["errMsg"].stringValue
         return SCError.api(errCode, errMsg)
-    }
-    
-    func makeMessage(_ subject: String, text: String) -> [String: String] {
-        return [kMessageSubject: subject, kMessageText: text]
     }
     
     func makeBodyDoc(_ update: SCUpdate) -> [String: Any] {
