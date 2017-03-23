@@ -25,7 +25,7 @@ end
 pod install
 ```
 5) В папке с проектом появится файл MyProject.xcworkspace, открыть его в xcode.
-В AppDelegate.swift в метод didFinishLaunchingWithOptions указать значения параметров инициализации API из личного кабинета:
+В AppDelegate.swift в метод didFinishLaunchingWithOptions указать значения параметров инициализации API из личного кабинета. Пример:
 ```
 //scorocode init
 let applicationId = "98bc4bacb5edeb727cfb8fae25f71b59"
