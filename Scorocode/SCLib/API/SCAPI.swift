@@ -41,6 +41,10 @@ public class SCAPI {
     fileprivate let kContent = "content"
     fileprivate let kDebug = "debug"
     fileprivate let kData = "data"
+    fileprivate let kCollectionName = "name"
+    fileprivate let kCollectionUseDocsACL = "useDocsACL"
+    fileprivate let kCollectionACL = "ACL"
+    fileprivate let kCollectionDictName = "collection"
     
     static let sharedInstance = SCAPI()
     
@@ -446,7 +450,7 @@ public class SCAPI {
         body[kCollection] = query.collection as Any?
         body[kQuery] = makeBodyQuery(query) as Any?
         body[kMessage] = ["data": data]
-        body[kDebug] = debug ? NSNumber(value: true) : NSNumber(value: false)
+        body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
         
         Alamofire.request(SCAPIRouter.sendPush(body)).responseJSON() {
             responseJSON in
@@ -476,7 +480,7 @@ public class SCAPI {
         body[kSessionId] = sessionId as Any?
         body[kCollection] = query.collection as Any?
         body[kQuery] = makeBodyQuery(query) as Any?
-        body[kDebug] = debug ? NSNumber(value: true) : NSNumber(value: false)
+        body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
         body[kMessage] =
             ["data":
                 ["apns" :
@@ -551,7 +555,7 @@ public class SCAPI {
         body[kAccessKey] = accessKey as Any?
         body[kScript] = scriptId as Any?
         body[kPool] = pool as Any?
-        body[kDebug] = debug ? NSNumber(value: true) : NSNumber(value: false)
+        body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
         
         Alamofire.request(SCAPIRouter.scripts(body)).responseJSON() {
             responseJSON in
@@ -597,6 +601,285 @@ public class SCAPI {
                 }
             }
         }
+    }
+    
+    // Получение полной информации о приложении
+    func app(_ callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        
+        Alamofire.request(SCAPIRouter.app(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Получение списка коллекций приложения и их настроек
+    func collections(_ callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        
+        Alamofire.request(SCAPIRouter.collections(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Просмотр структуры и настроек конкретной коллекции.
+    func getCollection(_ collection: String, callback: @escaping (Bool, SCError?, [String: Any]?, SCCollection?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kCollection] = collection as Any?
+        
+        Alamofire.request(SCAPIRouter.getCollection(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    let result = response["result"].dictionaryObject
+                    let coll = self.parseCollection(result: result)
+                    callback(true, nil, result, coll)
+                } else {
+                    callback(false, self.makeError(response), nil, nil)
+                }
+            }
+        }
+    }
+    
+    func parseCollection(result: [String: Any]?) -> SCCollection? {
+        guard result != nil else {
+            return nil
+        }
+        if let dict = result?["collection"] as? [String: Any] {
+            if let id = dict["id"] as? String, let name = dict["name"] as? String {
+                let coll = SCCollection(id: id, name: name)
+                if let useDocsACL = dict["useDocsACL"] as? Bool {
+                    coll.useDocsACL = useDocsACL
+                }
+                if let aclDict = dict["ACL"] as? [String: Any] {
+                    if let createArray = aclDict["create"] as? [String] {
+                        coll.acl.create = SCArray(stringArray: createArray)
+                    }
+                    if let readArray = aclDict["read"] as? [String] {
+                        coll.acl.read = SCArray(stringArray: readArray)
+                    }
+                    if let removeArray = aclDict["remove"] as? [String] {
+                        coll.acl.read = SCArray(stringArray: removeArray)
+                    }
+                    if let updateArray = aclDict["update"] as? [String] {
+                        coll.acl.read = SCArray(stringArray: updateArray)
+                    }
+                }
+                if let triggersDict = dict["triggers"] as? [String: Any] {
+                    if let afterInsert = triggersDict["afterInsert"] as? [String: Any],
+                        let code = afterInsert["code"] as? String,
+                        let isActive = afterInsert["isActive"] as? Bool {
+                        coll.triggers.afterInsert.code = code
+                        coll.triggers.afterInsert.isActive = isActive
+                    }
+                    if let afterRemove = triggersDict["afterRemove"] as? [String: Any],
+                        let code = afterRemove["code"] as? String,
+                        let isActive = afterRemove["isActive"] as? Bool {
+                        coll.triggers.afterRemove.code = code
+                        coll.triggers.afterRemove.isActive = isActive
+                    }
+                    if let afterUpdate = triggersDict["afterUpdate"] as? [String: Any],
+                        let code = afterUpdate["code"] as? String,
+                        let isActive = afterUpdate["isActive"] as? Bool {
+                        coll.triggers.afterUpdate.code = code
+                        coll.triggers.afterUpdate.isActive = isActive
+                    }
+                    if let beforeInsert = triggersDict["beforeInsert"] as? [String: Any],
+                        let code = beforeInsert["code"] as? String,
+                        let isActive = beforeInsert["isActive"] as? Bool {
+                        coll.triggers.beforeInsert.code = code
+                        coll.triggers.beforeInsert.isActive = isActive
+                    }
+                    if let beforeRemove = triggersDict["beforeRemove"] as? [String: Any],
+                        let code = beforeRemove["code"] as? String,
+                        let isActive = beforeRemove["isActive"] as? Bool {
+                        coll.triggers.beforeRemove.code = code
+                        coll.triggers.beforeRemove.isActive = isActive
+                    }
+                    if let beforeUpdate = triggersDict["beforeUpdate"] as? [String: Any],
+                        let code = beforeUpdate["code"] as? String,
+                        let isActive = beforeUpdate["isActive"] as? Bool {
+                        coll.triggers.beforeUpdate.code = code
+                        coll.triggers.beforeUpdate.isActive = isActive
+                    }
+                    return coll
+                }
+            } else {
+                return nil
+            }
+        }
+        return nil
+    }
+    
+    // Создание новой коллекции
+    func createCollection(name : String, useDocsACL: Bool, ACLsettings: ACL, callback: @escaping (Bool, SCError?, [String: Any]?, String?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kCollectionName] = name as Any?
+        body[kCollectionUseDocsACL] = useDocsACL //? NSNumber(value: true) : NSNumber(value: false)
+        body[kCollectionACL] = ACLsettings.toDict()
+        
+        Alamofire.request(SCAPIRouter.createCollection(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    let result = response["result"].dictionaryObject
+                    if let collectionID = (result?["collection"] as? [String: Any])?["id"] as? String {
+                        callback(true, nil, result, collectionID)
+                    } else {
+                        callback(true, nil, result, nil)
+                    }
+                } else {
+                    callback(false, self.makeError(response), nil, nil)
+                }
+            }
+        }
+    }
+    
+    // Изменение настроек коллекции
+    func updateCollection(id: String, name: String?, useDocsACL: Bool, ACLsettings: ACL, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        if name != nil {
+            body[kCollectionName] = name!
+        }
+        body[kCollectionUseDocsACL] = useDocsACL
+        body[kCollectionACL] = ACLsettings.toDict()
+        
+        Alamofire.request(SCAPIRouter.updateCollection(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Удаление коллекции
+    func deleteCollection(id: String, callback: @escaping (Bool, SCError?, [String:Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kCollectionDictName] = ["id": id]
+        
+        Alamofire.request(SCAPIRouter.removeCollection(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+
+    }
+    
+    // Создание дубликата коллекции
+    func cloneCollection(id: String, name: String, callback: @escaping (Bool, SCError?, [String:Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kCollectionDictName] = ["id": id, "name": name]
+        
+        Alamofire.request(SCAPIRouter.removeCollection(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+        
     }
     
     func makeError(_ response: JSON) -> SCError {

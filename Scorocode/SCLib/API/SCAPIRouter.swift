@@ -29,7 +29,13 @@ enum SCAPIRouter: URLRequestConvertible {
     case sendSms([String: Any])
     case scripts([String: Any])
     case stat([String: Any])
-    
+    case app([String: Any])
+    case collections([String: Any])
+    case getCollection([String: Any])
+    case createCollection([String: Any])
+    case updateCollection([String: Any])
+    case removeCollection([String: Any])
+    case cloneCollection([String: Any])
     
     func asURLRequest() throws -> URLRequest {
         
@@ -80,6 +86,20 @@ enum SCAPIRouter: URLRequestConvertible {
                 
             case .stat(let body):
                 return ("stat", body)
+            case .app(let body):
+                return ("app", body)
+            case .collections(let body):
+                return ("app/collections", body)
+            case .getCollection(let body):
+                return ("app/collections/get", body)
+            case .createCollection(let body):
+                return ("app/collections/create", body)
+            case .updateCollection(let body):
+                return ("app/collections/update", body)
+            case .removeCollection(let body):
+                return ("app/collections/delete", body)
+            case .cloneCollection(let body):
+                return ("app/collections/clone", body)
             }
         }()
         
@@ -129,6 +149,14 @@ enum SCAPIRouter: URLRequestConvertible {
         case .scripts: return .post
             
         case .stat: return .post
+        case .app: return .post
+            
+        case .collections: return .post
+        case .getCollection: return .post
+        case .createCollection: return .post
+        case .updateCollection: return .post
+        case .removeCollection: return .post
+        case .cloneCollection: return .post
         }
     }
 }

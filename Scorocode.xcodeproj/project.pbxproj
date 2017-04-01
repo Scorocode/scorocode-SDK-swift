@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		622E00AC1E88EB4D00F0D6D0 /* SCCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622E00AB1E88EB4D00F0D6D0 /* SCCollection.swift */; };
+		622E00AD1E88EB4D00F0D6D0 /* SCCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622E00AB1E88EB4D00F0D6D0 /* SCCollection.swift */; };
 		6283030B1E51E7A0007EA347 /* Scorocode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 628303011E51E7A0007EA347 /* Scorocode.framework */; };
 		628303121E51E7A0007EA347 /* Scorocode.h in Headers */ = {isa = PBXBuildFile; fileRef = 628303041E51E7A0007EA347 /* Scorocode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6283032C1E51E7D3007EA347 /* SCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283031D1E51E7D3007EA347 /* SCAPI.swift */; };
@@ -65,6 +67,7 @@
 		0E3A526309AD8B01F87D00B9 /* Pods-Scorocode-ScorocodeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode-ScorocodeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode-ScorocodeTests/Pods-Scorocode-ScorocodeTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B9112C348AA9C0E77837B0F /* Pods_Scorocode_ScorocodeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scorocode_ScorocodeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B217DB4E5BAEC28601AC230 /* Pods_Scorocode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scorocode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		622E00AB1E88EB4D00F0D6D0 /* SCCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCCollection.swift; sourceTree = "<group>"; };
 		628303011E51E7A0007EA347 /* Scorocode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Scorocode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		628303041E51E7A0007EA347 /* Scorocode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scorocode.h; sourceTree = "<group>"; };
 		628303051E51E7A0007EA347 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -232,6 +235,7 @@
 				628303291E51E7D3007EA347 /* SCUpdateOperator.swift */,
 				6283032A1E51E7D3007EA347 /* SCUser.swift */,
 				6283032B1E51E7D3007EA347 /* SCValue.swift */,
+				622E00AB1E88EB4D00F0D6D0 /* SCCollection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -298,7 +302,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Prof-IT Group OOO";
 				TargetAttributes = {
 					628303001E51E7A0007EA347 = {
@@ -436,6 +440,7 @@
 				6283033E1E51E7D3007EA347 /* SCUpdate.swift in Sources */,
 				628303361E51E7D3007EA347 /* SCObject.swift in Sources */,
 				6283033C1E51E7D3007EA347 /* SCScript.swift in Sources */,
+				622E00AC1E88EB4D00F0D6D0 /* SCCollection.swift in Sources */,
 				628303341E51E7D3007EA347 /* SCMessage.swift in Sources */,
 				628303441E51E7D3007EA347 /* SCValue.swift in Sources */,
 				628303401E51E7D3007EA347 /* SCUpdateOperator.swift in Sources */,
@@ -464,6 +469,7 @@
 				6283032F1E51E7D3007EA347 /* SCAPIRouter.swift in Sources */,
 				6283033F1E51E7D3007EA347 /* SCUpdate.swift in Sources */,
 				628303331E51E7D3007EA347 /* SC.swift in Sources */,
+				622E00AD1E88EB4D00F0D6D0 /* SCCollection.swift in Sources */,
 				628303411E51E7D3007EA347 /* SCUpdateOperator.swift in Sources */,
 				628303371E51E7D3007EA347 /* SCObject.swift in Sources */,
 				628303391E51E7D3007EA347 /* SCOperator.swift in Sources */,
@@ -633,6 +639,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8F7FCA537D6E69B20F06D4A8 /* Pods-Scorocode-ScorocodeTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = Q9F94SAMUV;
 				INFOPLIST_FILE = ScorocodeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -646,6 +653,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0E3A526309AD8B01F87D00B9 /* Pods-Scorocode-ScorocodeTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = Q9F94SAMUV;
 				INFOPLIST_FILE = ScorocodeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

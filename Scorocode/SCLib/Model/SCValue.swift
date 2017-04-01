@@ -91,6 +91,26 @@ public struct SCArray: SCValue {
     public var apiValue: Any {
         return value.map({ $0.apiValue })
     }
+    
+    public init(stringArray: [String]) {
+        self.value = stringArray.map({SCString($0)})
+    }
+    
+    public init(integerArray: [Int]) {
+        self.value = integerArray.map({SCInt($0)})
+    }
+    
+    public init(doubleArray: [Double]) {
+        self.value = doubleArray.map({SCDouble($0)})
+    }
+    
+    public init(boolArray: [Bool]) {
+        self.value = boolArray.map({SCBool($0)})
+    }
+    
+    public init(dateArray: [Date]) {
+        self.value = dateArray.map({SCDate($0)})
+    }
 }
 
 public struct SCDictionary: SCValue {

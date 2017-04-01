@@ -41,11 +41,11 @@ public class BSON {
                 return String(data: data, encoding: .utf8)!
             }
         }
-        return ""
+        fatalError("Error on string parse - string is not null-terminated.")
     }
     
     func fromByteArray<T>(_ value: [UInt8], _: T.Type) -> T {
-        /* crashes on 32bit arch.
+        /* crashes on 32bit architecture.
         return value.withUnsafeBytes {
             $0.baseAddress!.load(as: T.self)
         }*/
@@ -111,7 +111,6 @@ public class BSON {
                 value = dictionaryFromBSONBytes(byteArray: Array(byteArray[pointer...pointer + size - 1]))
                 pointer = pointer + size
             }
-            //debugPrint("added type: \(type) name: \(name) value: \(value)")
             dictionary[name] = value as Any
         }
         return dictionary
@@ -123,5 +122,5 @@ public class BSON {
     }
     
     //MARK: Serialization
-
+    // not used.
 }
