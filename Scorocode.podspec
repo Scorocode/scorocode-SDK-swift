@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Scorocode'
-  s.version          = '0.2.1'
+  s.version          = '0.2.2'
   s.summary          = 'Scorocode ios SDK, swift 3'
  
   s.description      = <<-DESC
@@ -18,3 +18,4 @@ SDK предоставляет доступ к платформе Scorocode дл
   s.source_files = 'Scorocode/SCLib/**/*'
  
 end
+
