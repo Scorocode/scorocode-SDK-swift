@@ -45,6 +45,21 @@ public class SCAPI {
     fileprivate let kCollectionUseDocsACL = "useDocsACL"
     fileprivate let kCollectionACL = "ACL"
     fileprivate let kCollectionDictName = "collection"
+    fileprivate let kCollectionIndexName = "index"
+    fileprivate let kCollectionFieldName = "collField"
+    fileprivate let kCollectionTriggersName = "triggers"
+    fileprivate let kFoldersPathName = "path"
+    
+    fileprivate let kScriptIDName = "script"
+    fileprivate let kScriptName = "cloudCode"
+    fileprivate let kScriptDescription = "description"
+    fileprivate let kScriptCode = "code"
+    fileprivate let kScriptJobStartAt = "jobStartAt"
+    fileprivate let kScriptIsActiveJob = "isActiveJob"
+    fileprivate let kScriptJobtype = "jobType"
+    fileprivate let kScriptPath = "path"
+    fileprivate let kScriptTimerSettings = "repeat"
+    fileprivate let kScriptACL = "ACL"
     
     static let sharedInstance = SCAPI()
     
@@ -548,7 +563,7 @@ public class SCAPI {
     
     
     // MARK: Script
-    func scripts(_ scriptId: String, pool: [String: Any], debug: Bool, callback: @escaping (Bool, SCError?) -> Void) {
+    func runScript(_ scriptId: String, pool: [String: Any], debug: Bool, callback: @escaping (Bool, SCError?) -> Void) {
         var body = [String: Any]()
         body[kApplicationId] = applicationId as Any?
         body[kClientKey] = clientId as Any?
@@ -763,9 +778,9 @@ public class SCAPI {
         body[kApplicationId] = applicationId as Any?
         body[kClientKey] = clientId as Any?
         body[kAccessKey] = accessKey as Any?
-        body[kCollectionName] = name as Any?
-        body[kCollectionUseDocsACL] = useDocsACL //? NSNumber(value: true) : NSNumber(value: false)
-        body[kCollectionACL] = ACLsettings.toDict()
+        body[kCollectionDictName] = [kCollectionName: name,
+                                     kCollectionUseDocsACL: useDocsACL, //? NSNumber(value: true) : NSNumber(value: false)
+                                     kCollectionACL: ACLsettings.toDict()]
         
         Alamofire.request(SCAPIRouter.createCollection(body)).responseJSON() {
             responseJSON in
@@ -881,6 +896,411 @@ public class SCAPI {
         }
         
     }
+    
+    // Создание индекса коллекции
+    func createCollectionIndex(collectionName: String, indexName: String, fieldName: String, order: IndexSortOrder, callback: @escaping (Bool, SCError?, [String:Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kCollection] = collectionName
+        body[kCollectionIndexName] = ["name" : indexName, "fields" : ["name" : fieldName, "order" : order.rawValue]]
+        
+        Alamofire.request(SCAPIRouter.createCollectionIndex(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+        
+    }
+    
+    // Удаление индекса коллекции
+    func deleteCollectionIndex(collectionName: String, indexName: String, callback: @escaping (Bool, SCError?, [String:Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kCollection] = collectionName
+        body[kCollectionIndexName] = ["name" : indexName]
+        
+        Alamofire.request(SCAPIRouter.deleteCollectionIndex(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+        
+    }
+    
+    // Создание поля коллекции
+    func createCollectonField(collectionName: String, fieldName: String, fieldType: FieldType, targetCollectonName: String?,callback: @escaping (Bool, SCError?, [String:Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kCollection] = collectionName
+        body[kCollectionFieldName] = (targetCollectonName == nil) ?
+        (["name" : fieldName,"type": fieldType.rawValue]) :
+        (["name" : fieldName,"type": fieldType.rawValue, "target": targetCollectonName])
+        
+        Alamofire.request(SCAPIRouter.createCollectonField(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Удаление поля коллекции
+    func deleteCollectonField(collectionName: String, fieldName: String, callback: @escaping (Bool, SCError?, [String:Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kCollection] = collectionName
+        body[kCollectionFieldName] = ["name" : fieldName]
+        
+        Alamofire.request(SCAPIRouter.deleteCollectonField(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    //Изменение триггеров коллекции 
+    func updateCollectionTriggers(collectionName : String, triggers: Triggers, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kCollectionName] = collectionName
+        body[kCollectionTriggersName] = triggers.toDict()
+        
+        Alamofire.request(SCAPIRouter.updateCollectionTriggers(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Получение списка папок и скриптов директории
+    func getFoldersAndScriptsList(path: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kFoldersPathName] = path
+        
+        Alamofire.request(SCAPIRouter.getFoldersAndScriptsList(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Создание новой папки
+    func createFolder(path: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kFoldersPathName] = path
+        
+        Alamofire.request(SCAPIRouter.getFoldersAndScriptsList(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Удаление папки со всем содержимым
+    func deleteFolder(path: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kFoldersPathName] = path
+        
+        Alamofire.request(SCAPIRouter.deleteFolder(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Получение скрипта
+    func getScript(scriptId: String, callback: @escaping (Bool, SCError?, [String: Any]?, SCScript?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kScriptIDName] = scriptId
+        
+        Alamofire.request(SCAPIRouter.getScript(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    let result = response["result"].dictionaryObject
+                    let script = self.parseScript(result: result)
+                    callback(true, nil, result, script)
+                } else {
+                    callback(false, self.makeError(response), nil, nil)
+                }
+            }
+        }
+    }
+    
+    func parseScript(result: [String: Any]?) -> SCScript? {
+        guard result != nil else {
+            return nil
+        }
+        if let dict = result?["script"] as? [String: Any] {
+            if let id = dict["id"] as? String, let path = dict["path"] as? String {
+                let script = SCScript(id: id, path: path)
+                if let ACL = dict["ACL"] as? [String] {
+                    script.ACL = SCArray(stringArray: ACL)
+                }
+                if let name = dict["name"] as? String {
+                    script.name = name
+                }
+                if let code = dict["code"] as? String {
+                    script.code = code
+                }
+                if let description = dict["description"] as? String {
+                    script.description = description
+                }
+                if let jobStartAt = dict["jobStartAt"] as? String {
+                    let en_US_POSIX = Locale(identifier: "en_US_POSIX")
+                    let rfc3339DateFormatter = DateFormatter()
+                    rfc3339DateFormatter.locale = en_US_POSIX
+                    rfc3339DateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssXXX"
+                    rfc3339DateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                    if let date = rfc3339DateFormatter.date(from: jobStartAt) {
+                        script.jobStartAt = SCDate(date)
+                    }
+                }
+                if let isActiveJob = dict["isActiveJob"] as? Bool {
+                    script.isActiveJob = isActiveJob
+                }
+                if let jobType = dict["jobType"] as? String {
+                    if let type = ScriptJobType(rawValue: jobType) {
+                        script.jobType = type
+                    }
+                }
+                if let timerSettings = dict["repeat"] as? [String: Any] {
+                    if let custom = timerSettings["custom"] as? [String: Any],
+                        let days = custom["days"] as? Int,
+                        let hours = custom["hours"] as? Int,
+                        let minutes = custom["minutes"] as? Int {
+                        script.repeatTimer.custom.days = days
+                        script.repeatTimer.custom.hours = hours
+                        script.repeatTimer.custom.minutes = minutes
+                    }
+                    if let daily = timerSettings["daily"] as? [String: Any],
+                        let on = daily["on"] as? [Int],
+                        let hours = daily["hours"] as? Int,
+                        let minutes = daily["minutes"] as? Int {
+                        script.repeatTimer.daily.on = on
+                        script.repeatTimer.daily.hours = hours
+                        script.repeatTimer.daily.minutes = minutes
+                    }
+                    if let monthly = timerSettings["monthly"] as? [String: Any],
+                        let days = monthly["days"] as? [Int],
+                        let hours = monthly["hours"] as? Int,
+                        let minutes = monthly["minutes"] as? Int,
+                        let lastDate = monthly["lastDate"] as? Bool,
+                        let on = monthly["on"] as? [Int] {
+                        script.repeatTimer.monthly.on = on
+                        script.repeatTimer.monthly.lastDate = lastDate
+                        script.repeatTimer.monthly.days = days
+                        script.repeatTimer.monthly.hours = hours
+                        script.repeatTimer.monthly.minutes = minutes
+                    }
+                }
+                return script
+            }
+        } else {
+            return nil
+        }
+        return nil
+    }
+    
+    // Создание нового скрипта
+    func createScript(path: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kScriptName] = [kScriptPath: path]
+        
+        Alamofire.request(SCAPIRouter.createScript(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Изменение скрипта
+    func saveScript(script: SCScript, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kScriptIDName] = script.id!
+        
+        body[kScriptName] = [kScriptPath: script.path!,
+                             kScriptName:script.name,
+                             kScriptCode:script.code,
+                             kScriptJobtype: script.jobType!.rawValue,
+                             kScriptJobStartAt: script.jobStartAt.apiValue,
+                             kScriptDescription: script.description,
+                             kScriptIsActiveJob: script.isActiveJob,
+                             kScriptACL: script.ACL.apiValue,
+                             kScriptTimerSettings: script.repeatTimer.toDict()]
+        
+        Alamofire.request(SCAPIRouter.saveScript(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+
     
     func makeError(_ response: JSON) -> SCError {
         let errCode = response["errCode"].stringValue

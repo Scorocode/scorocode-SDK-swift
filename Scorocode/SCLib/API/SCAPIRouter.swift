@@ -28,6 +28,7 @@ enum SCAPIRouter: URLRequestConvertible {
     case sendPush([String: Any])
     case sendSms([String: Any])
     case scripts([String: Any])
+    case getScript([String: Any])
     case stat([String: Any])
     case app([String: Any])
     case collections([String: Any])
@@ -36,6 +37,18 @@ enum SCAPIRouter: URLRequestConvertible {
     case updateCollection([String: Any])
     case removeCollection([String: Any])
     case cloneCollection([String: Any])
+    case createCollectionIndex([String: Any])
+    case deleteCollectionIndex([String: Any])
+    case createCollectonField([String: Any])
+    case deleteCollectonField([String: Any])
+    case updateCollectionTriggers([String: Any])
+    case getFoldersAndScriptsList([String: Any])
+    case createFolder([String: Any])
+    case deleteFolder([String: Any])
+    case createScript([String: Any])
+    case saveScript([String: Any])
+    
+    
     
     func asURLRequest() throws -> URLRequest {
         
@@ -100,6 +113,28 @@ enum SCAPIRouter: URLRequestConvertible {
                 return ("app/collections/delete", body)
             case .cloneCollection(let body):
                 return ("app/collections/clone", body)
+            case .createCollectionIndex(let body):
+                return ("app/collections/index/create", body)
+            case .deleteCollectionIndex(let body):
+                return ("app/collections/index/delete", body)
+            case .createCollectonField(let body):
+                return ("app/collections/fields/create", body)
+            case .deleteCollectonField(let body):
+                return ("app/collections/fields/delete", body)
+            case .updateCollectionTriggers(let body):
+                return ("app/collections/triggers", body)
+            case .getFoldersAndScriptsList(let body):
+                return ("app/scripts/folders", body)
+            case .createFolder(let body):
+                return ("app/scripts/folders/create",body)
+            case .deleteFolder(let body):
+                return ("app/scripts/folders/delete",body)
+            case .getScript(let body):
+                return ("app/scripts/get",body)
+            case .createScript(let body):
+                return ("app/scripts/create",body)
+            case .saveScript(let body):
+                return ("app/scripts/update",body)
             }
         }()
         
@@ -128,35 +163,8 @@ enum SCAPIRouter: URLRequestConvertible {
     var method: HTTPMethod {
         
         switch self {
-            
-        case .login: return .post
-        case .logout: return .post
-        case .register: return .post
-            
-        case .insert: return .post
-        case .remove: return .post
-        case .update: return .post
-        case .updateById: return .post
-        case .find: return .post
-        case .count: return .post
-            
-        case .upload: return .post
-        case .deleteFile: return .post
-            
-        case .sendPush: return .post
-        case .sendSms: return .post
-            
-        case .scripts: return .post
-            
-        case .stat: return .post
-        case .app: return .post
-            
-        case .collections: return .post
-        case .getCollection: return .post
-        case .createCollection: return .post
-        case .updateCollection: return .post
-        case .removeCollection: return .post
-        case .cloneCollection: return .post
+        //case .login: return .post
+        default: return .post
         }
     }
 }

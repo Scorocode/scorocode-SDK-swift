@@ -8,6 +8,10 @@
 
 import Foundation
 
+public enum IndexSortOrder : Int {
+    case ascending = 1
+    case descending = -1
+}
 
 public struct ACL {
     public var create = SCArray([SCString]())
@@ -93,6 +97,19 @@ public struct Triggers {
     }
 }
 
+public enum FieldType: String {
+    case Pointer = "Pointer"
+    case Date = "Date"
+    case Boolean = "Boolean"
+    case String = "String"
+    case File = "File"
+    case Number = "Number"
+    case Password = "Password"
+    case Array = "Array"
+    case Object = "Object"
+    case Relation = "Relation"
+}
+
 public class SCCollection {
     
     public var name: String?
@@ -167,5 +184,56 @@ public class SCCollection {
             callback(success, error, result)
         }
     }
+    
+    // Создание индекса коллекции
+    public func createIndex(indexName: String, fieldName: String, order: IndexSortOrder, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        guard self.name != nil else {
+            callback(false, SCError.system("имя коллекции не задано."), nil)
+            return
+        }
+        
+        SCAPI.sharedInstance.createCollectionIndex(collectionName: self.name!, indexName: indexName, fieldName: fieldName, order: order, callback: callback)
+    }
+
+    //Удаление индекса коллекции
+    public func deleteIndex(indexName: String, callback: @escaping(Bool, SCError?, [String: Any]?) -> Void) {
+        guard self.name != nil else {
+            callback(false, SCError.system("имя коллекции не задано."), nil)
+            return
+        }
+        SCAPI.sharedInstance.deleteCollectionIndex(collectionName: self.name!, indexName: indexName, callback: callback)
+    }
+    
+    // Создание поля коллекции
+    public func createField(fieldName: String, fieldType: FieldType, targetCollectionName: String? = nil, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        guard self.name != nil else {
+            callback(false, SCError.system("имя коллекции не задано."), nil)
+            return
+        }
+        if ((fieldType == .Pointer || fieldType == .Relation) && targetCollectionName == nil) {
+            callback(false, SCError.system("имя целевой коллекции, обязательное для полей типа Pointer или Relation не задано"), nil)
+            return
+        }
+        SCAPI.sharedInstance.createCollectonField(collectionName: self.name!, fieldName: fieldName, fieldType: fieldType, targetCollectonName: targetCollectionName, callback: callback)
+    }
+    
+    // Удаление поля коллекции
+    public func deleteField(fieldName: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        guard self.name != nil else {
+            callback(false, SCError.system("имя коллекции не задано."), nil)
+            return
+        }
+        SCAPI.sharedInstance.deleteCollectonField(collectionName: self.name!, fieldName: fieldName, callback: callback)
+    }
+    
+    //  Изменение триггеров коллекции
+    public func saveTriggers(callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        guard self.name != nil else {
+            callback(false, SCError.system("имя коллекции не задано."), nil)
+            return
+        }
+        SCAPI.sharedInstance.updateCollectionTriggers(collectionName: self.name!, triggers: self.triggers, callback: callback)
+    }
+    
 }
 
