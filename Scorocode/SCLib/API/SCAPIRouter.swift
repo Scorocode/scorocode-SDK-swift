@@ -47,8 +47,11 @@ enum SCAPIRouter: URLRequestConvertible {
     case deleteFolder([String: Any])
     case createScript([String: Any])
     case saveScript([String: Any])
-    
-    
+    case deleteScript([String: Any])
+    case saveBot([String: Any])
+    case getBots([String: Any])
+    case createBot([String: Any])
+    case deleteBot([String: Any])
     
     func asURLRequest() throws -> URLRequest {
         
@@ -135,6 +138,16 @@ enum SCAPIRouter: URLRequestConvertible {
                 return ("app/scripts/create",body)
             case .saveScript(let body):
                 return ("app/scripts/update",body)
+            case .deleteScript(let body):
+                return ("app/scripts/delete",body)
+            case .saveBot(let body):
+                return ("bots/update",body)
+            case .getBots(let body):
+                return ("bots",body)
+            case .createBot(let body):
+                return ("bots/create",body)
+            case .deleteBot(let body):
+                return ("bots/delete",body)
             }
         }()
         

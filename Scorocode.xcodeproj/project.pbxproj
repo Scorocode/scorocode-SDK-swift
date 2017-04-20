@@ -11,6 +11,8 @@
 		622E00AD1E88EB4D00F0D6D0 /* SCCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622E00AB1E88EB4D00F0D6D0 /* SCCollection.swift */; };
 		6234EB571EA754C2005DAF48 /* SCFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6234EB561EA754C2005DAF48 /* SCFolder.swift */; };
 		6234EB581EA754C2005DAF48 /* SCFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6234EB561EA754C2005DAF48 /* SCFolder.swift */; };
+		62510AB81EA8B74400D37CC7 /* SCBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62510AB71EA8B74400D37CC7 /* SCBot.swift */; };
+		62510AB91EA8B74400D37CC7 /* SCBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62510AB71EA8B74400D37CC7 /* SCBot.swift */; };
 		6283030B1E51E7A0007EA347 /* Scorocode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 628303011E51E7A0007EA347 /* Scorocode.framework */; };
 		628303121E51E7A0007EA347 /* Scorocode.h in Headers */ = {isa = PBXBuildFile; fileRef = 628303041E51E7A0007EA347 /* Scorocode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6283032C1E51E7D3007EA347 /* SCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6283031D1E51E7D3007EA347 /* SCAPI.swift */; };
@@ -71,6 +73,7 @@
 		4B217DB4E5BAEC28601AC230 /* Pods_Scorocode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scorocode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		622E00AB1E88EB4D00F0D6D0 /* SCCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCCollection.swift; sourceTree = "<group>"; };
 		6234EB561EA754C2005DAF48 /* SCFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCFolder.swift; sourceTree = "<group>"; };
+		62510AB71EA8B74400D37CC7 /* SCBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCBot.swift; sourceTree = "<group>"; };
 		628303011E51E7A0007EA347 /* Scorocode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Scorocode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		628303041E51E7A0007EA347 /* Scorocode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scorocode.h; sourceTree = "<group>"; };
 		628303051E51E7A0007EA347 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -240,6 +243,7 @@
 				6283032B1E51E7D3007EA347 /* SCValue.swift */,
 				622E00AB1E88EB4D00F0D6D0 /* SCCollection.swift */,
 				6234EB561EA754C2005DAF48 /* SCFolder.swift */,
+				62510AB71EA8B74400D37CC7 /* SCBot.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -440,6 +444,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6283032C1E51E7D3007EA347 /* SCAPI.swift in Sources */,
+				62510AB81EA8B74400D37CC7 /* SCBot.swift in Sources */,
 				628303321E51E7D3007EA347 /* SC.swift in Sources */,
 				6283033E1E51E7D3007EA347 /* SCUpdate.swift in Sources */,
 				628303361E51E7D3007EA347 /* SCObject.swift in Sources */,
@@ -486,6 +491,7 @@
 				628303611E51E815007EA347 /* Utils.swift in Sources */,
 				6283033B1E51E7D3007EA347 /* SCQuery.swift in Sources */,
 				628303551E51E815007EA347 /* TestSCValue.swift in Sources */,
+				62510AB91EA8B74400D37CC7 /* SCBot.swift in Sources */,
 				628303671E51E815007EA347 /* TestSCUpdate.swift in Sources */,
 				628303451E51E7D3007EA347 /* SCValue.swift in Sources */,
 			);

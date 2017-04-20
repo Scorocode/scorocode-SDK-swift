@@ -136,5 +136,15 @@ public class SCScript {
         }
         SCAPI.sharedInstance.saveScript(script: self, callback: callback)
     }
+    
+    // Удаление скрипта
+    public func delete(callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        guard self.id != nil else {
+            callback(false, SCError.system("id скрипта не задан."), nil)
+            return
+        }
+        SCAPI.sharedInstance.deleteScript(scriptId: self.id!, callback: callback)
+    }
+
 
 }

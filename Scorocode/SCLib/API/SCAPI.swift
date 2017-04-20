@@ -61,6 +61,12 @@ public class SCAPI {
     fileprivate let kScriptTimerSettings = "repeat"
     fileprivate let kScriptACL = "ACL"
     
+    fileprivate let kBotDictName = "bot"
+    fileprivate let kBotName = "name"
+    fileprivate let kBotTelegramBotId = "botId"
+    fileprivate let kBotScriptID = "scriptId"
+    fileprivate let kBotIsActive = "isActive"
+    
     static let sharedInstance = SCAPI()
     
     internal var applicationId = ""
@@ -1300,7 +1306,160 @@ public class SCAPI {
             }
         }
     }
+    
+    // Удаление скрипта
+    func deleteScript(scriptId: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        body[kScriptIDName] = scriptId
+        
+        Alamofire.request(SCAPIRouter.deleteScript(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
 
+    // Изменение бота
+    func saveBot(bot: SCBot, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        
+        body[kBotDictName] = ["_id": bot.id!,
+                             kBotName:bot.name,
+                             kBotTelegramBotId:bot.telegramBotId,
+                             kBotScriptID: bot.scriptId,
+                             kBotIsActive: bot.isActive]
+        
+        Alamofire.request(SCAPIRouter.saveBot(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Получение списка ботов приложения
+    func getBots(callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        
+        Alamofire.request(SCAPIRouter.getBots(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
+    
+    // Создание бота
+    func createBot(bot: SCBot, callback: @escaping (Bool, SCError?, [String: Any]?, String?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        
+        body[kBotDictName] = [kBotName: bot.name,
+                              kBotTelegramBotId: bot.telegramBotId,
+                              kBotScriptID: bot.scriptId,
+                              kBotIsActive: bot.isActive]
+        
+        Alamofire.request(SCAPIRouter.createBot(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    let result = response["result"].dictionaryObject
+                    if let id = (result?[self.kBotDictName] as? [String: Any])?["_id"] as? String {
+                        callback(true, nil, result, id)
+                    } else {
+                        callback(true, nil, result, nil)
+                    }
+                } else {
+                    callback(false, self.makeError(response), nil, nil)
+                }
+            }
+        }
+    }
+    
+    // Удаление бота
+    func deleteBot(botId: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        var body = [String: Any]()
+        body[kApplicationId] = applicationId as Any?
+        body[kClientKey] = clientId as Any?
+        body[kAccessKey] = accessKey as Any?
+        
+        body[kBotDictName] = ["_id": botId]
+        
+        Alamofire.request(SCAPIRouter.deleteBot(body)).responseJSON() {
+            responseJSON in
+            guard responseJSON.result.error == nil else {
+                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+                print(error)
+                callback(false, error, nil)
+                return
+            }
+            
+            if let responseValue = responseJSON.result.value {
+                let response = JSON(responseValue)
+                if !response["error"].boolValue {
+                    callback(true, nil, response["result"].dictionaryObject)
+                } else {
+                    callback(false, self.makeError(response), nil)
+                }
+            }
+        }
+    }
     
     func makeError(_ response: JSON) -> SCError {
         let errCode = response["errCode"].stringValue
