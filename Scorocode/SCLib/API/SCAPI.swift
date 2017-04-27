@@ -333,8 +333,11 @@ public class SCAPI {
             body[kLimit] = limit as Any?
         }
         
+        let lowPriorityQueue = DispatchQueue(label: "ru.scorocode.utility-queue",
+                                  qos: .utility,
+                                  attributes:.concurrent)
         
-        Alamofire.request(SCAPIRouter.find(body)).responseJSON() {
+        Alamofire.request(SCAPIRouter.find(body)).responseJSON(queue: lowPriorityQueue, options: .allowFragments) {
             responseJSON in
             guard responseJSON.result.error == nil else {
                 let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
@@ -349,8 +352,7 @@ public class SCAPI {
                     let base64String = response["result"].stringValue
                     let data = Data(base64Encoded: base64String.data(using: String.Encoding.utf8)!, options: Data.Base64DecodingOptions())
                     let bson = BSON()
-                    let dictionary = bson.dictionaryFromBSONData(BSONData: data!) as [String:AnyObject]
-                    //print(dictionary)
+                    let dictionary = bson.dictionaryFromBSONData(BSONData: data!)
                     callback(true, nil, dictionary)
                 } else {
                     callback(false, self.makeError(response), nil)
