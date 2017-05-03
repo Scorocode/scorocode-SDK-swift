@@ -18,4 +18,23 @@ public class SC {
         SCAPI.sharedInstance.messageKey = messageKey
     }
     
+    public class func getStat(_ callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        SCAPI.sharedInstance.stat(callback)
+    }
+    
+    public class func getInfo(_ callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+        SCAPI.sharedInstance.app(callback)
+    }
+    
+    public class func getCollections(_ callback: @escaping (Bool, SCError?, [String: Any]?, [SCCollection]) -> Void) {
+        SCAPI.sharedInstance.collections(callback)
+    }
+    
+    public class func getBotsList(callback: @escaping (Bool, SCError?, [SCBot]) -> Void) {
+        SCAPI.sharedInstance.getBots(callback: callback)
+    }
+    
+    public class func getFoldersAndScriptsList(path: String, callback: @escaping (Bool, SCError?, [Any]?) -> Void) {
+        SCAPI.sharedInstance.getFoldersAndScriptsList(path: path, callback: callback)
+    }
 }

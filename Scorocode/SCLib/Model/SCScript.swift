@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ScriptJobType : String {
+public enum ScriptJobType : String {
     case custom = "custom"
     case daily = "daily"
     case monthly = "monthly"
@@ -17,7 +17,7 @@ enum ScriptJobType : String {
 
 public struct RepeatTimer {
     fileprivate let kRepeatTimerCustomName = "custom"
-    fileprivate let kRepeatTimerDailyName = "afterRemove"
+    fileprivate let kRepeatTimerDailyName = "daily"
     fileprivate let kRepeatTimerMonthlyName = "monthly"
     
     public var custom = _custom()
@@ -67,19 +67,19 @@ public struct RepeatTimer {
 
 public class SCScript {
     
-    var id: String?
-    var path: String?
+    public var id: String?
+    public var path: String?
     
-    var name = ""
-    var description = ""
-    var code = ""
-    var jobStartAt = SCDate(Date())
-    var isActiveJob = false
-    var jobType: ScriptJobType?
-    var ACL = SCArray(stringArray: [])
-    var repeatTimer = RepeatTimer()
+    public var name = ""
+    public var description = ""
+    public var code = ""
+    public var jobStartAt = SCDate(Date())
+    public var isActiveJob = false
+    public var jobType: ScriptJobType?
+    public var ACL = [String]()
+    public var repeatTimer = RepeatTimer()
     
-    public init(id: String?, path: String) {
+    public init(id: String?, path: String?) {
         self.path = path
         self.id = id
     }
@@ -88,6 +88,9 @@ public class SCScript {
         self.init(id: nil, path: path)
     }
     
+    public convenience init(id: String) {
+        self.init(id: id, path: nil)
+    }
     // Запуск скрипта
     public func run(pool: [String: AnyObject], debug: Bool, callback: @escaping (Bool, SCError?) -> Void) {
         guard self.id != nil else {
@@ -112,7 +115,7 @@ public class SCScript {
                 self.jobStartAt = script?.jobStartAt ?? SCDate(Date())
                 self.isActiveJob = script?.isActiveJob ?? false
                 self.jobType = script?.jobType ?? nil
-                self.ACL = script?.ACL ?? SCArray(stringArray: [])
+                self.ACL = script?.ACL ?? [String]()
                 self.repeatTimer = script?.repeatTimer ?? RepeatTimer()
             }
             callback(success, error, result)
@@ -125,7 +128,7 @@ public class SCScript {
             callback(false, SCError.system("путь скрипта не задан."), nil)
             return
         }
-        SCAPI.sharedInstance.createScript(path: self.path!, callback: callback)
+        SCAPI.sharedInstance.createScript(script: self, callback: callback)
     }
     
     // Изменение скрипта
@@ -145,6 +148,6 @@ public class SCScript {
         }
         SCAPI.sharedInstance.deleteScript(scriptId: self.id!, callback: callback)
     }
-
-
+    
+    
 }

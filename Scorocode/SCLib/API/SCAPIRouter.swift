@@ -161,7 +161,7 @@ enum SCAPIRouter: URLRequestConvertible {
         } else {
             urlRequest = try URLEncoding.default.encode(urlRequest, with: result.parameters)
         }
-
+        
         urlRequest.httpMethod = method.rawValue
         
         if let httpBody = urlRequest.httpBody {

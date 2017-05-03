@@ -10,9 +10,8 @@ import Foundation
 
 public class SCFolder {
     
-    // Получение списка папок и скриптов директории
-    public func getFoldersAndScriptsList(path: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
-        SCAPI.sharedInstance.getFoldersAndScriptsList(path: path, callback: callback)
+    public init () {
+        
     }
     
     // Создание новой папки

@@ -10,12 +10,12 @@ import Foundation
 
 public class SCBot {
     
-    var id: String?
-    var name = ""
+    public var id: String?
+    public var name = ""
     
-    var telegramBotId = ""
-    var scriptId = ""
-    var isActive = false
+    public var telegramBotId = ""
+    public var scriptId = ""
+    public var isActive = false
     
     public init(id: String?, name: String) {
         self.name = name
@@ -35,13 +35,8 @@ public class SCBot {
         SCAPI.sharedInstance.saveBot(bot: self, callback: callback)
     }
     
-    // Получение списка ботов приложения
-    public func getBotsList(callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
-        SCAPI.sharedInstance.getBots(callback: callback)
-    }
-    
     // Создание бота
-    public func createBot(callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+    public func create(callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         guard self.name != "", self.telegramBotId != "", self.scriptId != "" else {
             callback(false, SCError.system("Имя бота, телеграм-токен и идентификатор серверного скрипта должны быть заданы! "), nil)
             return

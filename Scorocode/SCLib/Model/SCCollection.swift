@@ -14,10 +14,15 @@ public enum IndexSortOrder : Int {
 }
 
 public struct ACL {
-    public var create = SCArray([SCString]())
-    public var read = SCArray([SCString]())
-    public var remove = SCArray([SCString]())
-    public var update = SCArray([SCString]())
+    
+    public init() {
+        
+    }
+    
+    public var create = [String]()
+    public var read = [String]()
+    public var remove = [String]()
+    public var update = [String]()
     
     fileprivate let kCollectionACLcreate = "create"
     fileprivate let kCollectionACLread = "read"
@@ -26,13 +31,13 @@ public struct ACL {
     
     public func toDict() -> [String: Any] {
         var dict = [String: Any]()
-        dict.updateValue(self.read.apiValue, forKey: kCollectionACLread)
-        dict.updateValue(self.create.apiValue, forKey: kCollectionACLcreate)
-        dict.updateValue(self.update.apiValue, forKey: kCollectionACLupdate)
-        dict.updateValue(self.remove.apiValue, forKey: kCollectionACLremove)
+        dict.updateValue(self.read, forKey: kCollectionACLread)
+        dict.updateValue(self.create, forKey: kCollectionACLcreate)
+        dict.updateValue(self.update, forKey: kCollectionACLupdate)
+        dict.updateValue(self.remove, forKey: kCollectionACLremove)
         return dict
     }
-
+    
 }
 
 public struct Triggers {
@@ -128,12 +133,12 @@ public class SCCollection {
     }
     
     // Создание новой коллекции
-    public func create(useDocsACL: Bool = false, ACLsettings: ACL = ACL(), callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
+    public func create(callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         guard self.name != nil else {
             callback(false, SCError.system("Имя коллекции не задано."), nil)
             return
         }
-        SCAPI.sharedInstance.createCollection(name: self.name!, useDocsACL: useDocsACL, ACLsettings: ACLsettings) { (success, error, result, id) in
+        SCAPI.sharedInstance.createCollection(name: self.name!, useDocsACL: self.useDocsACL, ACLsettings: self.acl) { (success, error, result, id) in
             if id != nil {
                 self.id = id
             }
@@ -152,11 +157,24 @@ public class SCCollection {
     
     // Удаление коллекции
     public func delete(callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
-        guard self.id != nil else {
-            callback(false, SCError.system("id коллекции не задан."), nil)
+        guard self.name != nil else {
+            callback(false, SCError.system("Имя коллекции не задано."), nil)
             return
         }
-        SCAPI.sharedInstance.deleteCollection(id: self.id!, callback: callback)
+        
+        if self.id == nil {
+            SCAPI.sharedInstance.getCollection(self.name!, callback: { (success, error, result, collection) in
+                if collection?.id != nil {
+                    self.id = collection?.id
+                    SCAPI.sharedInstance.deleteCollection(id: self.id!, callback: callback)
+                } else {
+                    callback(false, SCError.system("Коллекция с таким именем не найдена."), nil)
+                    return
+                }
+            })
+        } else {
+            SCAPI.sharedInstance.deleteCollection(id: self.id!, callback: callback)
+        }
     }
     
     // Создание дубликата коллекции
@@ -191,10 +209,9 @@ public class SCCollection {
             callback(false, SCError.system("имя коллекции не задано."), nil)
             return
         }
-        
         SCAPI.sharedInstance.createCollectionIndex(collectionName: self.name!, indexName: indexName, fieldName: fieldName, order: order, callback: callback)
     }
-
+    
     //Удаление индекса коллекции
     public func deleteIndex(indexName: String, callback: @escaping(Bool, SCError?, [String: Any]?) -> Void) {
         guard self.name != nil else {
