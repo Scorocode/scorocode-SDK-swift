@@ -164,10 +164,6 @@ enum SCAPIRouter: URLRequestConvertible {
         
         urlRequest.httpMethod = method.rawValue
         
-        if let httpBody = urlRequest.httpBody {
-            let s = String(data: httpBody, encoding: String.Encoding.utf8)!
-        }
-        
         return urlRequest
         
     }
