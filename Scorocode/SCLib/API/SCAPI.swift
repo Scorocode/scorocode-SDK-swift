@@ -618,7 +618,6 @@ public class SCAPI {
             
             if let responseValue = responseJSON.result.value {
                 let response = JSON(responseValue)
-                print(response)
                 if !response["error"].boolValue {
                     callback(true, nil, response["result"].dictionaryObject)
                 } else {
@@ -730,7 +729,6 @@ public class SCAPI {
     }
     
     func parseCollection(dict: [String: Any]) -> SCCollection? {
-        print(dict)
         if let id = dict["id"] as? String, let name = dict["name"] as? String {
             let coll = SCCollection(id: id, name: name)
             if let useDocsACL = dict["useDocsACL"] as? Bool {
@@ -843,7 +841,7 @@ public class SCAPI {
             collectionDict[kCollectionName] = name!
         }
         body["collection"] = collectionDict
-        print(body)
+        
         Alamofire.request(SCAPIRouter.updateCollection(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
@@ -962,7 +960,7 @@ public class SCAPI {
         body[kAccessKey] = accessKey
         body[kCollection] = collectionName
         body[kCollectionIndexName] = ["name" : indexName]
-        print(body)
+        
         Alamofire.request(SCAPIRouter.deleteCollectionIndex(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
@@ -1064,7 +1062,6 @@ public class SCAPI {
             
             if let responseValue = responseJSON.result.value {
                 let response = JSON(responseValue)
-                print(response)
                 if !response["error"].boolValue {
                     callback(true, nil, response["result"].dictionaryObject)
                 } else {
@@ -1276,7 +1273,7 @@ public class SCAPI {
                              kScriptIsActiveJob: script.isActiveJob,
                              kScriptACL: script.ACL,
                              kScriptTimerSettings: script.repeatTimer.toDict()]
-        print(JSON(body))
+        
         Alamofire.request(SCAPIRouter.createScript(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
@@ -1314,7 +1311,7 @@ public class SCAPI {
                              kScriptIsActiveJob: script.isActiveJob,
                              kScriptACL: script.ACL,
                              kScriptTimerSettings: script.repeatTimer.toDict()]
-        print(JSON(body))
+        
         Alamofire.request(SCAPIRouter.saveScript(body)).responseJSON() {
             responseJSON in
             guard responseJSON.result.error == nil else {
