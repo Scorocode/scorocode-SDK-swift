@@ -60,9 +60,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E3A526309AD8B01F87D00B9 /* Pods-Scorocode-ScorocodeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode-ScorocodeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode-ScorocodeTests/Pods-Scorocode-ScorocodeTests.release.xcconfig"; sourceTree = "<group>"; };
-		3B9112C348AA9C0E77837B0F /* Pods_Scorocode_ScorocodeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scorocode_ScorocodeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B217DB4E5BAEC28601AC230 /* Pods_Scorocode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scorocode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		621F68631EC3106E009AF9BA /* SwiftSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		621F68651EC3106E009AF9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		621F68671EC3106E009AF9BA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,13 +100,6 @@
 		6283034F1E51E815007EA347 /* TestSCOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCOperator.swift; sourceTree = "<group>"; };
 		628303501E51E815007EA347 /* TestSCUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSCUpdate.swift; sourceTree = "<group>"; };
 		628303511E51E815007EA347 /* TestSC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSC.swift; sourceTree = "<group>"; };
-		7E148D1113188554E3E74082 /* Pods-SwiftSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftSDK/Pods-SwiftSDK.debug.xcconfig"; sourceTree = "<group>"; };
-		80C981D436FFD664C5698CF1 /* Pods_SwiftSDK_ScorocodeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftSDK_ScorocodeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		89B635100CEF9CBD4395B4D2 /* Pods-Scorocode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode/Pods-Scorocode.release.xcconfig"; sourceTree = "<group>"; };
-		8F7FCA537D6E69B20F06D4A8 /* Pods-Scorocode-ScorocodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode-ScorocodeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode-ScorocodeTests/Pods-Scorocode-ScorocodeTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A1EB8CDA00C524E58540AB75 /* Pods-SwiftSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftSDK/Pods-SwiftSDK.release.xcconfig"; sourceTree = "<group>"; };
-		B3BE7B31095FA35357290E44 /* Pods_SwiftSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD492AAB02E73C88894BE2A0 /* Pods-Scorocode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scorocode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scorocode/Pods-Scorocode.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,30 +120,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		26424AB247FA7C5942EAD4B3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4B217DB4E5BAEC28601AC230 /* Pods_Scorocode.framework */,
-				3B9112C348AA9C0E77837B0F /* Pods_Scorocode_ScorocodeTests.framework */,
-				B3BE7B31095FA35357290E44 /* Pods_SwiftSDK.framework */,
-				80C981D436FFD664C5698CF1 /* Pods_SwiftSDK_ScorocodeTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		47F53EE8C2C48B1E8D13C3BF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BD492AAB02E73C88894BE2A0 /* Pods-Scorocode.debug.xcconfig */,
-				89B635100CEF9CBD4395B4D2 /* Pods-Scorocode.release.xcconfig */,
-				8F7FCA537D6E69B20F06D4A8 /* Pods-Scorocode-ScorocodeTests.debug.xcconfig */,
-				0E3A526309AD8B01F87D00B9 /* Pods-Scorocode-ScorocodeTests.release.xcconfig */,
-				7E148D1113188554E3E74082 /* Pods-SwiftSDK.debug.xcconfig */,
-				A1EB8CDA00C524E58540AB75 /* Pods-SwiftSDK.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		621F68641EC3106E009AF9BA /* SwiftSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,8 +142,6 @@
 				6283030E1E51E7A0007EA347 /* ScorocodeTests */,
 				621F68641EC3106E009AF9BA /* SwiftSDK */,
 				628303021E51E7A0007EA347 /* Products */,
-				47F53EE8C2C48B1E8D13C3BF /* Pods */,
-				26424AB247FA7C5942EAD4B3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -451,7 +415,6 @@
 /* Begin XCBuildConfiguration section */
 		621F68721EC3106E009AF9BA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E148D1113188554E3E74082 /* Pods-SwiftSDK.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -467,7 +430,6 @@
 		};
 		621F68731EC3106E009AF9BA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1EB8CDA00C524E58540AB75 /* Pods-SwiftSDK.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
