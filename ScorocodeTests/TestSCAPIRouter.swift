@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import Alamofire
 
 class TestSCAPIRouter: XCTestCase {
     
@@ -24,43 +23,43 @@ class TestSCAPIRouter: XCTestCase {
     func testURLRequestMethod() {
         
         var router = SCAPIRouter.login([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.logout([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.register([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.insert([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.remove([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.update([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.updateById([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.find([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.count([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.upload([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.sendPush([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.sendSms([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
         
         router = SCAPIRouter.scripts([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
+        XCTAssertEqual(router.urlRequest?.httpMethod, "POST")
     }
     
     

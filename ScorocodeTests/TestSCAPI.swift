@@ -19,7 +19,7 @@ class TestSCAPI: XCTestCase {
     let accessKey = "61ad813bd71bd4f05aea53a3c996d53a"
     let fileKey = "351cb3d71efef69e346ac5657dd16c1c"
     let messageKey = "35d5a173e0391ae83d60a6a756a44051"
- 
+    
     private let collection = "testcollection"
     
     private let timeout = 3.0
@@ -46,7 +46,6 @@ class TestSCAPI: XCTestCase {
             success, error, result in
             
             assertSuccess(success: success, error: error, result: result)
-            
             XCTAssertNotNil(result!["sessionId"])
             
             exp.fulfill()
@@ -400,7 +399,6 @@ class TestSCAPI: XCTestCase {
             success, error, result in
             
             assertSuccess(success: success, error: error, result: result)
-            
             exp.fulfill()
         }
         

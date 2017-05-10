@@ -59,6 +59,16 @@
 		628303691E51E815007EA347 /* TestSC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628303511E51E815007EA347 /* TestSC.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		621F68881EC37137009AF9BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 628302F81E51E7A0007EA347 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 621F68621EC3106E009AF9BA;
+			remoteInfo = SwiftSDK;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		621F68631EC3106E009AF9BA /* SwiftSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		621F68651EC3106E009AF9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -262,6 +272,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				621F68891EC37137009AF9BA /* PBXTargetDependency */,
 			);
 			name = ScorocodeTests;
 			productName = ScorocodeTests;
@@ -287,6 +298,7 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = Q9F94SAMUV;
 						ProvisioningStyle = Automatic;
+						TestTargetID = 621F68621EC3106E009AF9BA;
 					};
 				};
 			};
@@ -392,6 +404,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		621F68891EC37137009AF9BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 621F68621EC3106E009AF9BA /* SwiftSDK */;
+			targetProxy = 621F68881EC37137009AF9BA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		621F68691EC3106E009AF9BA /* Main.storyboard */ = {
@@ -546,12 +566,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = Q9F94SAMUV;
 				INFOPLIST_FILE = ScorocodeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.scorocode.ScorocodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftSDK.app/SwiftSDK";
 			};
 			name = Debug;
 		};
@@ -559,12 +581,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = Q9F94SAMUV;
 				INFOPLIST_FILE = ScorocodeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.scorocode.ScorocodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftSDK.app/SwiftSDK";
 			};
 			name = Release;
 		};

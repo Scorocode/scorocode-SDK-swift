@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SCAPIRouter2 {
+enum SCAPIRouter {
     
     public static let baseURLString = "https://api.scorocode.ru/api/v1/"
     public var urlRequest: URLRequest? { return asURLRequest() }
@@ -150,7 +150,7 @@ enum SCAPIRouter2 {
             }
         }()
         
-        let baseURL = Foundation.URL(string: SCAPIRouter2.baseURLString)
+        let baseURL = Foundation.URL(string: SCAPIRouter.baseURLString)
         let URL = Foundation.URL(string: result.path, relativeTo: baseURL)
         var urlRequest = URLRequest(url: URL!)
         urlRequest.setValue(String("application/json"), forHTTPHeaderField: "Content-Type")

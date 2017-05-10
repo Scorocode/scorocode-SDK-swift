@@ -120,7 +120,7 @@ func dictionaryFromBSONBytes(byteArray: [UInt8]) -> [String:Any] {
             value = dictionaryFromBSONBytes(byteArray: Array(byteArray[pointer...pointer + size - 1]))
             pointer = pointer + size
         }
-        dictionary[name] = value as Any
+        dictionary[name] = value
     }
     return dictionary
 }

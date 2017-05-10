@@ -13,18 +13,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib
-        
-        var query = SCQuery(collection: "towns")
-        query.equalTo("name", SCString("Moscow"))
-        query.find { (success, error, result) in
-            print(result)
-        }
-        
-        SC.getCollections { (success, error, result, collections) in
-            for coll in collections {
-                print(coll.name)
+        let user = SCUser()
+        user.login("alexey@company.com", password: "TestUser1") { (success, error, result) in
+            print(error)
+            
+            let obj = SCObject(collection: "testcollection")
+            obj.set(["fieldString": SCString("bla bla")])
+            obj.save { (success, error, result) in
+                print(error, result)
             }
         }
+        
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
