@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct SCQuery {
     
@@ -101,10 +100,17 @@ public struct SCQuery {
     
     // Установка пользовательского условия выборки
     public mutating func raw(_ json: String) {
-        
+        /*
         if let dataFromString = json.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             let json = JSON(data: dataFromString)
             _userQuery = json.dictionaryObject as [String : Any]?
+        }*/
+        if let data = json.data(using: .utf8, allowLossyConversion: false) {
+            do {
+                _userQuery = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print("Cannot to serialize json string: \(error.localizedDescription)")
+            }
         }
     }
     

@@ -22,26 +22,12 @@ class TestSCMessage: XCTestCase {
         super.tearDown()
     }
     
-    func testSendEmail() {
-        
-        let exp = expectation(description: "SendEmail")
-        
-        let query = SCQuery(collection: "users")
-        SCMessage.sendEmail(query, subject: "Subject", text: "Mesage text") {
-            success, error, result in
-            assertSuccess(success: success, error: error, result: result)
-            exp.fulfill()
-        }
-        
-        waitForExpectations(timeout: timeout, handler: nil)
-    }
-    
     func testSendPush() {
         
         let exp = expectation(description: "SendPush")
         
         let query = SCQuery(collection: "devices")
-        SCMessage.sendPush(query, subject: "Subject", text: "Mesage text") {
+        SCMessage.sendPush(query, title: "title", text: "Mesage text", debug: false) {
             success, error, result in
             assertSuccess(success: success, error: error, result: result)
             exp.fulfill()
@@ -55,7 +41,7 @@ class TestSCMessage: XCTestCase {
         let exp = expectation(description: "SendSms")
         
         let query = SCQuery(collection: "users")
-        SCMessage.sendSms(query, subject: "Subject", text: "Mesage text") {
+        SCMessage.sendSms(query, text: "Mesage text") {
             success, error, result in
             assertSuccess(success: success, error: error, result: result)
             exp.fulfill()

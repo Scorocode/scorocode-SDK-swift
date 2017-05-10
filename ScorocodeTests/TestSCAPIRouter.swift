@@ -53,15 +53,6 @@ class TestSCAPIRouter: XCTestCase {
         router = SCAPIRouter.upload([:])
         XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
         
-        router = SCAPIRouter.getFile("","","")
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.get.rawValue)
-        
-        router = SCAPIRouter.getFileLink([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
-        
-        router = SCAPIRouter.sendEmail([:])
-        XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
-        
         router = SCAPIRouter.sendPush([:])
         XCTAssertEqual(router.urlRequest?.httpMethod, Alamofire.HTTPMethod.post.rawValue)
         

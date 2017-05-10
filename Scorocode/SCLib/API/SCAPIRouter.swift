@@ -7,12 +7,11 @@
 //
 
 import Foundation
-import Alamofire
-import SwiftyJSON
 
-enum SCAPIRouter: URLRequestConvertible {
+enum SCAPIRouter2 {
     
     public static let baseURLString = "https://api.scorocode.ru/api/v1/"
+    public var urlRequest: URLRequest? { return asURLRequest() }
     
     case login([String: Any])
     case logout([String: Any])
@@ -53,9 +52,9 @@ enum SCAPIRouter: URLRequestConvertible {
     case createBot([String: Any])
     case deleteBot([String: Any])
     
-    func asURLRequest() throws -> URLRequest {
+    func asURLRequest() -> URLRequest? {
         
-        let result: (path: String, parameters: [String: Any]?) = {
+        let result: (path: String, parameters: [String: Any]) = {
             switch self {
                 
             case .login(let body):
@@ -151,28 +150,27 @@ enum SCAPIRouter: URLRequestConvertible {
             }
         }()
         
-        let baseURL = Foundation.URL(string: SCAPIRouter.baseURLString)
+        let baseURL = Foundation.URL(string: SCAPIRouter2.baseURLString)
         let URL = Foundation.URL(string: result.path, relativeTo: baseURL)
         var urlRequest = URLRequest(url: URL!)
         urlRequest.setValue(String("application/json"), forHTTPHeaderField: "Content-Type")
         
-        if method == .post {
-            urlRequest = try JSONEncoding.default.encode(urlRequest, with: result.parameters)
-        } else {
-            urlRequest = try URLEncoding.default.encode(urlRequest, with: result.parameters)
+        do {
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: result.parameters, options: [])
+            urlRequest.httpMethod = method
+        } catch let error {
+            print("Error to serialize request body to json: \(error.localizedDescription)")
+            return nil
         }
-        
-        urlRequest.httpMethod = method.rawValue
-        
         return urlRequest
         
     }
     
-    var method: HTTPMethod {
+    var method: String {
         
         switch self {
-        //case .login: return .post
-        default: return .post
+        //case .someMethod: return "GET"
+        default: return "POST"
         }
     }
 }

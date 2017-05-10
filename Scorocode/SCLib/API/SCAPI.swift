@@ -1,14 +1,11 @@
 //
 //  SCAPI.swift
-//  SC
 //
 //  Created by Alexey Kuznetsov on 27/12/2016.
 //  Copyright © 2016 Prof-IT Group OOO. All rights reserved.
 //
 
 import Foundation
-import Alamofire
-import SwiftyJSON
 
 public enum SCError {
     case system(String)
@@ -16,6 +13,8 @@ public enum SCError {
 }
 
 public class SCAPI {
+    
+    fileprivate let queue = DispatchQueue(label: "com.scorocode.https-requests-queue", qos: .utility, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
     
     fileprivate let kApplicationId = "app"
     fileprivate let kClientKey = "cli"
@@ -78,6 +77,53 @@ public class SCAPI {
     
     var sessionId: String!
     
+    // MARK: request
+    func sendRequest(_ urlRequest: URLRequest?, callback: @escaping (SCError?, [String: Any]?) -> Void) {
+        guard urlRequest != nil else {
+            callback(SCError.system("Cannot create url request."), nil)
+            return
+        }
+        self.queue.async {
+            // set up the session
+            let config = URLSessionConfiguration.default
+            let session = URLSession(configuration: config)
+            
+            // make the request
+            let task = session.dataTask(with: urlRequest!) {
+                (data, response, error) in
+                // check for any errors
+                guard error == nil else {
+                    callback(SCError.system("Error: calling post request"), nil)
+                    return
+                }
+                // make sure we got data
+                guard let responseData = data else {
+                    callback(SCError.system("Error: did not receive data"), nil)
+                    return
+                }
+                // parse the result as JSON, since that's what the API provides
+                do {
+                    guard let response = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] else {
+                        callback(SCError.system("error trying to convert data to JSON"), nil)
+                        return
+                    }
+                    if let error = response["error"] as? Bool, error == true {
+                        callback(self.makeError2(response), response)
+                    } else {
+                        callback(nil, response)
+                    }
+                    return
+                } catch  {
+                    callback(SCError.system("error trying to convert data to JSON"), nil)
+                    return
+                }
+            }
+            task.resume()
+            session.finishTasksAndInvalidate()
+        }
+        
+    }
+
     // MARK: User
     func login(_ email: String, password: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         
@@ -87,29 +133,19 @@ public class SCAPI {
         body[kEmail] = email
         body[kPassword] = password
         
-        Alamofire.request(SCAPIRouter.login(body as [String : Any])).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let result = response["result"].dictionaryValue
-                    if let sessionId = result["sessionId"] {
-                        self.sessionId = sessionId.stringValue
-                        callback(true, nil, response["result"].dictionaryObject)
-                    }
+        self.sendRequest(SCAPIRouter2.login(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any],
+                    let sessionId = dict["sessionId"] as? String {
+                    self.sessionId = sessionId
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
-        
     }
     
     func logout(_ callback: @escaping (Bool, SCError?) -> Void) {
@@ -119,22 +155,12 @@ public class SCAPI {
         body[kClientKey] = clientId
         body[kSessionId] = sessionId
         
-        Alamofire.request(SCAPIRouter.logout(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
+        self.sendRequest(SCAPIRouter2.logout(body).urlRequest) { (error, result) in
+            if error == nil {
+                self.sessionId = ""
+                callback(true, nil)
+            } else {
                 callback(false, error)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil)
-                } else {
-                    callback(false, self.makeError(response))
-                }
             }
         }
     }
@@ -149,22 +175,15 @@ public class SCAPI {
         body[kEmail] = email as Any?
         body[kPassword] = password as Any?
         
-        Alamofire.request(SCAPIRouter.register(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.register(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -179,34 +198,17 @@ public class SCAPI {
         body[kSessionId] = sessionId as Any?
         body[kCollection] = doc.collection as Any?
         
-        //        var bodyDoc = [String: Any]()
-        //
-        //        for setter in doc.update.operators {
-        //            let key = setter.dic.allKeys[0] as! String
-        //            let value = setter.dic.allValues[0]
-        //            bodyDoc[key] = value
-        //        }
-        //        body[kDoc] = bodyDoc
-        
         body[kDoc] = doc.update.operators[0].dic
         
-        Alamofire.request(SCAPIRouter.insert(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.insert(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -225,22 +227,15 @@ public class SCAPI {
             body[kLimit] = limit as Any?
         }
         
-        Alamofire.request(SCAPIRouter.remove(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.remove(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -256,22 +251,15 @@ public class SCAPI {
         body[kQuery] = makeBodyQuery(query) as Any?
         body[kDoc] = makeBodyDoc(update) as Any?
         
-        Alamofire.request(SCAPIRouter.update(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.update(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -287,23 +275,15 @@ public class SCAPI {
         body[kQuery] = ["_id" : obj.id!]
         body[kDoc] = makeBodyDoc(obj.update) as Any?
         
-        Alamofire.request(SCAPIRouter.updateById(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let result = response["result"].dictionaryObject
-                    callback(true, nil, result)
+        self.sendRequest(SCAPIRouter2.updateById(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -333,34 +313,21 @@ public class SCAPI {
         if let limit = query.limit {
             body[kLimit] = limit as Any?
         }
-        
-        
-        let lowPriorityQueue = DispatchQueue(label: "ru.scorocode.utility-queue",
-                                             qos: .utility,
-                                             attributes:.concurrent)
-        
-        Alamofire.request(SCAPIRouter.find(body)).responseJSON(queue: lowPriorityQueue, options: .allowFragments) {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let base64String = response["result"].stringValue
-                    let data = Data(base64Encoded: base64String.data(using: String.Encoding.utf8)!, options: Data.Base64DecodingOptions())
-                    let bson = BSON()
-                    let dictionary = bson.dictionaryFromBSONData(BSONData: data!)
-                    callback(true, nil, dictionary)
+
+        self.sendRequest(SCAPIRouter2.find(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let base64String = result?["result"] as? String,
+                    let data = Data(base64Encoded: base64String, options: Data.Base64DecodingOptions()) {
+                        let dictionary = data.dictionaryFromBSONData()
+                        callback(true, nil, dictionary)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to convert response to dictionary"), nil)
                 }
+            } else {
+                callback(false, error, nil)
             }
-        }    }
+        }
+    }
     
     func count(_ query: SCQuery, callback: @escaping (Bool, SCError?, Int?) -> Void) {
         
@@ -372,29 +339,21 @@ public class SCAPI {
         body[kCollection] = query.collection as Any?
         body[kQuery] = makeBodyQuery(query) as Any?
         
-        Alamofire.request(SCAPIRouter.count(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].intValue)
+        self.sendRequest(SCAPIRouter2.count(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let int = result?["result"] as? Int {
+                    callback(true, nil, int)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), nil)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
     
     func getFileLink(collectionId: String, documentId: String, fieldName: String, fileName: String) -> String {
-        return SCAPIRouter.baseURLString + "getfile/\(applicationId)/\(collectionId)/\(fieldName)/\(documentId)/\(fileName)"
-        // https://api.scorocode.ru/api/v1/getfile/{app}/{coll}/{field}/{docId}/{file}
+        return SCAPIRouter2.baseURLString + "getfile/\(applicationId)/\(collectionId)/\(fieldName)/\(documentId)/\(fileName)"
     }
     
     // MARK: File
@@ -411,22 +370,15 @@ public class SCAPI {
         body[kContent] = data as Any?
         body[kFile] = filename as Any?
         
-        Alamofire.request(SCAPIRouter.upload(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
+        self.sendRequest(SCAPIRouter2.upload(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
                     callback(true, nil)
                 } else {
-                    callback(false, self.makeError(response))
+                    callback(false, SCError.system("Unable to parse response"))
                 }
+            } else {
+                callback(false, error)
             }
         }
     }
@@ -443,22 +395,11 @@ public class SCAPI {
         body[kField] = field as Any?
         body[kFile] = filename as Any?
         
-        Alamofire.request(SCAPIRouter.deleteFile(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
+        self.sendRequest(SCAPIRouter2.deleteFile(body).urlRequest) { (error, result) in
+            if error == nil {
+                callback(true, nil)
+            } else {
                 callback(false, error)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil)
-                } else {
-                    callback(false, self.makeError(response))
-                }
             }
         }
     }
@@ -476,22 +417,15 @@ public class SCAPI {
         body[kMessage] = ["data": data]
         body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
         
-        Alamofire.request(SCAPIRouter.sendPush(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["count"].intValue)
+        self.sendRequest(SCAPIRouter2.sendPush(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let int = result?["count"] as? Int {
+                    callback(true, nil, int)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), nil)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -505,34 +439,17 @@ public class SCAPI {
         body[kCollection] = query.collection as Any?
         body[kQuery] = makeBodyQuery(query) as Any?
         body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
-        body[kMessage] =
-            ["data":
-                ["apns" :
-                    ["aps" :
-                        ["alert" :
-                            [ "title" : title,
-                              "body" : text]
-                        ]
-                    ]
-                ]
-        ]
-        
-        Alamofire.request(SCAPIRouter.sendPush(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["count"].intValue)
+        body[kMessage] = ["data": ["apns": ["aps": ["alert": ["title" : title, "body" : text ]]]]]
+
+        self.sendRequest(SCAPIRouter2.sendPush(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let int = result?["count"] as? Int {
+                    callback(true, nil, int)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), nil)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -548,23 +465,15 @@ public class SCAPI {
         body[kQuery] = makeBodyQuery(query) as Any?
         body[kMessage] = [kMessageText: text] as Any?
         
-        
-        Alamofire.request(SCAPIRouter.sendSms(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["count"].intValue)
+        self.sendRequest(SCAPIRouter2.sendSms(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let int = result?["count"] as? Int {
+                    callback(true, nil, int)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), nil)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -581,22 +490,11 @@ public class SCAPI {
         body[kPool] = pool as Any?
         body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
         
-        Alamofire.request(SCAPIRouter.scripts(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
+        self.sendRequest(SCAPIRouter2.scripts(body).urlRequest) { (error, result) in
+            if error == nil {
+                callback(true, nil)
+            } else {
                 callback(false, error)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil)
-                } else {
-                    callback(false, self.makeError(response))
-                }
             }
         }
     }
@@ -607,22 +505,15 @@ public class SCAPI {
         body[kClientKey] = clientId as Any?
         body[kAccessKey] = accessKey as Any?
         
-        Alamofire.request(SCAPIRouter.stat(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.app(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -634,22 +525,15 @@ public class SCAPI {
         body[kClientKey] = clientId as Any?
         body[kAccessKey] = accessKey as Any?
         
-        Alamofire.request(SCAPIRouter.app(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["app"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.app(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["app"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -661,36 +545,24 @@ public class SCAPI {
         body[kClientKey] = clientId as Any?
         body[kAccessKey] = accessKey as Any?
         
-        Alamofire.request(SCAPIRouter.collections(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil, [])
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let dict = response["collections"].dictionaryObject
-                    if dict != nil {
-                        var collectionsArray = [SCCollection]()
-                        for (_, value) in dict! {
-                            if let dict = value as? [String: Any] {
-                                let coll = self.parseCollection(dict: dict)
-                                if coll != nil {
-                                    collectionsArray.append(coll!)
-                                }
+        self.sendRequest(SCAPIRouter2.collections(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["collections"] as? [String: Any] {
+                    var collectionsArray = [SCCollection]()
+                    for (_, value) in dict {
+                        if let d = value as? [String: Any] {
+                            let coll = self.parseCollection(dict: d)
+                            if coll != nil {
+                                collectionsArray.append(coll!)
                             }
                         }
-                        callback(true, nil, dict, collectionsArray)
-                    } else {
-                        callback(true, nil, dict, [])
                     }
+                    callback(true, nil, dict, collectionsArray)
                 } else {
-                    callback(false, self.makeError(response), nil, [])
+                    callback(false, SCError.system("Unable to parse response"), result, [])
                 }
+            } else {
+                callback(false, error, nil, [])
             }
         }
     }
@@ -703,27 +575,15 @@ public class SCAPI {
         body[kAccessKey] = accessKey as Any?
         body[kCollection] = collection as Any?
         
-        Alamofire.request(SCAPIRouter.getCollection(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let result = response["collection"].dictionaryObject
-                    if result != nil {
-                        callback(true, nil, result, self.parseCollection(dict: result!))
-                    } else {
-                        callback(true, nil, result, nil)
-                    }
+        self.sendRequest(SCAPIRouter2.getCollection(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["collection"] as? [String: Any] {
+                    callback(true, nil, result, self.parseCollection(dict: dict))
                 } else {
-                    callback(false, self.makeError(response), nil, nil)
+                    callback(false, SCError.system("Unable to parse response"), result, nil)
                 }
+            } else {
+                callback(false, error, nil, nil)
             }
         }
     }
@@ -800,30 +660,19 @@ public class SCAPI {
         body[kClientKey] = clientId as Any?
         body[kAccessKey] = accessKey as Any?
         body[kCollectionDictName] = [kCollectionName: name,
-                                     kCollectionUseDocsACL: useDocsACL, //? NSNumber(value: true) : NSNumber(value: false)
-            kCollectionACL: ACLsettings.toDict()]
+                                     kCollectionUseDocsACL: useDocsACL,
+                                     kCollectionACL: ACLsettings.toDict()]
         
-        Alamofire.request(SCAPIRouter.createCollection(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let result = response["collection"].dictionaryObject
-                    if let collectionID = result?["id"] as? String {
-                        callback(true, nil, result, collectionID)
-                    } else {
-                        callback(true, nil, result, nil)
-                    }
+        self.sendRequest(SCAPIRouter2.createCollection(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["collection"] as? [String: Any],
+                    let collectionID = dict["id"] as? String {
+                    callback(true, nil, dict, collectionID)
                 } else {
-                    callback(false, self.makeError(response), nil, nil)
+                    callback(false, SCError.system("Unable to parse response"), result, nil)
                 }
+            } else {
+                callback(false, error, nil, nil)
             }
         }
     }
@@ -842,21 +691,15 @@ public class SCAPI {
         }
         body["collection"] = collectionDict
         
-        Alamofire.request(SCAPIRouter.updateCollection(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["collection"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.updateCollection(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["collection"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -869,25 +712,17 @@ public class SCAPI {
         body[kAccessKey] = accessKey
         body[kCollectionDictName] = ["id": id]
         
-        Alamofire.request(SCAPIRouter.removeCollection(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.removeCollection(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
-        
     }
     
     // Создание дубликата коллекции
@@ -898,25 +733,17 @@ public class SCAPI {
         body[kAccessKey] = accessKey
         body[kCollectionDictName] = ["id": id, "name": name]
         
-        Alamofire.request(SCAPIRouter.cloneCollection(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.cloneCollection(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
-        
     }
     
     // Создание индекса коллекции
@@ -931,25 +758,13 @@ public class SCAPI {
             "order": order.rawValue
             ]]]
         
-        
-        Alamofire.request(SCAPIRouter.createCollectionIndex(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
+        self.sendRequest(SCAPIRouter2.createCollectionIndex(body).urlRequest) { (error, result) in
+            if error == nil {
+                callback(true, nil, result)
+            } else {
                 callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, nil)
-                } else {
-                    callback(false, self.makeError(response), nil)
-                }
             }
         }
-        
     }
     
     // Удаление индекса коллекции
@@ -961,25 +776,13 @@ public class SCAPI {
         body[kCollection] = collectionName
         body[kCollectionIndexName] = ["name" : indexName]
         
-        Alamofire.request(SCAPIRouter.deleteCollectionIndex(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
+        self.sendRequest(SCAPIRouter2.deleteCollectionIndex(body).urlRequest) { (error, result) in
+            if error == nil {
+                callback(true, nil, result)
+            } else {
                 callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
-                } else {
-                    callback(false, self.makeError(response), nil)
-                }
             }
         }
-        
     }
     
     // Создание поля коллекции
@@ -993,22 +796,11 @@ public class SCAPI {
             (["name" : fieldName,"type": fieldType.rawValue]) :
             (["name" : fieldName,"type": fieldType.rawValue, "target": targetCollectonName])
         
-        Alamofire.request(SCAPIRouter.createCollectonField(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
+        self.sendRequest(SCAPIRouter2.createCollectonField(body).urlRequest) { (error, result) in
+            if error == nil {
+                callback(true, nil, result)
+            } else {
                 callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
-                } else {
-                    callback(false, self.makeError(response), nil)
-                }
             }
         }
     }
@@ -1022,22 +814,15 @@ public class SCAPI {
         body[kCollection] = collectionName
         body[kCollectionFieldName] = ["name" : fieldName]
         
-        Alamofire.request(SCAPIRouter.deleteCollectonField(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["collection"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.deleteCollectonField(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["collection"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1051,22 +836,15 @@ public class SCAPI {
         body[kCollection] = collectionName
         body[kCollectionTriggersName] = triggers.toDict()
         
-        Alamofire.request(SCAPIRouter.updateCollectionTriggers(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.updateCollectionTriggers(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["triggers"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1079,22 +857,15 @@ public class SCAPI {
         body[kAccessKey] = accessKey as Any?
         body[kFoldersPathName] = path
         
-        Alamofire.request(SCAPIRouter.getFoldersAndScriptsList(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["items"].arrayObject)
+        self.sendRequest(SCAPIRouter2.getFoldersAndScriptsList(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let array = result?["items"] as? [Any] {
+                    callback(true, nil, array)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), [])
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1107,22 +878,15 @@ public class SCAPI {
         body[kAccessKey] = accessKey as Any?
         body[kFoldersPathName] = path
         
-        Alamofire.request(SCAPIRouter.createFolder(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.createFolder(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1135,22 +899,15 @@ public class SCAPI {
         body[kAccessKey] = accessKey as Any?
         body[kFoldersPathName] = path
         
-        Alamofire.request(SCAPIRouter.deleteFolder(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.deleteFolder(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1163,27 +920,15 @@ public class SCAPI {
         body[kAccessKey] = accessKey as Any?
         body[kScriptIDName] = scriptId
         
-        Alamofire.request(SCAPIRouter.getScript(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let result = response["script"].dictionaryObject
-                    if result != nil {
-                        callback(true, nil, result, self.parseScript(dict: result!))
-                    } else {
-                        callback(false, nil, result, nil)
-                    }
+        self.sendRequest(SCAPIRouter2.getScript(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["script"] as? [String: Any] {
+                    callback(true, nil, dict, self.parseScript(dict: dict))
                 } else {
-                    callback(false, self.makeError(response), nil, nil)
+                    callback(false, SCError.system("Unable to parse response"), result, nil)
                 }
+            } else {
+                callback(false, error, nil, nil)
             }
         }
     }
@@ -1274,22 +1019,15 @@ public class SCAPI {
                              kScriptACL: script.ACL,
                              kScriptTimerSettings: script.repeatTimer.toDict()]
         
-        Alamofire.request(SCAPIRouter.createScript(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["cloudCode"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.createScript(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["cloudCode"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1312,22 +1050,15 @@ public class SCAPI {
                              kScriptACL: script.ACL,
                              kScriptTimerSettings: script.repeatTimer.toDict()]
         
-        Alamofire.request(SCAPIRouter.saveScript(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["script"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.saveScript(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["script"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1340,22 +1071,15 @@ public class SCAPI {
         body[kAccessKey] = accessKey as Any?
         body[kScriptIDName] = scriptId
         
-        Alamofire.request(SCAPIRouter.deleteScript(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.deleteScript(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1373,22 +1097,15 @@ public class SCAPI {
                               kBotScriptID: bot.scriptId,
                               kBotIsActive: bot.isActive]
         
-        Alamofire.request(SCAPIRouter.saveBot(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.saveBot(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
@@ -1418,35 +1135,22 @@ public class SCAPI {
         body[kClientKey] = clientId as Any?
         body[kAccessKey] = accessKey as Any?
         
-        Alamofire.request(SCAPIRouter.getBots(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, [])
-                return
-            }
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let array = response["items"].arrayObject
-                    if array != nil {
-                        var botsArray = [SCBot]()
-                        for value in array! {
-                            if let dict = value as? [String: Any] {
-                                let bot = self.parseBot(bot: dict)
-                                if bot != nil {
-                                    botsArray.append(bot!)
-                                }
-                            }
+        self.sendRequest(SCAPIRouter2.getBots(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let array = result?["items"] as? [Any] {
+                    var botsArray = [SCBot]()
+                    for value in array {
+                        if let dict = value as? [String: Any],
+                            let bot = self.parseBot(bot: dict) {
+                                botsArray.append(bot)
                         }
-                        callback(true, nil, botsArray)
-                    } else {
-                        callback(true, nil, [])
                     }
+                    callback(true, nil, botsArray)
                 } else {
-                    callback(false, self.makeError(response), [])
+                    callback(false, SCError.system("Unable to parse response"), [])
                 }
+            } else {
+                callback(false, error, [])
             }
         }
     }
@@ -1463,27 +1167,15 @@ public class SCAPI {
                               kBotScriptID: bot.scriptId,
                               kBotIsActive: bot.isActive]
         
-        Alamofire.request(SCAPIRouter.createBot(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    let result = response["bot"].dictionaryObject
-                    if let id = result?["_id"] as? String {
-                        callback(true, nil, result, id)
-                    } else {
-                        callback(true, nil, result, nil)
-                    }
+        self.sendRequest(SCAPIRouter2.createBot(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["bot"] as? [String: Any], let id = dict["_id"] as? String {
+                    callback(true, nil, dict, id)
                 } else {
-                    callback(false, self.makeError(response), nil, nil)
+                    callback(false, SCError.system("Unable to parse response"), result, nil)
                 }
+            } else {
+                callback(false, error, nil, nil)
             }
         }
     }
@@ -1497,30 +1189,26 @@ public class SCAPI {
         
         body[kBotDictName] = ["_id": botId]
         
-        Alamofire.request(SCAPIRouter.deleteBot(body)).responseJSON() {
-            responseJSON in
-            guard responseJSON.result.error == nil else {
-                let error = SCError.system((responseJSON.result.error?.localizedDescription)!)
-                print(error)
-                callback(false, error, nil)
-                return
-            }
-            
-            if let responseValue = responseJSON.result.value {
-                let response = JSON(responseValue)
-                if !response["error"].boolValue {
-                    callback(true, nil, response["result"].dictionaryObject)
+        self.sendRequest(SCAPIRouter2.deleteBot(body).urlRequest) { (error, result) in
+            if error == nil {
+                if let dict = result?["result"] as? [String: Any] {
+                    callback(true, nil, dict)
                 } else {
-                    callback(false, self.makeError(response), nil)
+                    callback(false, SCError.system("Unable to parse response"), result)
                 }
+            } else {
+                callback(false, error, nil)
             }
         }
     }
     
-    func makeError(_ response: JSON) -> SCError {
-        let errCode = response["errCode"].stringValue
-        let errMsg = response["errMsg"].stringValue
-        return SCError.api(errCode, errMsg)
+    func makeError2(_ response: [String: Any]) -> SCError {
+        if let errCode = response["errCode"] as? String,
+            let errMsg = response["errMsg"] as? String {
+            return SCError.api(errCode, errMsg)
+        } else {
+            return SCError.system("unable to get error code or error message")
+        }
     }
     
     func makeBodyDoc(_ update: SCUpdate) -> [String: Any] {
@@ -1553,7 +1241,6 @@ public class SCAPI {
                 break
             }
         }
-        
         return result
     }
     

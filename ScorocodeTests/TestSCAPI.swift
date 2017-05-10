@@ -12,13 +12,13 @@ class TestSCAPI: XCTestCase {
     
     private let username = "alexey"
     private let email = "alexey@company.com"
-    private let password = "alexey"
+    private let password = "TestUser1"
     
-    private let applicationId = ""
-    private let clientId = ""
-    private let accessKey = ""
-    private let fileKey = ""
-    private let messageKey = ""
+    let applicationId = "98bc4bacb5edea727cfb8fae25f71b59"
+    let clientId = "39169707deb69fc061c5c995aa4cdefe"
+    let accessKey = "61ad813bd71bd4f05aea53a3c996d53a"
+    let fileKey = "351cb3d71efef69e346ac5657dd16c1c"
+    let messageKey = "35d5a173e0391ae83d60a6a756a44051"
  
     private let collection = "testcollection"
     
@@ -325,28 +325,6 @@ class TestSCAPI: XCTestCase {
         
     }
     
-    func testSendEmail() {
-        
-        let exp = expectation(description: "SendEmail")
-        
-        SCAPI.sharedInstance.login(email, password: password) {
-            success, error, result in
-            
-            assertSuccess(success: success, error: error, result: result)
-            
-            let query = SCQuery(collection: "users")
-            SCAPI.sharedInstance.sendEmail(query, subject: "Test Message", text: "Test message text") {
-                success, error, result in
-                
-                assertSuccess(success: success, error: error, result: result)
-                
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: timeout, handler: nil)
-        
-    }
-    
     func testSendPush() {
         
         let exp = expectation(description: "SendPush")
@@ -357,7 +335,8 @@ class TestSCAPI: XCTestCase {
             assertSuccess(success: success, error: error, result: result)
             
             let query = SCQuery(collection: "devices")
-            SCAPI.sharedInstance.sendPush(query, subject: "Test Message", text: "Test message text") {
+            
+            SCAPI.sharedInstance.sendPush(query, title: "Test Message", text: "Test message text", debug: false) {
                 success, error, result in
                 
                 assertSuccess(success: success, error: error, result: result)
@@ -379,7 +358,8 @@ class TestSCAPI: XCTestCase {
             assertSuccess(success: success, error: error, result: result)
             
             let query = SCQuery(collection: "users")
-            SCAPI.sharedInstance.sendSms(query, subject: "Test Message", text: "Test message text") {
+
+            SCAPI.sharedInstance.sendSms(query, text: "Test Message") {
                 success, error, result in
                 
                 assertSuccess(success: success, error: error, result: result)
@@ -397,7 +377,7 @@ class TestSCAPI: XCTestCase {
         
         // TODO: успешное выполнение
         
-        SCAPI.sharedInstance.scripts("abc", pool: [:]) {
+        SCAPI.sharedInstance.runScript("abc", pool: [:], debug: false) {
             success, error in
             
             assertError(success: success, error: error, result: nil)

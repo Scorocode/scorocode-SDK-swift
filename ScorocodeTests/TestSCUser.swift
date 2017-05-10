@@ -12,7 +12,7 @@ class TestSCUser: XCTestCase {
     
     private let username = "alexey"
     private let email = "alexey@company.com"
-    private let password = "alexey"
+    private let password = "TestUser1"
     
     private let timeout = 5.0
     
