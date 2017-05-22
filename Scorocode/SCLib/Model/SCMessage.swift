@@ -11,24 +11,6 @@ import Foundation
 public struct SCMessage {
     //Отправка пуша со своей data.
     public static func sendPush(_ query: SCQuery, data: Dictionary<String, Any>, debug: Bool, callback: @escaping (Bool, SCError?, Int?) -> Void) {
-        /* пример словаря data:
-        "apns": {       // Данные для передачи iOs-устройствам, необязательно
-            "id": "123e4567-e89b-12d3-a456-42665544000", // apns-id, необязательно
-            "topic": "com.sideshow.Apns2",               // apns-topic, необязательно
-            "collapseId": "my_collapse",                 // apns-collapse-id, необязательно
-            "expiration": "2006-01-02T15:04:05Z07:00",   // apns-expiration, необязательно
-            "priority":5,                                // apns-priority, необязательно
-            "aps" : {
-                "alert" : {
-                    "title" : "Portugal vs. Denmark",
-                    "body" : "great match!",
-                    "action-loc-key" : "Watch"
-                },
-                "badge" : 5
-            },
-            "acme1" : "bar",
-            "acme2" : [ "bang",  "whiz" ]
-        }*/
         SCAPI.sharedInstance.sendPush(query, data: data, debug: debug, callback: callback)
     }
     
@@ -38,7 +20,6 @@ public struct SCMessage {
     }
     
     public static func sendSms(_ query: SCQuery, text: String, callback: @escaping (Bool, SCError?, Int?) -> Void) {
-        
         SCAPI.sharedInstance.sendSms(query, text: text, callback: callback)
     }
 }

@@ -13,19 +13,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib
-        let user = SCUser()
-        user.login("alexey@company.com", password: "TestUser1") { (success, error, result) in
-            print(error)
-            
-            let obj = SCObject(collection: "testcollection")
-            obj.set(["fieldString": SCString("bla bla")])
-            obj.save { (success, error, result) in
-                print(error, result)
-            }
-        }
-        
-        
-        
         
     }
 

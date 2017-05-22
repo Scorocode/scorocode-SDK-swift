@@ -359,7 +359,13 @@ public class SCAPI {
     }
     
     func getFileLink(collectionId: String, documentId: String, fieldName: String, fileName: String) -> String {
-        return SCAPIRouter.baseURLString + "getfile/\(applicationId)/\(collectionId)/\(fieldName)/\(documentId)/\(fileName)"
+        let urlString = SCAPIRouter.baseURLString + "getfile/\(applicationId)/\(collectionId)/\(fieldName)/\(documentId)/\(fileName)"
+        if let url = urlString.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) {
+            return url
+        } else {
+            print("Error: Unable to make correct url for this file: \(fileName)")
+            return ""
+        }
     }
     
     // MARK: File
@@ -417,7 +423,7 @@ public class SCAPI {
         body[kCollection] = query.collection 
         body[kQuery] = makeBodyQuery(query) 
         body[kMessage] = ["data": data]
-        body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
+        body[kDebug] = debug
         
         self.sendRequest(SCAPIRouter.sendPush(body).urlRequest) { (error, result) in
             if error == nil {
@@ -440,7 +446,7 @@ public class SCAPI {
         body[kSessionId] = sessionId 
         body[kCollection] = query.collection 
         body[kQuery] = makeBodyQuery(query) 
-        body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
+        body[kDebug] = debug 
         body[kMessage] = ["data": ["apns": ["aps": ["alert": ["title" : title, "body" : text ]]]]]
 
         self.sendRequest(SCAPIRouter.sendPush(body).urlRequest) { (error, result) in

@@ -11,9 +11,7 @@ SDK предоставляет доступ к платформе Scorocode дл
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Alexey Kuznetsov' => 'alexey073@gmail.com' }
   s.source           = { :git => 'https://github.com/Scorocode/scorocode-SDK-swift.git', :tag => s.version.to_s }
- 
-  s.dependency 'Alamofire','4.3'
-  s.dependency 'SwiftyJSON','3.1.4'
+
   s.ios.deployment_target = '8.0'
   s.source_files = 'Scorocode/SCLib/**/*'
  
