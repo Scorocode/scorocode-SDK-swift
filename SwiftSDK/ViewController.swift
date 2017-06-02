@@ -13,7 +13,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib
-        
+        let query = SCQuery(collection: "users")
+        query.find { (success, error, result) in
+            print((result!).first)
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {

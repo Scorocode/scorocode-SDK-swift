@@ -18,11 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Scorocode init
-        let applicationId = "bd956e03f2e242a18c33bea4fb6a37b9"
-        let clientId = "1d4c87b837e64e429ad41570c375d81f"
-        let accessKey = "d859ef0194eb44e3a972adb56af7b239"
-        let fileKey = "7be5f62002b7430ea247ae32760b8706"
-        let messageKey = "72ec4c044a3f4d2b9a9efbd3ffa49b50"
+        let applicationId = "cd02126a02e44643ba38c923cf699bb7"
+        let clientId = "900ca6a05f604eb8a88aac6941efcaa4"
+        let accessKey = "32e4b1c15e7d470dbbacab57fa6e8406"
+        let fileKey = "98bd371cdca944bcbebd45eb13fa17b6"
+        let messageKey = "171f8ac1fa6f4ed8b3ec623739b2ad04"
         
         SC.initWith(applicationId: applicationId, clientId: clientId, accessKey: accessKey, fileKey: fileKey, messageKey: messageKey)
         
