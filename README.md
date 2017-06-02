@@ -2,85 +2,63 @@
 SDK предоставляет доступ к платформе Scorocode для построения приложений, основанных на swift.
 Подробности на нашем сайте: https://scorocode.ru
 
-### Установка
-Подключение библиотеки к проекту
+### Установка:
+1) Скопировать с репозитория папку [SCLib](https://github.com/Scorocode/scorocode-SDK-swift/tree/swift3/Scorocode/SCLib)
+Добавить папку в свой проект.
 
-Установить [Carthage](https://github.com/Carthage/Carthage)
+2) В AppDelegate.swift в методе didFinishLaunchingWithOptions указать значения параметров инициализации API из личного кабинета. Пример:
+```
+//scorocode init
+let applicationId = "98bc4bacb5edeb727cfb8fae25f71b59"
+let clientId = "39169707deb69fc06145c995aa4cdefe"
+let accessKey = "61ad813bd71bd4f45aea53a3c996d53a"
+let fileKey = "351cb3d71efef69e3d6ac5657dd16c1c"
+let messageKey = "35d5a173e0391a283d60a6a756a44051" 
 
-Создать приложение
-
-Создать в корне проекта файл с именем "Cartfile", записать в него строки:
-```
-github "Alamofire/Alamofire" ~> 3.3
-github "SwiftyJSON/SwiftyJSON"
-```
-Закрыть проект в xcode, запустить в консоли:
-```
-carthage update --platform iOS,Mac
-```
-Открыть заново проект в Xcode. В Target -> General -> Linked Frameworks and Libraries из <Каталог проекта> -> Carthage -> Build -> iOS перетащить 2 файла:
-```
-Alamofire.framework
-SwiftyJSON.framework
+SC.initWith(applicationId: applicationId, clientId: clientId, accessKey: accessKey, fileKey: fileKey, messageKey: messageKey)
 ```
 
-В Target -> Build Phases добавить New Run Script Phase:
+### Установка с помощью cocoapods:
 
-Скрипт:
-```
-/usr/local/bin/carthage copy-frameworks
-```
-Два Input File:
+Подключение библиотеки к проекту:
+
+1) Установить [CocoaPods](https://cocoapods.org)
 
 ```
-$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework
-```
-и
-```
-$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework
+sudo gem install cocoapods
 ```
 
-В случае отсутствия bridging header создать его с таким содержимым:
+2) Создать новый проект в xcode, например "MyProject" (Имя проекта не должно совпадать со строкой "Scorocode")
+
+3) Создать в корне проекта файл с именем "Podfile" с текстом:
 
 ```
-#import "BSONSerialization.h"
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+target 'MyProject' do
+  pod 'Scorocode'
+end
 ```
 
-Создать в проекте новую группу (например, SCLib)
-
-Добавить в нее 3 папки (BSON, API, Model) из папки SCLib проекта, полученного из репозитория
-
-В AppDelegate.swift в метод didFinishLaunchingWithOptions указать значения параметров инициализации API:
+4) Закрыть проект в xcode, запустить в консоли:
 
 ```
-let applicationId = ""
-let clientId = ""
-let accessKey = ""
-let fileKey = ""
-let messageKey = ""
+pod install
 ```
 
-### License
-```
-MIT License
+5) В папке с проектом появится файл `MyProject.xcworkspace`, открыть его в xcode.
 
-Copyright (c) 2016 ProfIT-Ventures LLC
+6) В `AppDelegate.swift` в методе `didFinishLaunchingWithOptions` указать значения параметров инициализации API из личного кабинета. Пример:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+```SWIFT
+//scorocode init
+let applicationId = "98bc4bacb5edeb727cfb8fae25f71b59"
+let clientId = "39169707deb69fc06145c995aa4cdefe"
+let accessKey = "61ad813bd71bd4f45aea53a3c996d53a"
+let fileKey = "351cb3d71efef69e3d6ac5657dd16c1c"
+let messageKey = "35d5a173e0391a283d60a6a756a44051" 
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+SC.initWith(applicationId: applicationId, clientId: clientId, accessKey: accessKey, fileKey: fileKey, messageKey: messageKey)
 ```
