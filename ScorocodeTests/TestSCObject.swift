@@ -16,11 +16,12 @@ class TestSCObject: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        let applicationId = "98bc4bacb5edea727cfb8fae25f71b59"
-        let clientId = "39169707deb69fc061c5c995aa4cdefe"
-        let accessKey = "61ad813bd71bd4f05aea53a3c996d53a"
-        let fileKey = "351cb3d71efef69e346ac5657dd16c1c"
-        let messageKey = "35d5a173e0391ae83d60a6a756a44051"
+        let applicationId = "cd02126a02e44643ba38c923cf699bb7"
+        let clientId = "900ca6a05f604eb8a88aac6941efcaa4"
+        let accessKey = "32e4b1c15e7d470dbbacab57fa6e8406"
+        let fileKey = "98bd371cdca944bcbebd45eb13fa17b6"
+        let messageKey = "171f8ac1fa6f4ed8b3ec623739b2ad04"
+
         
         SC.initWith(applicationId: applicationId, clientId: clientId, accessKey: accessKey, fileKey: fileKey, messageKey: messageKey)
     }
