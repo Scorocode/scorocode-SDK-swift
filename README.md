@@ -3,7 +3,7 @@ SDK предоставляет доступ к платформе Scorocode дл
 Подробности на нашем сайте: https://scorocode.ru
 
 ### Установка:
-1) Скопировать с репозитория папку [SCLib](https://github.com/Scorocode/scorocode-SDK-swift/tree/swift3/Scorocode/SCLib)
+1) Скопировать с репозитория папку [SCLib](https://github.com/Scorocode/scorocode-SDK-swift/tree/master/todolist/SCLib)
 Добавить папку в свой проект.
 
 2) В AppDelegate.swift в методе didFinishLaunchingWithOptions указать значения параметров инициализации API из личного кабинета. Пример:
