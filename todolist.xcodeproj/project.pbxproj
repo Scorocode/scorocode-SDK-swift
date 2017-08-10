@@ -40,6 +40,7 @@
 		622101381EE060DE002664DD /* SCValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B5E2681EDEF23E00419580 /* SCValue.swift */; };
 		6221013C1EE06AE6002664DD /* alertBossScript.js in Resources */ = {isa = PBXBuildFile; fileRef = 6221013A1EE06AE6002664DD /* alertBossScript.js */; };
 		6221013D1EE06AE6002664DD /* taskStatusChanges.js in Resources */ = {isa = PBXBuildFile; fileRef = 6221013B1EE06AE6002664DD /* taskStatusChanges.js */; };
+		6226456F1F3D180B00025C76 /* Scorocode.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 6226456E1F3D180B00025C76 /* Scorocode.podspec */; };
 		627735841DBFD92300CFC713 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627735831DBFD92300CFC713 /* AppDelegate.swift */; };
 		627735891DBFD92300CFC713 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 627735871DBFD92300CFC713 /* Main.storyboard */; };
 		6277358E1DBFD92300CFC713 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6277358C1DBFD92300CFC713 /* LaunchScreen.storyboard */; };
@@ -100,6 +101,7 @@
 		622101031EE059F5002664DD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = ScorocodeTests/Utils.swift; sourceTree = SOURCE_ROOT; };
 		6221013A1EE06AE6002664DD /* alertBossScript.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = alertBossScript.js; sourceTree = "<group>"; };
 		6221013B1EE06AE6002664DD /* taskStatusChanges.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = taskStatusChanges.js; sourceTree = "<group>"; };
+		6226456E1F3D180B00025C76 /* Scorocode.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Scorocode.podspec; sourceTree = "<group>"; };
 		627735801DBFD92300CFC713 /* todolist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todolist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		627735831DBFD92300CFC713 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		627735881DBFD92300CFC713 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		627735771DBFD92300CFC713 = {
 			isa = PBXGroup;
 			children = (
+				6226456E1F3D180B00025C76 /* Scorocode.podspec */,
 				622101391EE06AE6002664DD /* Server Scripts */,
 				62D019711DCB3509003B7EBD /* Assets.xcassets */,
 				627735821DBFD92300CFC713 /* todolist */,
@@ -405,6 +408,7 @@
 			files = (
 				6277358E1DBFD92300CFC713 /* LaunchScreen.storyboard in Resources */,
 				62D019721DCB3509003B7EBD /* Assets.xcassets in Resources */,
+				6226456F1F3D180B00025C76 /* Scorocode.podspec in Resources */,
 				627735891DBFD92300CFC713 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
