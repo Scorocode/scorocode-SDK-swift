@@ -16,4 +16,3 @@ SDK предоставляет доступ к платформе Scorocode дл
   s.source_files = 'todolist/SCLib/**/*'
  
 end
-
