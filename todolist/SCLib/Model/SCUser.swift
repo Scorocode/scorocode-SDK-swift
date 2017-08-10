@@ -21,7 +21,7 @@ public class SCUser: SCObject {
     }
     
     // Завершение активной сессии пользователя
-    public static func logout(_ callback: @escaping (Bool, SCError?) -> Void) {
+    public func logout(_ callback: @escaping (Bool, SCError?) -> Void) {
         
         SCAPI.sharedInstance.logout(callback)
     }

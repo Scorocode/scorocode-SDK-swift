@@ -46,6 +46,7 @@ class RegisterVC : UIViewController {
     
     func signup(email: String, password: String, name: String) {
         let scUser = SCUser()
+        
         scUser.signup(name, email: email, password: password) { (success, error, result) in
             if success {
                 self.user.saveCredentials(email: email, password: password)
