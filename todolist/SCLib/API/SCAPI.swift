@@ -32,7 +32,6 @@ public class SCAPI {
     fileprivate let kFields = "fields"
     fileprivate let kLimit = "limit"
     fileprivate let kSkip = "skip"
-    fileprivate let kScript = "script"
     fileprivate let kPool = "pool"
     fileprivate let kDocId = "docId"
     fileprivate let kField = "field"
@@ -507,12 +506,21 @@ public class SCAPI {
     
     
     // MARK: Script
-    func runScript(_ scriptId: String, pool: [String: Any], debug: Bool, callback: @escaping (Bool, SCError?) -> Void) {
+    func runScript(scriptId: String?, scriptPath: String?, pool: [String: Any], debug: Bool, callback: @escaping (Bool, SCError?) -> Void) {
         var body = [String: Any]()
+        
+        if let path = scriptPath {
+            body["isRunByPath"] = true
+            body["path"] = path
+        }
+        
+        if let id = scriptId {
+            body["script"] = id
+        }
+        
         body[kApplicationId] = applicationId 
         body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kScript] = scriptId 
+        body[kAccessKey] = accessKey
         body[kPool] = pool 
         body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
         
@@ -961,7 +969,8 @@ public class SCAPI {
     
     func parseScript(dict: [String: Any]) -> SCScript? {
         if let id = dict["_id"] as? String, let path = dict["path"] as? String {
-            let script = SCScript(id: id, path: path)
+            let script = SCScript(id: id)
+            script.path = path
             if let ACL = dict["ACL"] as? [String] {
                 script.ACL = ACL
             }
@@ -1038,7 +1047,7 @@ public class SCAPI {
         body[kScriptName] = [kScriptPath: script.path!,
                              kScriptName:script.name,
                              kScriptCode:script.code,
-                             kScriptJobtype: script.jobType!.rawValue,
+                             kScriptJobtype: script.jobType.rawValue,
                              kScriptJobStartAt: script.jobStartAt.apiValue,
                              kScriptDescription: script.description,
                              kScriptIsActiveJob: script.isActiveJob,
@@ -1066,10 +1075,9 @@ public class SCAPI {
         body[kAccessKey] = accessKey 
         body[kScriptIDName] = script.id!
         
-        body[kScriptName] = [kScriptPath: script.path!,
-                             kScriptFilename:script.name,
+        body[kScriptName] = [kScriptFilename:script.name,
                              kScriptCode:script.code,
-                             kScriptJobtype: script.jobType!.rawValue,
+                             kScriptJobtype: script.jobType.rawValue,
                              kScriptJobStartAt: script.jobStartAt.apiValue,
                              kScriptDescription: script.description,
                              kScriptIsActiveJob: script.isActiveJob,

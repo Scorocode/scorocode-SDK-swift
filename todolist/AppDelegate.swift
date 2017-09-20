@@ -34,13 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotifications()
         }
         
-        
         //scorocode init
-        let applicationId = "ca5b4172f54d4839b7af536a884f77bc"
-        let clientId = "adeb3bf8810d488bbf57dede2812f3ee"
-        let accessKey = "b28b2afa05e24ad481aa358b23210a73"
-        let fileKey = "3824781938324a7a81025d7e6594d901"
-        let messageKey = "9de581f126554bf2bf304f3dd7af2142"
+        let applicationId = "0b0fdf86cf064d118f2df6ca485937af"
+        let clientId = "adeb3bf2410d488bbf57dede2812f3ee"
+        let accessKey = "b28b2afa06e24ad481aa358b23210a73"
+        let fileKey = "3824781956324a7a81025d7e6594d901"
+        let messageKey = "9de581d126554bf2bf304f3dd7af2142"
         SC.initWith(applicationId: applicationId, clientId: clientId, accessKey: accessKey, fileKey: fileKey, messageKey: messageKey)
         
         // Check if launched from notification

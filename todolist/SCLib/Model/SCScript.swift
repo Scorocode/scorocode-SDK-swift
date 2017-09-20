@@ -75,29 +75,24 @@ public class SCScript {
     public var code = ""
     public var jobStartAt = SCDate(Date())
     public var isActiveJob = false
-    public var jobType: ScriptJobType?
+    public var jobType = ScriptJobType.once
     public var ACL = [String]()
     public var repeatTimer = RepeatTimer()
     
-    public init(id: String?, path: String?) {
-        self.path = path
+    public init(id: String) {
         self.id = id
     }
-    
-    public convenience init(path: String) {
-        self.init(id: nil, path: path)
+    public init(path: String) {
+        self.path = path
     }
-    
-    public convenience init(id: String) {
-        self.init(id: id, path: nil)
-    }
+
     // Запуск скрипта
     public func run(pool: [String: Any], debug: Bool, callback: @escaping (Bool, SCError?) -> Void) {
-        guard self.id != nil else {
-            callback(false, SCError.system("id скрипта не задан."))
+        guard self.id != nil || self.path != nil else {
+            callback(false, SCError.system("Укажите id скрипта или путь к скрипту."))
             return
         }
-        SCAPI.sharedInstance.runScript(self.id!, pool: pool, debug: debug, callback: callback)
+        SCAPI.sharedInstance.runScript(scriptId: self.id, scriptPath: self.path, pool: pool, debug: debug, callback: callback)
     }
     
     // Получение скрипта
@@ -114,7 +109,7 @@ public class SCScript {
                 self.code = script?.code ?? ""
                 self.jobStartAt = script?.jobStartAt ?? SCDate(Date())
                 self.isActiveJob = script?.isActiveJob ?? false
-                self.jobType = script?.jobType ?? nil
+                self.jobType = script?.jobType ?? ScriptJobType.once
                 self.ACL = script?.ACL ?? [String]()
                 self.repeatTimer = script?.repeatTimer ?? RepeatTimer()
             }
