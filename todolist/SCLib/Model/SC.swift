@@ -11,6 +11,7 @@ import Foundation
 public class SC {
     
     public class func initWith(applicationId: String, clientId: String, accessKey: String, fileKey: String, messageKey: String) {
+        
         SCAPI.sharedInstance.applicationId = applicationId
         SCAPI.sharedInstance.clientId = clientId
         SCAPI.sharedInstance.accessKey = accessKey

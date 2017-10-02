@@ -127,5 +127,9 @@ func dictionaryFromBSONBytes(byteArray: [UInt8]) -> [String:Any] {
 
 func arrayFromBSONBytes(byteArray: [UInt8]) -> [Any] {
     let dictionary = dictionaryFromBSONBytes(byteArray: byteArray)
-    return dictionary.sorted(by: { Int($0.0.0)! < Int($0.1.0)! }).map({$0.1})
+    return dictionary.sorted(by: { (a, b) -> Bool in
+        return a.key < b.key
+    }).map({ (a) -> Any in
+        return a.value
+    })
 }

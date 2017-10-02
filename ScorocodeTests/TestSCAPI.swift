@@ -375,8 +375,7 @@ class TestSCAPI: XCTestCase {
         let exp = expectation(description: "Scripts")
         
         // TODO: успешное выполнение
-        
-        SCAPI.sharedInstance.runScript("abc", pool: [:], debug: false) {
+        SCAPI.sharedInstance.runScript(scriptId: "abc", scriptPath: nil, pool: [:], debug: false) {
             success, error in
             
             assertError(success: success, error: error, result: nil)

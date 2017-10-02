@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'Scorocode'
-  s.version          = '1.02'
-  s.summary          = 'Scorocode ios SDK, swift 3'
+  s.version          = '1.03'
+  s.summary          = 'Scorocode ios SDK, swift 4'
  
   s.description      = <<-DESC
 SDK предоставляет доступ к платформе Scorocode для построения приложений, основанных на swift. 

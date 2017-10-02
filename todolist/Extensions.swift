@@ -34,7 +34,7 @@ extension UIViewController {
     }
     
     // resize view on show keyboard
-    func keyboardWillShowForResizing(notification: Notification) {
+    @objc func keyboardWillShowForResizing(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
             let window = self.view.window?.frame {
             self.view.frame = CGRect(x: self.view.frame.origin.x,
@@ -47,7 +47,7 @@ extension UIViewController {
     }
     
     // resize view on hide keyboard
-    func keyboardWillHideForResizing(notification: Notification) {
+    @objc func keyboardWillHideForResizing(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let viewHeight = self.view.frame.height
             self.view.frame = CGRect(x: self.view.frame.origin.x,
@@ -68,7 +68,7 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
 }

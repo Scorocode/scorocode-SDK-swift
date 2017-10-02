@@ -71,7 +71,7 @@ class TestSCUser: XCTestCase {
             
             XCTAssertNotNil(result!["sessionId"])
             
-            SCUser.logout() {
+            user.logout() {
                 success, error in
                 
                 XCTAssertTrue(success)
