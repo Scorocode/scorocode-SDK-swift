@@ -12,6 +12,7 @@ SDK предоставляет доступ к платформе Scorocode дл
   s.author           = { 'Alexey Kuznetsov' => 'alexey073@gmail.com' }
   s.source           = { :git => 'https://github.com/Scorocode/scorocode-SDK-swift.git', :tag => s.version.to_s }
 
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
   s.ios.deployment_target = '9.0'
   s.source_files = 'todolist/SCLib/**/*'
  
