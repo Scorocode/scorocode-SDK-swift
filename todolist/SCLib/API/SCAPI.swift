@@ -73,6 +73,7 @@ public class SCAPI {
     internal var accessKey = ""
     internal var fileKey = ""
     internal var messageKey = ""
+    internal var scriptKey = ""
     
     var sessionId: String!
     
@@ -142,7 +143,7 @@ public class SCAPI {
         }
         
     }
-
+    
     // MARK: User
     func login(_ email: String, password: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         
@@ -187,12 +188,12 @@ public class SCAPI {
     func register(_ username: String, email: String, password: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kUsername] = username 
-        body[kEmail] = email 
-        body[kPassword] = password 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kUsername] = username
+        body[kEmail] = email
+        body[kPassword] = password
         
         self.sendRequest(SCAPIRouter.register(body).urlRequest) { (error, result) in
             if error == nil {
@@ -212,10 +213,10 @@ public class SCAPI {
     func insert(_ doc: SCObject, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kSessionId] = sessionId 
-        body[kCollection] = doc.collection 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kSessionId] = sessionId
+        body[kCollection] = doc.collection
         
         body[kDoc] = doc.update.operators[0].dic
         
@@ -235,15 +236,15 @@ public class SCAPI {
     func remove(_ query: SCQuery, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = query.collection 
-        body[kQuery] = makeBodyQuery(query) 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kSessionId] = sessionId
+        body[kCollection] = query.collection
+        body[kQuery] = makeBodyQuery(query)
         
         if let limit = query.limit {
-            body[kLimit] = limit 
+            body[kLimit] = limit
         }
         
         self.sendRequest(SCAPIRouter.remove(body).urlRequest) { (error, result) in
@@ -262,13 +263,13 @@ public class SCAPI {
     func update(_ query: SCQuery, update: SCUpdate, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = query.collection 
-        body[kQuery] = makeBodyQuery(query) 
-        body[kDoc] = makeBodyDoc(update) 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kSessionId] = sessionId
+        body[kCollection] = query.collection
+        body[kQuery] = makeBodyQuery(query)
+        body[kDoc] = makeBodyDoc(update)
         
         self.sendRequest(SCAPIRouter.update(body).urlRequest) { (error, result) in
             if error == nil {
@@ -286,13 +287,13 @@ public class SCAPI {
     func updateById(_ obj: SCObject, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = obj.collection 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kSessionId] = sessionId
+        body[kCollection] = obj.collection
         body[kQuery] = ["_id" : obj.id!]
-        body[kDoc] = makeBodyDoc(obj.update) 
+        body[kDoc] = makeBodyDoc(obj.update)
         
         self.sendRequest(SCAPIRouter.updateById(body).urlRequest) { (error, result) in
             if error == nil {
@@ -310,39 +311,39 @@ public class SCAPI {
     func find(_ query: SCQuery, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = query.collection 
-        body[kQuery] = makeBodyQuery(query) 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kSessionId] = sessionId
+        body[kCollection] = query.collection
+        body[kQuery] = makeBodyQuery(query)
         
         if let sort = query.sort {
-            body[kSort] = sort 
+            body[kSort] = sort
         }
         
         if let fields = query.fields {
-            body[kFields] = fields 
+            body[kFields] = fields
         }
         
         if let skip = query.skip {
-            body[kSkip] = skip 
+            body[kSkip] = skip
         }
         
         if let limit = query.limit {
-            body[kLimit] = limit 
+            body[kLimit] = limit
         }
-
+        
         self.sendRequest(SCAPIRouter.find(body).urlRequest) { (error, result) in
             if error == nil {
                 if let base64String = result?["result"] as? String,
                     let data = Data(base64Encoded: base64String, options: Data.Base64DecodingOptions()) {
-                        self.queue.async {
-                            let dictionary = data.dictionaryFromBSONData()
-                            DispatchQueue.main.async {
-                                callback(true, nil, dictionary)
-                            }
+                    self.queue.async {
+                        let dictionary = data.dictionaryFromBSONData()
+                        DispatchQueue.main.async {
+                            callback(true, nil, dictionary)
                         }
+                    }
                 } else {
                     callback(false, SCError.system("Unable to convert response to dictionary"), nil)
                 }
@@ -355,12 +356,12 @@ public class SCAPI {
     func count(_ query: SCQuery, callback: @escaping (Bool, SCError?, Int?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = query.collection 
-        body[kQuery] = makeBodyQuery(query) 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kSessionId] = sessionId
+        body[kCollection] = query.collection
+        body[kQuery] = makeBodyQuery(query)
         
         self.sendRequest(SCAPIRouter.count(body).urlRequest) { (error, result) in
             if error == nil {
@@ -389,15 +390,15 @@ public class SCAPI {
     func upload(_ field: String, filename: String, data: String, docId: String,  collection: String, callback: @escaping (Bool, SCError?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = collection 
-        body[kDocId] = docId 
-        body[kField] = field 
-        body[kContent] = data 
-        body[kFile] = filename 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = fileKey
+        body[kSessionId] = sessionId
+        body[kCollection] = collection
+        body[kDocId] = docId
+        body[kField] = field
+        body[kContent] = data
+        body[kFile] = filename
         
         self.sendRequest(SCAPIRouter.upload(body).urlRequest) { (error, result) in
             if error == nil {
@@ -411,14 +412,14 @@ public class SCAPI {
     func deleteFile(_ field: String, filename: String, docId: String, collection: String, callback: @escaping (Bool, SCError?) -> Void) {
         
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = collection 
-        body[kDocId] = docId 
-        body[kField] = field 
-        body[kFile] = filename 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = fileKey
+        body[kSessionId] = sessionId
+        body[kCollection] = collection
+        body[kDocId] = docId
+        body[kField] = field
+        body[kFile] = filename
         
         self.sendRequest(SCAPIRouter.deleteFile(body).urlRequest) { (error, result) in
             if error == nil {
@@ -433,12 +434,12 @@ public class SCAPI {
     // MARK: Message
     func sendPush(_ query: SCQuery, data: Dictionary<String, Any>, debug: Bool, callback: @escaping (Bool, SCError?, Int?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = query.collection 
-        body[kQuery] = makeBodyQuery(query) 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = messageKey
+        body[kSessionId] = sessionId
+        body[kCollection] = query.collection
+        body[kQuery] = makeBodyQuery(query)
         body[kMessage] = ["data": data]
         body[kDebug] = debug
         
@@ -457,15 +458,15 @@ public class SCAPI {
     
     func sendPush(_ query: SCQuery, title: String, text: String, debug: Bool, callback: @escaping (Bool, SCError?, Int?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = query.collection 
-        body[kQuery] = makeBodyQuery(query) 
-        body[kDebug] = debug 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = messageKey
+        body[kSessionId] = sessionId
+        body[kCollection] = query.collection
+        body[kQuery] = makeBodyQuery(query)
+        body[kDebug] = debug
         body[kMessage] = ["data": ["apns": ["aps": ["alert": ["title" : title, "body" : text ]]]]]
-
+        
         self.sendRequest(SCAPIRouter.sendPush(body).urlRequest) { (error, result) in
             if error == nil {
                 if let int = result?["count"] as? Int {
@@ -482,13 +483,13 @@ public class SCAPI {
     
     func sendSms(_ query: SCQuery, text: String, callback: @escaping (Bool, SCError?, Int?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kSessionId] = sessionId 
-        body[kCollection] = query.collection 
-        body[kQuery] = makeBodyQuery(query) 
-        body[kMessage] = [kMessageText: text] 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = messageKey
+        body[kSessionId] = sessionId
+        body[kCollection] = query.collection
+        body[kQuery] = makeBodyQuery(query)
+        body[kMessage] = [kMessageText: text]
         
         self.sendRequest(SCAPIRouter.sendSms(body).urlRequest) { (error, result) in
             if error == nil {
@@ -518,10 +519,11 @@ public class SCAPI {
             body["script"] = id
         }
         
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey
-        body[kPool] = pool 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = scriptKey
+        body[kSessionId] = sessionId
+        body[kPool] = pool
         body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
         
         self.sendRequest(SCAPIRouter.scripts(body).urlRequest) { (error, result) in
@@ -535,9 +537,9 @@ public class SCAPI {
     
     func stat(_ callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         
         self.sendRequest(SCAPIRouter.app(body).urlRequest) { (error, result) in
             if error == nil {
@@ -555,9 +557,9 @@ public class SCAPI {
     // Получение полной информации о приложении
     func app(_ callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         
         self.sendRequest(SCAPIRouter.app(body).urlRequest) { (error, result) in
             if error == nil {
@@ -575,9 +577,9 @@ public class SCAPI {
     // Получение списка коллекций приложения и их настроек
     func collections(_ callback: @escaping (Bool, SCError?, [String: Any]?, [SCCollection]) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         
         self.sendRequest(SCAPIRouter.collections(body).urlRequest) { (error, result) in
             if error == nil {
@@ -604,10 +606,10 @@ public class SCAPI {
     // Просмотр структуры и настроек конкретной коллекции.
     func getCollection(_ collection: String, callback: @escaping (Bool, SCError?, [String: Any]?, SCCollection?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
-        body[kCollection] = collection 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
+        body[kCollection] = collection
         
         self.sendRequest(SCAPIRouter.getCollection(body).urlRequest) { (error, result) in
             if error == nil {
@@ -690,9 +692,9 @@ public class SCAPI {
     // Создание новой коллекции
     func createCollection(name : String, useDocsACL: Bool, ACLsettings: ACL, callback: @escaping (Bool, SCError?, [String: Any]?, String?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         body[kCollectionDictName] = [kCollectionName: name,
                                      kCollectionUseDocsACL: useDocsACL,
                                      kCollectionACL: ACLsettings.toDict()]
@@ -714,9 +716,9 @@ public class SCAPI {
     // Изменение настроек коллекции
     func updateCollection(id: String, name: String?, useDocsACL: Bool, ACLsettings: ACL, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         var collectionDict : [String: Any] = ["id": id,
                                               kCollectionUseDocsACL: useDocsACL,
                                               kCollectionACL: ACLsettings.toDict()]
@@ -864,9 +866,9 @@ public class SCAPI {
     //Изменение триггеров коллекции
     func updateCollectionTriggers(collectionName : String, triggers: Triggers, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         body[kCollection] = collectionName
         body[kCollectionTriggersName] = triggers.toDict()
         
@@ -886,9 +888,9 @@ public class SCAPI {
     // Получение списка папок и скриптов директории
     func getFoldersAndScriptsList(path: String, callback: @escaping (Bool, SCError?, [Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         body[kFoldersPathName] = path
         
         self.sendRequest(SCAPIRouter.getFoldersAndScriptsList(body).urlRequest) { (error, result) in
@@ -907,9 +909,9 @@ public class SCAPI {
     // Создание новой папки
     func createFolder(path: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         body[kFoldersPathName] = path
         
         self.sendRequest(SCAPIRouter.createFolder(body).urlRequest) { (error, result) in
@@ -928,9 +930,9 @@ public class SCAPI {
     // Удаление папки со всем содержимым
     func deleteFolder(path: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         body[kFoldersPathName] = path
         
         self.sendRequest(SCAPIRouter.deleteFolder(body).urlRequest) { (error, result) in
@@ -949,9 +951,9 @@ public class SCAPI {
     // Получение скрипта
     func getScript(scriptId: String, callback: @escaping (Bool, SCError?, [String: Any]?, SCScript?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         body[kScriptIDName] = scriptId
         
         self.sendRequest(SCAPIRouter.getScript(body).urlRequest) { (error, result) in
@@ -1040,9 +1042,9 @@ public class SCAPI {
     // Создание нового скрипта
     func createScript(script: SCScript, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         
         body[kScriptName] = [kScriptPath: script.path!,
                              kScriptName:script.name,
@@ -1070,9 +1072,9 @@ public class SCAPI {
     // Изменение скрипта
     func saveScript(script: SCScript, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         body[kScriptIDName] = script.id!
         
         body[kScriptName] = [kScriptFilename:script.name,
@@ -1100,9 +1102,9 @@ public class SCAPI {
     // Удаление скрипта
     func deleteScript(scriptId: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         body[kScriptIDName] = scriptId
         
         self.sendRequest(SCAPIRouter.deleteScript(body).urlRequest) { (error, result) in
@@ -1121,9 +1123,9 @@ public class SCAPI {
     // Изменение бота
     func saveBot(bot: SCBot, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         
         body[kBotDictName] = ["_id": bot.id!,
                               kBotName:bot.name,
@@ -1165,9 +1167,9 @@ public class SCAPI {
     // Получение списка ботов приложения
     func getBots(callback: @escaping (Bool, SCError?, [SCBot]) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         
         self.sendRequest(SCAPIRouter.getBots(body).urlRequest) { (error, result) in
             if error == nil {
@@ -1176,7 +1178,7 @@ public class SCAPI {
                     for value in array {
                         if let dict = value as? [String: Any],
                             let bot = self.parseBot(bot: dict) {
-                                botsArray.append(bot)
+                            botsArray.append(bot)
                         }
                     }
                     callback(true, nil, botsArray)
@@ -1192,9 +1194,9 @@ public class SCAPI {
     // Создание бота
     func createBot(bot: SCBot, callback: @escaping (Bool, SCError?, [String: Any]?, String?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         
         body[kBotDictName] = [kBotName: bot.name,
                               kBotTelegramBotId: bot.telegramBotId,
@@ -1217,9 +1219,9 @@ public class SCAPI {
     // Удаление бота
     func deleteBot(botId: String, callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
         var body = [String: Any]()
-        body[kApplicationId] = applicationId 
-        body[kClientKey] = clientId 
-        body[kAccessKey] = accessKey 
+        body[kApplicationId] = applicationId
+        body[kClientKey] = clientId
+        body[kAccessKey] = accessKey
         
         body[kBotDictName] = ["_id": botId]
         
@@ -1270,3 +1272,4 @@ public class SCAPI {
     }
     
 }
+

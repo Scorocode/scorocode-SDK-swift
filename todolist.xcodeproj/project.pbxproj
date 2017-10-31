@@ -353,7 +353,7 @@
 					};
 					6277357F1DBFD92300CFC713 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = Q9F94SAMUV;
+						DevelopmentTeam = 2Y98Z4WG4M;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -670,7 +670,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Q9F94SAMUV;
+				DEVELOPMENT_TEAM = 2Y98Z4WG4M;
 				INFOPLIST_FILE = todolist/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -691,7 +691,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Q9F94SAMUV;
+				DEVELOPMENT_TEAM = 2Y98Z4WG4M;
 				INFOPLIST_FILE = todolist/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
