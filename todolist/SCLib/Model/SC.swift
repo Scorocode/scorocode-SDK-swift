@@ -10,13 +10,14 @@ import Foundation
 
 public class SC {
     
-    public class func initWith(applicationId: String, clientId: String, accessKey: String, fileKey: String, messageKey: String) {
+    public class func initWith(applicationId: String, clientId: String, accessKey: String, fileKey: String, messageKey: String, scriptKey: String) {
         
         SCAPI.sharedInstance.applicationId = applicationId
         SCAPI.sharedInstance.clientId = clientId
         SCAPI.sharedInstance.accessKey = accessKey
         SCAPI.sharedInstance.fileKey = fileKey
         SCAPI.sharedInstance.messageKey = messageKey
+        SCAPI.sharedInstance.scriptKey = scriptKey
     }
     
     public class func getStat(_ callback: @escaping (Bool, SCError?, [String: Any]?) -> Void) {
@@ -39,3 +40,4 @@ public class SC {
         SCAPI.sharedInstance.getFoldersAndScriptsList(path: path, callback: callback)
     }
 }
+

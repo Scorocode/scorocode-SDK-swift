@@ -11,7 +11,7 @@ import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     let user = User.sharedInstance
     var alerts = [String]()
@@ -24,7 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             center.delegate = self
             center.requestAuthorization(options: [.sound, .alert, .badge]) { (granted, error) in
                 if error == nil{
-                    UIApplication.shared.registerForRemoteNotifications()
+                    DispatchQueue.main.async {
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
                 }
             }
         } else {
@@ -40,7 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let accessKey = "b28b2afa05e14ad481aa358b23210a73"
         let fileKey = "3824781938324a8a81025d7e6594d901"
         let messageKey = "9de581f126354bf2bf304f3dd7af2142"
-        SC.initWith(applicationId: applicationId, clientId: clientId, accessKey: accessKey, fileKey: fileKey, messageKey: messageKey)
+        let scriptKey = "9de581f126354bf2bf304f3dd7af2142"
+        SC.initWith(applicationId: applicationId, clientId: clientId, accessKey: accessKey, fileKey: fileKey, messageKey: messageKey, scriptKey: scriptKey)
         
         // Check if launched from notification
         if let notification = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification]  {
@@ -48,26 +51,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         application.applicationIconBadgeNumber = 0;
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
@@ -93,13 +96,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
-                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+                             fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // If you are receiving a notification message while your app is in the background,
         // this callback will not be fired till the user taps on the notification launching the application.
         print("Received notification: \(userInfo)");
         performActionOnPushNotification(userInfo: userInfo)
     }
- 
+    
     func performActionOnPushNotification(userInfo: [NSObject : AnyObject]) {
         print("receive an push, notification, trying to parse...")
         if let aps = userInfo[("aps" as NSString)] as? [String: Any] {
