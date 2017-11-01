@@ -75,7 +75,7 @@ public class SCAPI {
     internal var messageKey = ""
     internal var scriptKey = ""
     
-    var sessionId: String!
+    var sessionId: String?
     
     // MARK: request
     func sendRequest(_ urlRequest: URLRequest?, callback: @escaping (SCError?, [String: Any]?) -> Void) {
@@ -173,11 +173,13 @@ public class SCAPI {
         var body = [String: String]()
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+        }
         
         self.sendRequest(SCAPIRouter.logout(body).urlRequest) { (error, result) in
             if error == nil {
-                self.sessionId = ""
+                self.sessionId = nil
                 callback(true, nil)
             } else {
                 callback(false, error)
@@ -215,7 +217,9 @@ public class SCAPI {
         var body = [String: Any]()
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+        }
         body[kCollection] = doc.collection
         
         body[kDoc] = doc.update.operators[0].dic
@@ -239,7 +243,9 @@ public class SCAPI {
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
         body[kAccessKey] = accessKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+        }
         body[kCollection] = query.collection
         body[kQuery] = makeBodyQuery(query)
         
@@ -266,7 +272,9 @@ public class SCAPI {
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
         body[kAccessKey] = accessKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+        }
         body[kCollection] = query.collection
         body[kQuery] = makeBodyQuery(query)
         body[kDoc] = makeBodyDoc(update)
@@ -290,7 +298,9 @@ public class SCAPI {
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
         body[kAccessKey] = accessKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+        }
         body[kCollection] = obj.collection
         body[kQuery] = ["_id" : obj.id!]
         body[kDoc] = makeBodyDoc(obj.update)
@@ -314,7 +324,9 @@ public class SCAPI {
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
         body[kAccessKey] = accessKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+        }
         body[kCollection] = query.collection
         body[kQuery] = makeBodyQuery(query)
         
@@ -359,7 +371,9 @@ public class SCAPI {
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
         body[kAccessKey] = accessKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+        }
         body[kCollection] = query.collection
         body[kQuery] = makeBodyQuery(query)
         
@@ -392,8 +406,12 @@ public class SCAPI {
         var body = [String: Any]()
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
-        body[kAccessKey] = fileKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+            body[kAccessKey] = fileKey
+        } else {
+            body[kAccessKey] = accessKey
+        }
         body[kCollection] = collection
         body[kDocId] = docId
         body[kField] = field
@@ -415,7 +433,12 @@ public class SCAPI {
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
         body[kAccessKey] = fileKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+            body[kAccessKey] = fileKey
+        } else {
+            body[kAccessKey] = accessKey
+        }
         body[kCollection] = collection
         body[kDocId] = docId
         body[kField] = field
@@ -436,8 +459,12 @@ public class SCAPI {
         var body = [String: Any]()
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
-        body[kAccessKey] = messageKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+            body[kAccessKey] = messageKey
+        } else {
+            body[kAccessKey] = accessKey
+        }
         body[kCollection] = query.collection
         body[kQuery] = makeBodyQuery(query)
         body[kMessage] = ["data": data]
@@ -460,8 +487,12 @@ public class SCAPI {
         var body = [String: Any]()
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
-        body[kAccessKey] = messageKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+            body[kAccessKey] = messageKey
+        } else {
+            body[kAccessKey] = accessKey
+        }
         body[kCollection] = query.collection
         body[kQuery] = makeBodyQuery(query)
         body[kDebug] = debug
@@ -485,8 +516,12 @@ public class SCAPI {
         var body = [String: Any]()
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
-        body[kAccessKey] = messageKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+            body[kAccessKey] = messageKey
+        } else {
+            body[kAccessKey] = accessKey
+        }
         body[kCollection] = query.collection
         body[kQuery] = makeBodyQuery(query)
         body[kMessage] = [kMessageText: text]
@@ -521,8 +556,12 @@ public class SCAPI {
         
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
-        body[kAccessKey] = scriptKey
-        body[kSessionId] = sessionId
+        if let sessionId = sessionId {
+            body[kSessionId] = sessionId
+            body[kAccessKey] = scriptKey
+        } else {
+            body[kAccessKey] = accessKey
+        }
         body[kPool] = pool
         body[kDebug] = debug //? NSNumber(value: true) : NSNumber(value: false)
         
