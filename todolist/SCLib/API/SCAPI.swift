@@ -556,7 +556,9 @@ public class SCAPI {
         
         body[kApplicationId] = applicationId
         body[kClientKey] = clientId
-        if let sessionId = sessionId {
+        if sessionId == nil && accessKey.isEmpty {
+            body[kAccessKey] = scriptKey
+        } else if let sessionId = sessionId {
             body[kSessionId] = sessionId
             body[kAccessKey] = scriptKey
         } else {
